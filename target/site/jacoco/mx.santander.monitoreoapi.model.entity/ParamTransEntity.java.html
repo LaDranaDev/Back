@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParamTransEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">monitoreoapi</a> &gt; <a href="index.source.html" class="el_package">mx.santander.monitoreoapi.model.entity</a> &gt; <span class="el_source">ParamTransEntity.java</span></div><h1>ParamTransEntity.java</h1><pre class="source lang-java linenums">package mx.santander.monitoreoapi.model.entity;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * Parametrización de tipos de operación (API_MX_PRC_CAT_PARAM_TRANS).
+ * &lt;p&gt;
+ * Mapea 1:1 la tabla operacional; por eso conserva varios campos.
+ * Los metadatos de auditoría se agrupan en {@link Auditoria} para
+ * reducir el número total de atributos expuestos.
+ * &lt;/p&gt;
+ */
+@Entity
+@Table(name = &quot;API_MX_PRC_CAT_PARAM_TRANS&quot;)
+@Getter @Setter @ToString
+<span class="fc" id="L26">public class ParamTransEntity implements Serializable {</span>
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /** Identificador único del parámetro (PK). */
+    @Id
+    @Column(name = &quot;ID_PARAM_PK&quot;, nullable = false)
+    private Long idParam;
+
+    /** Centro de costos del canal. */
+    @Column(name = &quot;TXT_CNTRO_COSTO&quot;)
+    private Integer centroCosto;
+
+    /** Tipo de pago (SPEI, SPID, INTERNACIONAL, B2B). */
+    @Column(name = &quot;ID_TIPO_PAGO&quot;)
+    private String idTipoPago;
+
+    /** Tipo de operación (ENTRE CUENTAS, TERCERO-TERCERO, etc.). */
+    @Column(name = &quot;ID_TIPO_OPER&quot;)
+    private String idTipoOper;
+
+    /** Clave de la empresa. */
+    @Column(name = &quot;TXT_EMPRESA&quot;)
+    private String empresa;
+
+    /** Clave del punto de venta. */
+    @Column(name = &quot;TXT_PNTO_VENTA&quot;)
+    private String puntoVenta;
+
+    /** Clave del medio de entrega. */
+    @Column(name = &quot;TXT_CLV_MED_ENTRE&quot;)
+    private String claveMedioEntrega;
+
+    /** Clave de transferencia. */
+    @Column(name = &quot;TXT_CLV_TRANS&quot;)
+    private String claveTransferencia;
+
+    /** Clave de operación. */
+    @Column(name = &quot;TXT_CLV_OPER&quot;)
+    private String claveOperacion;
+
+    /** Metadatos de auditoría (usuario y fechas). */
+    @Embedded
+    private Auditoria auditoria;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

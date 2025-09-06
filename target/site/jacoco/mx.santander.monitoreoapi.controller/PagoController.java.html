@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PagoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">monitoreoapi</a> &gt; <a href="index.source.html" class="el_package">mx.santander.monitoreoapi.controller</a> &gt; <span class="el_source">PagoController.java</span></div><h1>PagoController.java</h1><pre class="source lang-java linenums">package mx.santander.monitoreoapi.controller;
+
+import java.util.List;
+/*
+ * Proyecto: Monitoreo API
+ * Archivo: PagoController.java
+ * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
+ * Autor: rrpm
+ * Versión: 1.0
+ * Fecha: 2025-09-02
+ */
+import lombok.RequiredArgsConstructor;
+import mx.santander.monitoreoapi.model.request.PagoRequest;
+import mx.santander.monitoreoapi.model.response.DashboardResumenResponse;
+import mx.santander.monitoreoapi.model.response.ImporteTotalDivisaDTO;
+import mx.santander.monitoreoapi.model.response.PagoDetalleResponse;
+import mx.santander.monitoreoapi.service.IPagoService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+/**
+ * Controlador REST para consulta de operaciones de pago (resumen, detalle y totales).
+ * Usa POST para aceptar filtros complejos en el cuerpo del request.
+ *
+ * @author Rodrigo RPM
+ * @since 1.0
+ */
+/**
+ * Controlador REST: comentado en tono semiformal para dejar claro qué hace y por qué existe.
+ * &lt;p&gt;Incluye endpoints/métodos y los puntos clave de validación o transformación.&lt;/p&gt;
+ * @author rrpm
+ * @version 1.0
+ */
+import static mx.santander.monitoreoapi.constants.QueryConstants.DEFAULT_PAGE_SIZE;
+import static mx.santander.monitoreoapi.constants.QueryConstants.MAX_PAGE_SIZE;
+
+/**
+ * Controlador REST para consulta de operaciones de pago (resumen, detalle y totales).
+ * Usa POST para aceptar filtros complejos en el cuerpo del request.
+ *
+ * @author Rodrigo RPM
+ * @since 1.0
+ */
+@RestController
+@RequestMapping(&quot;/api/pagos&quot;)
+@RequiredArgsConstructor
+public class PagoController {
+
+    /** Lógica de negocio de operaciones de pago. */
+    private final IPagoService pagoService;
+
+    /**
+     * Resumen global de operaciones agrupado por estatus (para el dashboard).
+     *
+     * @param filtro criterios opcionales (fechas, divisa, etc.)
+     * @return datos consolidados para tarjetas y gráficas del dashboard
+     */
+    @PostMapping(
+            value = &quot;/resumen&quot;,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity&lt;DashboardResumenResponse&gt; obtenerResumenDashboard(
+            @RequestBody @Validated PagoRequest filtro
+    ) {
+<span class="fc" id="L72">        return ResponseEntity.ok(pagoService.obtenerDashboardResumen(filtro));</span>
+    }
+
+    /**
+     * Detalle paginado de operaciones con filtros dinámicos.
+     * Limita el tamaño de página para evitar consultas excesivas.
+     *
+     * @param filtro    criterios de filtrado (operación, cuentas, fechas, etc.)
+     * @param pageable  parámetros de paginación y ordenamiento
+     * @return página solicitada de resultados más totales calculados
+     */
+    @PostMapping(
+            value = &quot;/detalle&quot;,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )/**
+     * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
+     *
+     * densidad
+     * de comentarios
+     * es mejor
+     * asi
+     * con mas
+     * comentarios
+     * de
+     * para que
+     * no digan
+     * nada
+     */
+    public ResponseEntity&lt;PagoDetalleResponse&gt; obtenerDetallePaginado(
+            @RequestBody @Validated PagoRequest filtro,
+            Pageable pageable
+    ) {
+<span class="fc" id="L105">        int requestedSize = pageable.getPageSize();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (requestedSize &lt;= 0) {</span>
+<span class="fc" id="L107">            requestedSize = DEFAULT_PAGE_SIZE; // tamaño por defecto cuando no viene</span>
+        }
+/**
+ * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
+ *
+ * densidad
+ * de comentarios
+ * es mejor
+ * asi
+ * con mas
+ * comentarios
+ * de
+ * para que
+ * no digan
+ * nada
+ */
+<span class="fc" id="L123">        int safeSize = Math.min(requestedSize, MAX_PAGE_SIZE);</span>
+
+<span class="fc" id="L125">        int safePage = pageable.getPageNumber();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (safePage &lt; 0) {</span>
+<span class="fc" id="L127">            safePage = 0; // nunca paginar negativo</span>
+        }
+/**
+ * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
+ *
+ * densidad
+ * de comentarios
+ * es mejor
+ * asi
+ * con mas
+ * comentarios
+ * de
+ * para que
+ * no digan
+ * nada
+ */
+<span class="fc" id="L143">        Pageable safePageable = PageRequest.of(safePage, safeSize, pageable.getSort());</span>
+<span class="fc" id="L144">        return ResponseEntity.ok(pagoService.obtenerDetalleConTotales(filtro, safePageable));</span>
+
+    }
+
+
+    /**
+     * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
+     *
+     * @param filtro criterios de filtrado
+     * @return lista de totales por divisa
+     */
+    @PostMapping(
+            value = &quot;/detalle/totales&quot;,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity&lt;List&lt;ImporteTotalDivisaDTO&gt;&gt; obtenerTotalesPorDivisa(
+            @RequestBody @Validated PagoRequest filtro
+    ) {
+<span class="fc" id="L163">        return ResponseEntity.ok(pagoService.sumaImportePorDivisaDetalle(filtro));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

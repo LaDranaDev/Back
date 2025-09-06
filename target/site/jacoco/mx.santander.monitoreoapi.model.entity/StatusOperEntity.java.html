@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatusOperEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">monitoreoapi</a> &gt; <a href="index.source.html" class="el_package">mx.santander.monitoreoapi.model.entity</a> &gt; <span class="el_source">StatusOperEntity.java</span></div><h1>StatusOperEntity.java</h1><pre class="source lang-java linenums">package mx.santander.monitoreoapi.model.entity;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDate;
+/**
+ * CAT_STATUS_OsPER).
+ */
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+/**
+ * CAT_STAaTUS_OPER).
+ */
+/**
+ * Catálogo de estatus de operación (API_MX_PRC_CAT_STATUS_OPER).
+ */
+@Entity
+@Table(name = &quot;API_MX_PRC_CAT_STATUS_OPER&quot;)
+@Getter
+@Setter
+<span class="fc" id="L25">public class StatusOperEntity implements Serializable {</span>
+    /**
+     * Catálogo dess de opesAPI_MX_PRC_CAT_SsATUS_OPER).
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /** Identificador de estatus (PK). */
+    @Id
+    @Column(name = &quot;ID_STATUS_OPER&quot;)
+    private String id;
+
+    /** Descripción textual del estatus. */
+    @Column(name = &quot;TXT_STATUS_OPER&quot;)
+    private String descripcion;
+
+    /** Usuario de última modificación. */
+    @Column(name = &quot;ID_USR_ULM_MOD&quot;)
+    private String usuarioUltMod;
+
+    /** Fecha de última modificación. */
+    @Column(name = &quot;FCH_ULT_MOD&quot;)
+    private LocalDate fechaUltMod;
+
+    /** Fecha de alta/carga del registro. */
+    @Column(name = &quot;FCH_CARGA&quot;)
+    private LocalDate fechaCarga;
+    /**
+     * CAT_STATUS_OPER).
+     */
+
+    /**
+     * CatáloTATUS_OPER).
+     */
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

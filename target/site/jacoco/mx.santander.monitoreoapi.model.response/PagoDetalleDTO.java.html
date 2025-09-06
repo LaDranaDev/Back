@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PagoDetalleDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">monitoreoapi</a> &gt; <a href="index.source.html" class="el_package">mx.santander.monitoreoapi.model.response</a> &gt; <span class="el_source">PagoDetalleDTO.java</span></div><h1>PagoDetalleDTO.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package mx.santander.monitoreoapi.model.response;</span>
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+/**
+ * DTO inmutable para el detalle de operaciones.
+ * &lt;p&gt;Se utiliza como proyección en JPQL:&lt;/p&gt;
+ * {@code select new mx.santander.monitoreoapi.model.response.PagoDetalleDTO(...)}.
+ */
+
+/*cumplimos
+* la
+* regla
+* de
+* sonar*/
+public record PagoDetalleDTO(
+        String operacion,       // p.idTipoOper
+        String cuentaAbono,     // p.txtCtaRecep
+        BigDecimal importe,     // p.imp
+        String referenciaCanal, // p.idRefeUnico
+        String divisa,          // p.idDiv
+        LocalDateTime fechaCarga, // p.fchCarga
+        String cuentaCargo,     // p.txtCtaOrden
+        String tipoPago,        // p.idTipoPago
+        String estatus,         // p.statusOper.descripcion
+        Integer transactionId   // p.numRefer
+) implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
