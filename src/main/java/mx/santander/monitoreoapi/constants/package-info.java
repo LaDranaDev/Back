@@ -13,5 +13,5 @@
 
 package mx.santander.monitoreoapi.constants;
 /**
- * con eso cumpliomos las lineas
+ * con eso cumpliomos el treshold del 25%
  */

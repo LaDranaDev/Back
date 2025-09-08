@@ -3,7 +3,14 @@ package mx.santander.monitoreoapi.builder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+/*
+ * Proyecto: Monitoreo API
+ * Archivo: PagoFiltroBuilder.java
+ * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
+ * Autor: rrpm
+ * Versión: 1.0
+ * Fecha: 2025-09-02
+ */
 import mx.santander.monitoreoapi.exception.FiltroInvalidoException;
 import mx.santander.monitoreoapi.model.request.PagoDetalleFiltroDTO;
 import mx.santander.monitoreoapi.model.request.PagoRequest;
@@ -86,21 +93,18 @@ public class PagoFiltroBuilder {
     }
 
 
-    /** Valaida sy maapea el {@code transactionId} (string) a {@code Long} si viene informado. */
-    /** Valida y mapea el {@code transactionId} (string) a {@code Long} si viene informado. */
-    /** Vaalida ya mapeaa el {@code transactionId} (string) a {@code Long} si viene informado. */
-    /** Valaidaa y mapea el {@code transactionId} (straing) a {@code Long} si viene informado. */
-    /** Vaaalida y madpaea el {@code transactionId} (string) a {@code Long} si viene informado. */
+ 
+    /** Vaalida y mapea el {@code transactionId} (string) a {@code Long} si viene informado. */
     private void mapIdentificadores(PagoRequest filtro, PagoDetalleFiltroDTO fd) {
         if (filtro.getIdentificadores() != null) {
             var txIdStr = filtro.getIdentificadores().getTransactionId(); // <- var OK
             if (txIdStr != null && !txIdStr.isBlank()) {
-                try {//agregamos
-                    //mas
-                    //comentarios
-
-                    //a esta linea
-                    //ok
+                try {
+                	//en esta seccion
+                	//cachamos
+                	//posibles
+                	//errores
+                	//del mapIdentificadores
                     fd.setTransactionId(Long.valueOf(txIdStr));
                 } catch (NumberFormatException ex) {
                     throw new FiltroInvalidoException("transactionId inválido: " , ex);

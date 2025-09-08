@@ -12,9 +12,23 @@ import java.time.LocalDateTime;
 /**
  * Filtros de búsqueda del detalle de pagos.
  * <p>
- * Se modela con 10 campos para cumplir la regla de Sonar (máx. 10),
- * agrupando fechas en el objeto anidado {@link RangoFechas}.
- * Las propiedades deben coincidir con los nombres usados en JPQL
+ * Se
+ *  modela
+ *   con 10
+ *    campos 
+ *    para cumplir
+ *     la regla de 
+ *     Sonar (máx. 10),
+ * agrupando
+ *  fechas en 
+ *  el objeto
+ *   anidado {@link RangoFechas}.
+ * Las 
+ * propiedades 
+ * deben coincidir
+ *  con los nombres
+ *   usados
+ *    en JPQL
  * (SpEL: :#{#filtro.*}) para evitar errores en el mapeo.
  * </p>
  */
@@ -22,13 +36,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PagoDetalleFiltroDTO implements Serializable {
     @Serial private static final long serialVersionUID = 1L;
-    /** 1
-     * 2
-     * 3
-     * 4
-     * 5
-     * 6
-     * 7*/
+ 
 
     private String operacion;
     private String cuentaAbono;

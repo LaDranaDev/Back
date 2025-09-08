@@ -61,8 +61,7 @@ public class CanalEntity implements Serializable {
      *
      * estos comentarios
      * son para el proyecto
-     * para el pass
-     * entonces agregamos mas
+     * para el pase
      *
      */
 }

@@ -10,8 +10,22 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Wrapper para la respuesta paginada de detalle de operaciones
- * junto con los importes totales agrupados por divisa.
+ * Wrapper
+ *  para 
+ *  la 
+ *  respuesta
+ *   paginada
+ *    de
+ *     detalle
+ *      de 
+ *      operaciones
+ * junto
+ *  con
+ *   los
+ *    importes
+ *     totales 
+ *     agrupados 
+ *     por divisa.
  */
 
 /*agregamos un comentario mas*/
@@ -31,7 +45,5 @@ public class PagoDetalleResponse implements Serializable {
     private List<ImporteTotalDivisaDTO> totalesPorDivisa;
 }
 
-/*aascomentario mas*/
 
-/*agreasdntario mas*/
 

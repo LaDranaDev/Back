@@ -11,14 +11,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Catálogo de tipos de pago (SPEI, SPID, INTERNACIONAL, etc.).
- * Entidad JPA mapeada a la tabla API_MX_PRC_CAT_TIPO_PAGO.
- * ok
- * resolver
- * pwd
- * chown
- * ps
- * ok
+ * Catálogo
+ *  de
+ *   tipos
+ *    de
+ *     pago
+ *      (SPEI,
+ *       SPID,
+ *        INTERNACIONAL,
+ *         etc.).
+ * Entidad
+ *  JPA
+ *   mapeada
+ *    a la tabla API_MX_PRC_CAT_TIPO_PAGO.
  *
  */
 @Entity

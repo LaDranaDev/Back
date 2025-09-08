@@ -4,20 +4,20 @@
  * Define las consultas JPQL personalizadas y el acceso a las entidades
  * relacionadas con operaciones, catálogos y métricas.
  *ok
- * ok
- * ok
- * ok
- * ok
- * ok
- * ok
- * ok
+ *agregamos
+ * en
+ *  este
+ *   paquete
+ *    la 
+ *    capa
+ *     de 
+ *     repositorio
  * </p>
  */
 package mx.santander.monitoreoapi.repository;
 
 /*
-* vamos
-* a
-* agregar
-* comentarios
-* */
+ * Autor RRPM
+ * V.10
+ * Proyecto de apis
+ * 9 de septiembre del 2025*/

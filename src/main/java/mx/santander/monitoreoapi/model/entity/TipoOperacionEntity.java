@@ -3,14 +3,17 @@ package mx.santander.monitoreoapi.model.entity;
 import java.io.Serial;
 import java.io.Serializable;
 /**
- * Catálogo de tipos de operación (API_MX_PRC_CAT_TIPO_OPER).
- * si
- * si
- * si
- * ok
- * df
- * hs
- * pwd
+ * Catálogo
+ *  de
+ * tipos
+ * de
+ * operación 
+ * (API_
+ * MX_
+ * PRC_
+ * CAT
+ * _TIPO
+ * _OPER).
  */
 
 import jakarta.persistence.Column;
@@ -21,7 +24,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Catálogo de tipos de operación (API_MX_PRC_CAT_TIPO_OPER).
+ * Catálogo
+ *  de
+ *  tipos
+ *  de
+ *  operación (API_MX_PRC_CAT_TIPO_OPER).
  */
 @Entity
 @Table(name = "API_MX_PRC_CAT_TIPO_OPER")

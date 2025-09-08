@@ -11,13 +11,16 @@ public record TotalGlobalOperacionesDTO(
         BigDecimal totalMontos
 ) {
     // No es necesario serialVersionUID en un record que no implementa Serializable
-    //1
-    //2
-    //3
-    //4
-    //5
+
     /*
-     * Totales globales de operaciones: conteo y monto agregado
+     * Totales
+     *  globales
+     *   de 
+     *   operaciones:
+     *    conteo
+     *     y 
+     *     monto
+     *      agregado
      * asi
      * cumplimos
      * sonar.

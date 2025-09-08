@@ -12,11 +12,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class OpcionCatalogo implements Serializable {
     /**
-     * Representa una opción de catálogo con un identificador y su descripción.
-     * vamos
-     * a
-     * daele
-     * mas
+     * Representa 
+     * una opción 
+     * de catálogo
+     *  con un
+     *   identificador
+     *    y su descripción.
+    
      *
      */
     @Serial

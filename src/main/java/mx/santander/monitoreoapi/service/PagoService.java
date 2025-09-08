@@ -21,30 +21,7 @@ import org.springframework.stereotype.Service;
  * Servicio de consultas de pagos (dashboard, detalle y totales).
  * Se extrajo la construcción de filtros a {@link PagoFiltroBuilder} para
  * reducir dependencias y duplicación, y se simplificó la lógica para
- * bajar complejidad cognitiva.
- * 1
- * 2
- * 3
- * 4
- * 5
- * 6
- * 7
- * 8
- * 9
- * 0
- * 10
- * 11
- * 12
- * 13
- * 14
- * 15
- * 16
- * 17
- * 18
- * 19
- * 20
- * 21
- */
+ * bajar complejidad cognitiva. */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -84,7 +61,24 @@ public class PagoService implements IPagoService {
                 totalMontos = tm;
             }
         }
-        //
+        /*
+         * Proyecto:
+         *  Monitoreo API
+         * Archivo:
+         *  PagoController.java
+         * Descripción:
+         *  Comentarios
+         *   añadidos
+         *    para documentar 
+         *    el propósito y
+         *     funcionamiento del componente.
+         * Autor:
+         *  rrpm
+         * Versión: 
+         * 1.0
+         * Fecha: 
+         * 2025-09-02
+         */
 
         // Conteo por divisa -> Map<String, Long>
         Map<String, Long> pagosPorDivisa = pagoRepository

@@ -19,8 +19,7 @@
 package mx.santander.monitoreoapi.model.response;
 
 /*
-* 1
-* 2
-* 3
-* 445r3fdsfs
-* */
+ * Version 1.0
+ * Autor :RRPM
+ * Monitoreo de apis
+ * 9 de septiembre 2025*/

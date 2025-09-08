@@ -89,11 +89,7 @@ import org.springframework.context.annotation.Configuration;
  * Componente para la api
  * <p>aqui armamos una estructura
  * aqui vemos eso
- * 1
- * 2
- * 3
- * 4
- * 5
+
  * aqui puedes checar informacion.</p>
  * <p> con swagger encontramos.</p>
  */

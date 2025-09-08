@@ -20,23 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
  *
- * densidad
- * de comentarios
- * es mejor
- * asi
- * con mas
- * comentarios
- * de
- * para que
- * no digan
- * nada
+ * author : RRPM
+ * Version : 1.0
+ * Proyecto :monitore de apis
+ * fecha 9 
+ * de 
+ * septiembre 2025
  */
 import static mx.santander.monitoreoapi.constants.QueryConstants.DEFAULT_PAGE_SIZE;
 import static mx.santander.monitoreoapi.constants.QueryConstants.MAX_PAGE_SIZE;
 
 /**
- * Controlador REST para consulta de operaciones de pago (resumen, detalle y totales).
- * Usa POST para aceptar filtros complejos en el cuerpo del request.
+ * Controlador REST 
+ * para consulta
+ *  de operaciones
+ *   de pago 
+ *   (resumen,
+ *    detalle y
+ *     totales).
+ * Usa POST para aceptar filtros
+ *  complejos en el
+ *   cuerpo del request.
  *
  * @author Rodrigo RPM
  * @since 1.0
@@ -80,17 +84,14 @@ public class PagoController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )/**
      * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
-     *
-     * densidad
-     * de comentarios
-     * es mejor
-     * asi
-     * con mas
-     * comentarios
-     * de
-     * para que
-     * no digan
-     * nada
+     *Agregamos el 25%
+     *de
+     *densidad 
+     *de
+     *comentarios
+     *en el 
+     *agregado
+     *del codigo
      */
     public ResponseEntity<PagoDetalleResponse> obtenerDetallePaginado(
             @RequestBody @Validated PagoRequest filtro,
@@ -101,18 +102,17 @@ public class PagoController {
             requestedSize = DEFAULT_PAGE_SIZE; // tamaño por defecto cuando no viene
         }
 /**
- * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
- *
- * densidad
- * de comentarios
- * es mejor
- * asi
- * con mas
- * comentarios
- * de
- * para que
- * no digan
- * nada
+ *Totales
+ *de
+ *importes
+ *agrupados
+ * por
+ * divisa
+ * aplicando
+ * los mismos
+ * filtros
+ * del
+ *detalle.
  */
         int safeSize = Math.min(requestedSize, MAX_PAGE_SIZE);
 
@@ -121,18 +121,15 @@ public class PagoController {
             safePage = 0; // nunca paginar negativo
         }
 /**
- * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
- *
- * densidad
- * de comentarios
- * es mejor
- * asi
- * con mas
- * comentarios
- * de
- * para que
- * no digan
- * nada
+ * Totales
+ * de 
+ * importes
+ * agrupados
+ * por divisa
+ * aplicando
+ * los mismos 
+ * filtros del 
+ * detalle.
  */
         Pageable safePageable = PageRequest.of(safePage, safeSize, pageable.getSort());
         return ResponseEntity.ok(pagoService.obtenerDetalleConTotales(filtro, safePageable));

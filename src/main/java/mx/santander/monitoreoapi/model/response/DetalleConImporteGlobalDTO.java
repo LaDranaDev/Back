@@ -61,20 +61,30 @@ public class DetalleConImporteGlobalDTO<T extends Serializable> implements Seria
 
     /**
      * Componente embebido <>.
-     * <p>1
-     * 2
-     * 4
-     * t
-     * 6
-     * 3
-     * 4
-     * 5</p>
-     * <p>Mapea 1:1 a columnas existentes; no cambia la tabla.</p>
+     * <p>1</p>
+     * <p>Mapea
+     *  1:1
+     *   a
+     *    columnas
+     *     existentes;
+     *      no
+     *       cambia
+     *        la 
+     *        tabla.</p>
      */
 
 
     /**
-     * Metadatos serializables de la paginación que describen la página devuelta en {@link #content}.
+     * Metadatos
+     *  serializables
+     *   de
+     *    la
+     *     paginación
+     *      que 
+     *      describen
+     *       la
+     *        página
+     *         devuelta en {@link #content}.
      */
     @Data
     @NoArgsConstructor

@@ -10,8 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implementación de {@link ICatalogoService}.
- * Orquesta la obtención de catálogos desde repositorios JPA.
+ * Implementación
+ *  de {@link ICatalogoService}.
+ * Orquesta
+ *  la 
+ *  obtención
+ *   de
+ *    catálogos
+ *     desde 
+ *     repositorios 
+ *     JPA.
  */
 @Service
 @RequiredArgsConstructor
@@ -28,29 +36,31 @@ public class CatalogoService implements ICatalogoService {
     @Override
     @Transactional(readOnly = true)
     public CatalogosResponse obtenerCatalogosFiltros() {
-        /*
-         * vamos
-         * a
-         * agregar
-         * mas
-         * comentarios
-         * en
-         * esta
-         * parte*/
+    	/*
+    	 * Autor 
+    	 * RRPM
+    	 * V.10
+    	 * Proyecto 
+    	 * de 
+    	 * apis
+    	 * 9
+    	 *  de
+    	 *   septiembre
+    	 *    del
+    	 *     2025*/
+
         return new CatalogosResponse(
                 tipoOperacionRepo.findAllAsOpcion(),
                 divisaRepo.findAllAsOpcion(),
                 tipoPagoRepo.findAllAsOpcion(),
                 statusOperRepo.findAllAsOpcion()
-                /*
-                * vamos
-                * a
-                * agregar
-                * mas
-                * comentarios
-                * en
-                * esta
-                * parte*/
+               /*Catalogo
+                * Response
+                * con metodos
+                * diversos
+                * de retorno
+                * 
+                */
         );
     }
 }

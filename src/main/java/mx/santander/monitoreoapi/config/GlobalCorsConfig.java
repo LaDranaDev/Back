@@ -12,10 +12,30 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * CORS seguro: sin comodines, orígenes por propiedad y credenciales deshabilitadas.
- * Fortify odia '*' en allowedOrigins/allowedHeaders.
+ * Configuración global de CORS (Cross-Origin Resource Sharing) para la aplicación.
  *
- * Front/QA: cambien la propiedad app.cors.allowed-origins en su application-<env>.yml.
+ * <p>
+ * Esta clase define las políticas de intercambio de recursos entre orígenes distintos,
+ * permitiendo que aplicaciones web ejecutándose en diferentes dominios puedan
+ * interactuar con la API de manera segura y controlada.
+ * </p>
+ *
+ * <p>
+ * La configuración establece:
+ * - Orígenes permitidos para realizar peticiones
+ * - Métodos HTTP autorizados (GET, POST, PUT, DELETE, etc.)
+ * - Headers personalizados permitidos
+ * - Configuración de credenciales y tiempo de caché
+ * </p>
+ *
+ * <p>
+ * <strong>Importante:</strong> Esta configuración está optimizada para desarrollo.
+ * En entornos productivos se debe restringir adecuadamente los orígenes permitidos.
+ * </p>
+ *
+ * @author Rodrigo RPM
+ * @version 1.0
+ * @since 1.0
  */
 @Configuration
 public class GlobalCorsConfig {
