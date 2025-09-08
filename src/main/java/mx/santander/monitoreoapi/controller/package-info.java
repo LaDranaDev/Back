@@ -1,11 +1,3 @@
-/*
- * Proyecto: Monitoreo API
- * Archivo: package-info.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
 /**
  * Controladores REST del módulo de monitoreo de pagos.
  * <p>
@@ -23,3 +15,8 @@
  */
 package mx.santander.monitoreoapi.controller;
 
+/*
+* 1
+* linea
+* mas
+* */

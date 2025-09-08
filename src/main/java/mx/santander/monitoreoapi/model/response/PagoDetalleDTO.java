@@ -17,17 +17,39 @@ import java.time.LocalDateTime;
 * de
 * sonar*/
 public record PagoDetalleDTO(
-        String operacion,       // p.idTipoOper
-        String cuentaAbono,     // p.txtCtaRecep
-        BigDecimal importe,     // p.imp
-        String referenciaCanal, // p.idRefeUnico
-        String divisa,          // p.idDiv
-        LocalDateTime fechaCarga, // p.fchCarga
-        String cuentaCargo,     // p.txtCtaOrden
-        String tipoPago,        // p.idTipoPago
-        String estatus,         // p.statusOper.descripcion
-        Integer transactionId   // p.numRefer
+        String operacion,
+        String cuentaAbono,
+        BigDecimal importe,
+        String referenciaCanal,
+        String divisa,
+        LocalDateTime fechaCarga,
+        String cuentaCargo,
+        String tipoPago,
+        String estatus,
+        Integer transactionId
 ) implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    /** Devuelve la cuenta de abono enmascarada para logging o UI. */
+    public String cuentaAbonoMasked() {
+        return mask(cuentaAbono);
+    }
+
+    /** Devuelve la cuenta de cargo enmascarada para logging o UI. */
+    public String cuentaCargoMasked() {
+        return mask(cuentaCargo);
+    }
+
+    /** Devuelve el transactionId enmascarado (últimos 3 dígitos). */
+    public String transactionIdMasked() {
+        if (transactionId == null) return "***";
+        String s = transactionId.toString();
+        return s.length() > 3 ? "***" + s.substring(s.length() - 3) : "***";
+    }
+
+    private static String mask(String cuenta) {
+        if (cuenta == null || cuenta.length() < 4) return "****";
+        return "****" + cuenta.substring(cuenta.length() - 4);
+    }
 }

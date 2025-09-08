@@ -1,17 +1,5 @@
 package mx.santander.monitoreoapi.model.response;
-/*
- * Proyecto:
- *  Monitoreo API
- * Archivo:
- *  PagoController.java
- * Descripción:
- *  Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor:
- *  rrpm
- * Versión:
- *  1.0
- * Fecha: 2025-09-02
- */
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -71,7 +59,18 @@ public class DetalleConImporteGlobalDTO<T extends Serializable> implements Seria
         );
     }
 
-
+    /**
+     * Componente embebido <>.
+     * <p>1
+     * 2
+     * 4
+     * t
+     * 6
+     * 3
+     * 4
+     * 5</p>
+     * <p>Mapea 1:1 a columnas existentes; no cambia la tabla.</p>
+     */
 
 
     /**

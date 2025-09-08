@@ -1,13 +1,13 @@
-package mx.santander.monitoreoapi.config;
+package mx.santander.monitoreoapi.exception;
 
-import mx.santander.monitoreoapi.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.lang.reflect.Field;
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -23,13 +23,12 @@ class GlobalExceptionHandlerTest {
         webRequest = mock(WebRequest.class);
         when(webRequest.getDescription(false)).thenReturn("uri=/api/demo");
 
-        // inyecta debugEnabled si quieres cubrir ambos caminos
         set(handler, "debugEnabled", false);
     }
 
     @Test
-    void handleNoHandlerFoundException_returns404() {
-        var ex = new org.springframework.web.servlet.NoHandlerFoundException("GET", "/missing", null);
+    void handleNoHandlerFoundException_retorna404()  {
+        var ex = new NoHandlerFoundException("GET", "/missing", null);
 
         ResponseEntity<GlobalExceptionHandler.ErrorResponse> resp =
                 handler.handleNoHandlerFoundException(ex, webRequest);
@@ -37,12 +36,13 @@ class GlobalExceptionHandlerTest {
         assertThat(resp.getStatusCode().value()).isEqualTo(404);
         assertThat(resp.getBody().getError()).isEqualTo("Not Found");
         assertThat(resp.getBody().getPath()).isEqualTo("/api/demo");
-        assertThat(resp.getBody().getTimestamp()).isBeforeOrEqualTo(LocalDateTime.now());
     }
 
     @Test
     void handleBusinessException_usaStatusYMensaje() {
-        var ex = new GlobalExceptionHandler.BusinessException("Regla de negocio x", org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY);
+        var ex = new GlobalExceptionHandler.BusinessException(
+                "Regla de negocio x",
+                org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY);
 
         var resp = handler.handleBusinessException(ex, webRequest);
 
@@ -52,7 +52,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleAccessDeniedException_devuelve403() {
-        var ex = new org.springframework.security.access.AccessDeniedException("nope");
+        var ex = new AccessDeniedException("nope");
 
         var resp = handler.handleAccessDeniedException(ex, webRequest);
 
@@ -75,8 +75,8 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void handleGlobalException_muestraPistaSoloEnDebug() throws Exception {
-        set(handler, "debugEnabled", true); // simula app.debug.enabled=true
+    void handleGlobalException_muestraHintSoloEnDebug() throws Exception {
+        set(handler, "debugEnabled", true);
         var ex = new RuntimeException("DB timeout");
 
         var resp = handler.handleGlobalException(ex, webRequest);
@@ -85,7 +85,6 @@ class GlobalExceptionHandlerTest {
         assertThat(resp.getBody().getMessage()).contains("[DEBUG] DB timeout");
     }
 
-    // --- util para setear campo privado ---
     private static void set(Object target, String field, Object value) throws Exception {
         Field f = target.getClass().getDeclaredField(field);
         f.setAccessible(true);

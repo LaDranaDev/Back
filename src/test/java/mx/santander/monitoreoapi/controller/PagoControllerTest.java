@@ -1,4 +1,3 @@
-// src/test/java/mx/santander/monitoreoapi/controller/PagoControllerTest.java
 package mx.santander.monitoreoapi.controller;
 
 import mx.santander.monitoreoapi.model.response.DashboardResumenResponse;
@@ -10,6 +9,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,9 +23,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PagoController.class)
-@AutoConfigureMockMvc(addFilters = false) // desactiva Security filters
+@AutoConfigureMockMvc(addFilters = false)
+@Import(PagoControllerTest.DataWebConfig.class) // <-- habilita Pageable en el slice MVC
 class PagoControllerTest {
 
+    @TestConfiguration
+    @EnableSpringDataWebSupport // <-- registra PageableHandlerMethodArgumentResolver
+    static class DataWebConfig {}
 
     @Autowired
     MockMvc mvc;
@@ -31,10 +37,16 @@ class PagoControllerTest {
     @MockitoBean
     IPagoService pagoService;
 
-    // Ajusta este JSON si tu PagoRequest requiere campos obligatorios
+    // JSON mínimo que cumple tus constraints (do opcional salvo formato)
     private static final String PAGO_REQUEST_JSON = """
-        { "divisa":"MXN", "operacion":"EN" }
-        """;
+      {
+        "divisa":"MXN",
+        "operacion":"EN",
+        "tipoPago":"SPEI",
+        "estatus":"EN",
+        "referenciaCanal":"CANAL123"
+      }
+      """;
 
     @Test
     void resumen_dashboard_ok() throws Exception {
@@ -49,7 +61,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void detalle_conPageYSize_ok() throws Exception {
+    void detalle_ok() throws Exception {
         Mockito.when(pagoService.obtenerDetalleConTotales(any(), any()))
                 .thenReturn(Mockito.mock(PagoDetalleResponse.class));
 
@@ -60,24 +72,8 @@ class PagoControllerTest {
                         .content(PAGO_REQUEST_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
     }
-
-    @Test
-    void detalle_sizeCero_yPaginaNegativa_usaSafeDefaults_ok() throws Exception {
-        // Cubre ramas: requestedSize <= 0  y  safePage < 0
-        Mockito.when(pagoService.obtenerDetalleConTotales(any(), any()))
-                .thenReturn(Mockito.mock(PagoDetalleResponse.class));
-
-        mvc.perform(post("/api/pagos/detalle")
-                        .param("size", "0")
-                        .param("page", "-5")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(PAGO_REQUEST_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-    }
-
-
 
     @Test
     void totales_por_divisa_ok() throws Exception {

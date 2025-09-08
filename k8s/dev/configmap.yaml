@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoreoapi-config
+  namespace: monitoreo-dev
+data:
+  SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@180.228.44.12:1670/odmx1qb2"
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: "oracle.jdbc.OracleDriver"
+
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "none"
+  SPRING_JPA_SHOW_SQL: "false"
+  SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.OracleDialect"
+
+  APP_CORS_ALLOWED_ORIGINS: "http://localhost:3000"
+
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info"
+  MANAGEMENT_HEALTH_PROBES_ENABLED: "true"

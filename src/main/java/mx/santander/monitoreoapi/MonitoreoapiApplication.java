@@ -1,5 +1,5 @@
 package mx.santander.monitoreoapi;
-/**
+/*
  * Clase principal para arrancar la aplicación de Monitoreo API.
  *
  * <p><strong>Responsabilidades</strong>:</p>

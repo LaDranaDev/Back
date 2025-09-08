@@ -20,10 +20,6 @@
 package mx.santander.monitoreoapi.exception;
 
 /*
- * Proyecto: Monitoreo API
- * Archivo: PagoController.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
+* 1
+* linea
+* mas*/

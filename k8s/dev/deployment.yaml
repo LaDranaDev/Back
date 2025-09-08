@@ -1,0 +1,6 @@
+envFrom:
+  - configMapRef:
+      name: monitoreoapi-config
+  - secretRef:
+      name: monitoreoapi-secrets
+ 

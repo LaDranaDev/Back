@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -27,7 +28,7 @@ import java.time.LocalDate;
 public class CanalEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+@Serial
     /** Clave primaria compuesta: TXT_CANAL, TXT_TIPO_PAGO, TXT_TIPO_OPER. */
     @EmbeddedId
     private CanalId id;

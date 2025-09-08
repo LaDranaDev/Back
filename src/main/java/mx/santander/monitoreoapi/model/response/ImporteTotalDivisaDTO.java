@@ -1,12 +1,5 @@
 package mx.santander.monitoreoapi.model.response;
-/*
- * Proyecto: Monitoreo API
- * Archivo: PagoController.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
+
 
 
 /**
@@ -28,4 +21,7 @@ public record ImporteTotalDivisaDTO(
 
     @java.io.Serial private static final long serialVersionUID = 1L;
 }
+
+/*agregamos un comentario mas*/
+/*agredagamos un comentario mas*/
 

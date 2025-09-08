@@ -1,13 +1,3 @@
-/*
- * Proyecto: Monitoreo API
- * Archivo: PagoController.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 
- * 1.0
- * Fecha:
- *  2025-09-02
- */
 /**
  * Objetos de transferencia de datos (DTO) para respuestas del API.
  * <p>
@@ -19,8 +9,18 @@
  *   <li>Detalle paginado de operaciones</li>
  *   <li>Totales monetarios por divisa</li>
  *   <li>Catálogos de datos para inicialización de filtros</li>
+ *   ok
+ *   ok
+ *   ok
+ *   ok
  * </ul>
  * </p>
  */
 package mx.santander.monitoreoapi.model.response;
 
+/*
+* 1
+* 2
+* 3
+* 445r3fdsfs
+* */

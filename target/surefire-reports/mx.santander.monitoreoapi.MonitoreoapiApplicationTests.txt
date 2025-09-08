@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: mx.santander.monitoreoapi.MonitoreoapiApplicationTests
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 71.40 s -- in mx.santander.monitoreoapi.MonitoreoapiApplicationTests

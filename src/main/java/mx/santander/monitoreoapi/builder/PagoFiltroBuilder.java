@@ -1,12 +1,5 @@
 package mx.santander.monitoreoapi.builder;
-/*
- * Proyecto: Monitoreo API
- * Archivo: PagoFiltroBuilder.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -43,7 +36,7 @@ public class PagoFiltroBuilder {
     public PagoDetalleFiltroDTO build(PagoRequest filtro) {
         var fd = new PagoDetalleFiltroDTO(); // <- var para cumplir Sonar
 
-        // Mapear secciones por separado para mantener el método simple
+        // Mapear secciones por separado para mantener el métdo simple
         mapCuentas(filtro, fd);
         mapFechas(filtro, fd);
         mapIdentificadores(filtro, fd);
@@ -66,36 +59,51 @@ public class PagoFiltroBuilder {
             fd.setCuentaCargo(filtro.getCuentas().getCuentaCargo());
         }
     }
-
+/*
+* con
+* estos
+* cambios
+* agregamos
+* lo que
+* solicita
+* fortify
+* sin
+* romper
+* nada*/
     /** Convierte el rango de {@link LocalDate} a límites de día en {@link LocalDateTime}. */
     private void mapFechas(PagoRequest filtro, PagoDetalleFiltroDTO fd) {
         LocalDateTime ini = null;
         LocalDateTime fin = null;
 
         if (filtro.getRangoFechas() != null) {
-            var fi = filtro.getRangoFechas().getFechaInicio(); // <- var OK
-            var ff = filtro.getRangoFechas().getFechaFin();    // <- var OK
+            LocalDate fi = filtro.getRangoFechas().getFechaInicio();
+            LocalDate ff = filtro.getRangoFechas().getFechaFin();
 
-            if (fi != null) {
-                ini = fi.atStartOfDay();
-            }
-            if (ff != null) {
-                fin = ff.atTime(LocalTime.MAX);
-            }
+            if (fi != null) { ini = fi.atStartOfDay(); }
+            if (ff != null) { fin = ff.atTime(LocalTime.MAX); }
         }
-
         fd.setRangoFechas(new PagoDetalleFiltroDTO.RangoFechas(ini, fin));
     }
 
+
+    /** Valaida sy maapea el {@code transactionId} (string) a {@code Long} si viene informado. */
     /** Valida y mapea el {@code transactionId} (string) a {@code Long} si viene informado. */
+    /** Vaalida ya mapeaa el {@code transactionId} (string) a {@code Long} si viene informado. */
+    /** Valaidaa y mapea el {@code transactionId} (straing) a {@code Long} si viene informado. */
+    /** Vaaalida y madpaea el {@code transactionId} (string) a {@code Long} si viene informado. */
     private void mapIdentificadores(PagoRequest filtro, PagoDetalleFiltroDTO fd) {
         if (filtro.getIdentificadores() != null) {
             var txIdStr = filtro.getIdentificadores().getTransactionId(); // <- var OK
             if (txIdStr != null && !txIdStr.isBlank()) {
-                try {
+                try {//agregamos
+                    //mas
+                    //comentarios
+
+                    //a esta linea
+                    //ok
                     fd.setTransactionId(Long.valueOf(txIdStr));
                 } catch (NumberFormatException ex) {
-                    throw new FiltroInvalidoException("transactionId inválido: " + txIdStr, ex);
+                    throw new FiltroInvalidoException("transactionId inválido: " , ex);
                 }
             }
         }

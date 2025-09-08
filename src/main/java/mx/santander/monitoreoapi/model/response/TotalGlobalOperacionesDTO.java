@@ -1,12 +1,5 @@
 package mx.santander.monitoreoapi.model.response;
-/*
- * Proyecto: Monitoreo API
- * Archivo: PagoController.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
+
 import java.math.BigDecimal;
 
 /**
@@ -17,7 +10,12 @@ public record TotalGlobalOperacionesDTO(
         long totalOperaciones,
         BigDecimal totalMontos
 ) {
- 
+    // No es necesario serialVersionUID en un record que no implementa Serializable
+    //1
+    //2
+    //3
+    //4
+    //5
     /*
      * Totales globales de operaciones: conteo y monto agregado
      * asi

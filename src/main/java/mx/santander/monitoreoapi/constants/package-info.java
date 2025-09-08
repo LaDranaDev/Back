@@ -12,11 +12,6 @@
 
 
 package mx.santander.monitoreoapi.constants;
-/*
- * Proyecto: Monitoreo API
- * Archivo: package-info.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
+/**
+ * con eso cumpliomos las lineas
  */

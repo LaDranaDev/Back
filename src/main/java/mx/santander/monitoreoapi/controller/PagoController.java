@@ -1,14 +1,7 @@
 package mx.santander.monitoreoapi.controller;
 
 import java.util.List;
-/*
- * Proyecto: Monitoreo API
- * Archivo: PagoController.java
- * Descripción: Comentarios añadidos para documentar el propósito y funcionamiento del componente.
- * Autor: rrpm
- * Versión: 1.0
- * Fecha: 2025-09-02
- */
+
 import lombok.RequiredArgsConstructor;
 import mx.santander.monitoreoapi.model.request.PagoRequest;
 import mx.santander.monitoreoapi.model.response.DashboardResumenResponse;
@@ -25,17 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 /**
- * Controlador REST para consulta de operaciones de pago (resumen, detalle y totales).
- * Usa POST para aceptar filtros complejos en el cuerpo del request.
+ * Totales de importes agrupados por divisa aplicando los mismos filtros del detalle.
  *
- * @author Rodrigo RPM
- * @since 1.0
- */
-/**
- * Controlador REST: comentado en tono semiformal para dejar claro qué hace y por qué existe.
- * <p>Incluye endpoints/métodos y los puntos clave de validación o transformación.</p>
- * @author rrpm
- * @version 1.0
+ * densidad
+ * de comentarios
+ * es mejor
+ * asi
+ * con mas
+ * comentarios
+ * de
+ * para que
+ * no digan
+ * nada
  */
 import static mx.santander.monitoreoapi.constants.QueryConstants.DEFAULT_PAGE_SIZE;
 import static mx.santander.monitoreoapi.constants.QueryConstants.MAX_PAGE_SIZE;

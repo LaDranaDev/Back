@@ -28,12 +28,11 @@ import org.springframework.security.web.SecurityFilterChain;
  * - Configuración de cadena de filtros de seguridad
  * - Políticas de autorización por endpoint
  * </p>
- *<p>
- * Esta clase define las políticas de seguridad y autenticación para todos los endpoints
- * de la API REST. Configura aspectos fundamentales como CORS, CSRF, autorización
- * de requests y filtros de seguridad que se aplicarán a las peticiones entrantes.
- * </p>
  *
+ * <p>
+ * <strong>ADVERTENCIA:</strong> Esta configuración permite acceso sin autenticación.
+ * En producción debe implementarse autenticación JWT, OAuth2 o similar.
+ * </p>
  *
  * @author Rodrigo RPM
  * @version 1.0
