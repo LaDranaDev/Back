@@ -1,4 +1,0 @@
-# no subir secretos reales
-secret*.yaml
-secrets/
-*.env
