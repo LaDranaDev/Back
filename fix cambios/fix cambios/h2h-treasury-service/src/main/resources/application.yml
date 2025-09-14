@@ -1,0 +1,23 @@
+application:
+  cors:
+    interceptorPath:
+      - /api/**
+
+# ===================================================================
+# PROPERTIES FOR SERVICE ADMON CONTRATOS SPRING
+# ===================================================================
+spring:
+  application:
+    name: h2h-treasury-service
+  cloud:
+    config:
+      enabled: true
+      uri: ${SPRING_CLOUD_CONFIG_URI}
+      name: ${SPRING_APPLICATION_NAME}
+      label: ${SPRING_CLOUD_CONFIG_LABEL}
+      profile: ${SPRING_CLOUD_CONFIG_PROFILE}
+      allow-override: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect 
