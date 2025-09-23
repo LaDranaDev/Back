@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: h2h-database-config
+  namespace: mx-h2h-bo-monitoreo-dev
+data:
+  # Configuración de la base de datos H2H
+  H2H_DB_DRIVER: "org.hibernate.dialect.OracleDialect"
+  H2H_DB_URL: "jdbc:oracle:thin:@dbtredlo21mxg01.ilm.dev.mx.corp:1660/deatih2h"
+  H2H_DB_USERNAME: "deatih2h"
+  H2H_DB_POOL_SIZE: "10"
+  H2H_DB_CONNECTION_TIMEOUT: "30000"
+  
+  # Configuración adicional de Hibernate
+  hibernate.dialect: "org.hibernate.dialect.OracleDialect"
+  hibernate.show_sql: "false"
+  hibernate.hbm2ddl.auto: "validate"
+  hibernate.connection.pool_size: "10"
+  hibernate.connection.timeout: "30000"
+  
+  # Configuración de aplicación (si es necesaria)
+  application.properties: |
+    # Configuración de base de datos H2H (inyectada desde ConfigMap)
+    h2h.datasource.driver=${H2H_DB_DRIVER}
+    h2h.datasource.url=${H2H_DB_URL}
+    h2h.datasource.username=${H2H_DB_USERNAME}
+    h2h.datasource.password=${H2H_DB_PASSWORD}
+    h2h.datasource.poolSize=${H2H_DB_POOL_SIZE}
+    h2h.datasource.connectiontime=${H2H_DB_CONNECTION_TIMEOUT}
+    
+    # Configuración de Hibernate
+    hibernate.dialect=${hibernate.dialect}
+    hibernate.show_sql=${hibernate.show_sql}
+    hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+    hibernate.connection.pool_size=${hibernate.connection.pool_size}
+    hibernate.connection.timeout=${hibernate.connection.timeout}
