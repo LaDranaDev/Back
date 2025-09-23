@@ -34,3 +34,41 @@ data:
     hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
     hibernate.connection.pool_size=${hibernate.connection.pool_size}
     hibernate.connection.timeout=${hibernate.connection.timeout}
+
+
+
+
+------
+
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: h2h-database-secret
+  namespace: mx-h2h-bo-monitoreo-dev
+type: Opaque
+data:
+  # Password encodado en base64
+  # Para generar: echo -n 'deatih2h' | base64
+  H2H_DB_PASSWORD: ZGVhdGloMmg=
+stringData:
+  # También puedes usar stringData para valores en texto plano (OpenShift los codificará automáticamente)
+  # H2H_DB_PASSWORD: "deatih2h"
+
+
+ env:
+     - name: H2H_DB_URL
+       valueFrom:
+         configMapKeyRef:
+           name: h2h-database-config
+           key: H2H_DB_URL
+     - name: H2H_DB_USERNAME
+       valueFrom:
+         configMapKeyRef:
+           name: h2h-database-config
+           key: H2H_DB_USERNAME
+     - name: H2H_DB_PASSWORD
+       valueFrom:
+         secretKeyRef:
+           name: h2h-database-secret
+           key: H2H_DB_PASSWORD
