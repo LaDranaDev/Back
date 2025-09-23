@@ -1,0 +1,33 @@
+application:
+  cors:
+    interceptorPath:
+      - /api/**
+
+# ===================================================================
+# PROPERTIES FOR SERVICE ADMON CONTRATOS SPRING
+# ===================================================================
+spring:
+  application:
+    name: h2h-treasury-service
+  cloud:
+    config:
+      enabled: true
+      uri: ${SPRING_CLOUD_CONFIG_URI}
+      name: ${SPRING_APPLICATION_NAME}
+      label: ${SPRING_CLOUD_CONFIG_LABEL}
+      profile: ${SPRING_CLOUD_CONFIG_PROFILE}
+      allow-override: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+
+# Configuración de base de datos H2H (inyectada desde ConfigMap/Secret en OpenShift)
+h2h:
+  datasource:
+    driver: ${H2H_DB_DRIVER}
+    url: ${H2H_DB_URL}
+    username: ${H2H_DB_USERNAME}
+    password: ${H2H_DB_PASSWORD}
+    poolsize: ${H2H_DB_POOL_SIZE}
+    connectiontime: ${H2H_DB_CONNECTION_TIMEOUT} 
