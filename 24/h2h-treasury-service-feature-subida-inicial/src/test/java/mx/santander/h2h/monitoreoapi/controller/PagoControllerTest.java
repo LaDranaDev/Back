@@ -1,0 +1,138 @@
+package mx.santander.h2h.monitoreoapi.controller;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import mx.santander.h2h.monitoreoapi.model.response.DashboardResumenResponse;
+import mx.santander.h2h.monitoreoapi.model.response.ImporteTotalDivisaDTO;
+import mx.santander.h2h.monitoreoapi.model.response.MontoTotalDivisaDTO;
+import mx.santander.h2h.monitoreoapi.model.response.PagoDetalleDTO;
+import mx.santander.h2h.monitoreoapi.model.response.PagoDetalleResponse;
+import mx.santander.h2h.monitoreoapi.model.response.PagedDataDTO;
+import mx.santander.h2h.monitoreoapi.model.response.ResumenEstatusGlobalDTO;
+import mx.santander.h2h.monitoreoapi.model.response.ResumenProductoDivisaEstatusDTO;
+import mx.santander.h2h.monitoreoapi.model.response.TotalesGlobalesDTO;
+import mx.santander.h2h.monitoreoapi.service.IPagoService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(MockitoExtension.class)
+class PagoControllerTest {
+
+    private static final String PAGO_REQUEST_JSON = """
+      {
+        "divisa":"MXN",
+        "operacion":"EN",
+        "tipoPago":"SPEI",
+        "estatus":"EN",
+        "referenciaCanal":"CANAL123"
+      }
+      """;
+
+    @Mock
+    IPagoService pagoService;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+        PagoController controller = new PagoController(pagoService);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                .build();
+    }
+
+    @Test
+    void resumen_dashboard_ok() throws Exception {
+        when(pagoService.obtenerDashboardResumen(any())).thenReturn(buildDashboardResponse());
+
+        mockMvc.perform(post("/api/pagos/resumen")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(PAGO_REQUEST_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void detalle_ok() throws Exception {
+        when(pagoService.obtenerDetalleConTotales(any(), any())).thenReturn(buildDetalleResponse());
+
+        mockMvc.perform(post("/api/pagos/detalle")
+                        .param("page", "0")
+                        .param("size", "20")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(PAGO_REQUEST_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void totales_por_divisa_ok() throws Exception {
+        when(pagoService.sumaImportePorDivisaDetalle(any())).thenReturn(buildTotalesPorDivisa());
+
+        mockMvc.perform(post("/api/pagos/detalle/totales")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(PAGO_REQUEST_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    private DashboardResumenResponse buildDashboardResponse() {
+        TotalesGlobalesDTO totales = new TotalesGlobalesDTO(5L, BigDecimal.TEN, Map.of("MXN", 5L));
+        List<ResumenEstatusGlobalDTO> resumenEstatus = List.of(new ResumenEstatusGlobalDTO("EN", 3L));
+        List<ResumenProductoDivisaEstatusDTO> resumenProducto = List.of(
+                new ResumenProductoDivisaEstatusDTO("EN", "MXN", "EN", 3L)
+        );
+        List<MontoTotalDivisaDTO> montosPorDivisa = List.of(new MontoTotalDivisaDTO("MXN", BigDecimal.TEN));
+        return new DashboardResumenResponse(totales, resumenEstatus, resumenProducto, montosPorDivisa);
+    }
+
+    private PagoDetalleResponse buildDetalleResponse() {
+        PagoDetalleDTO detalle = new PagoDetalleDTO(
+                "EN",
+                "1234567890123456",
+                BigDecimal.ONE,
+                "CANAL123",
+                "MXN",
+                LocalDateTime.now(),
+                "6543210987654321",
+                "SPEI",
+                "EN",
+                1001
+        );
+        Pageable pageRequest = PageRequest.of(0, 20);
+        PagedDataDTO<PagoDetalleDTO> content = new PagedDataDTO<>(
+                List.of(detalle),
+                pageRequest.getPageNumber(),
+                pageRequest.getPageSize(),
+                1,
+                1,
+                true,
+                true,
+                1,
+                false
+        );
+        return new PagoDetalleResponse(content, buildTotalesPorDivisa());
+    }
+
+    private List<ImporteTotalDivisaDTO> buildTotalesPorDivisa() {
+        return List.of(new ImporteTotalDivisaDTO("MXN", BigDecimal.TEN));
+    }
+}
