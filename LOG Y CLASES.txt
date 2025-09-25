@@ -1,0 +1,641 @@
+=========================================
+Starting application
+=========================================
+ [INFO] Downloading artifact https://nexus.pro.pandora.mx.corp/repository/maven-snapshot/mx/santander/h2h/monitoreoapi/h2h-treasury-service/0.0.1-SNAPSHOT/h2h-treasury-service-0.0.1-20250925.011324-24.jar...
+### Default user has been modified ###
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.4.10)
+
+2025-09-25 09:44:08,829 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Fetching config from server at : http://config-service:8080/
+2025-09-25 09:44:09,742 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Located environment: name=h2h-treasury-service, profiles=[dev], label=master, version=ee465218223104550726f9955eb9af63f07367e7, state=null
+2025-09-25 09:44:09,744 [,,,,,][main] INFO   [o.s.c.b.c.PropertySourceBootstrapConfiguration] Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-ssh://git@gitlab.pro.pandora.mx.corp:2220/mx-santander-online-bomonitor/config-service.git/application-dev.yml'}]
+2025-09-25 09:44:09,845 [,,,,,][main] INFO   [m.s.h.m.H2hTreasuryServiceApplication] No active profile set, falling back to 1 default profile: "default"
+2025-09-25 09:44:13,156 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-25 09:44:13,824 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 592 ms. Found 7 JPA repository interfaces.
+2025-09-25 09:44:15,914 [,,,,,][main] INFO   [o.s.cloud.context.scope.GenericScope] BeanFactory id=1c839fd0-68ad-3286-8ddc-47579427b5f1
+2025-09-25 09:44:17,723 [,,,,,][main] INFO   [o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port 8080 (http)
+2025-09-25 09:44:17,746 [,,,,,][main] INFO   [o.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-25 09:44:17,751 [,,,,,][main] INFO   [o.apache.catalina.core.StandardService] Starting service [Tomcat]
+2025-09-25 09:44:17,751 [,,,,,][main] INFO   [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-25 09:44:18,026 [,,,,,][main] INFO   [o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2025-09-25 09:44:18,028 [,,,,,][main] INFO   [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 8098 ms
+2025-09-25 09:44:18,135 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Usando Worker [mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI]
+2025-09-25 09:44:18,138 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Creando Instancia: class mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI
+2025-09-25 09:44:18,140 [,,,,,][main] INFO   [m.s.p.l.core.filters.TrackerFilter] MDC Tracker Init, headers [X-B3-TraceId], mdcValues [X-B3-TraceId]
+2025-09-25 09:44:18,324 [,,,,,][main] INFO   [m.s.p.l.core.filters.ServletFilter] ServletFilter inicializado...
+2025-09-25 09:44:18,410 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] Driver class ${H2H_DB_DRIVER} not found in Thread context class loader org.springframework.boot.loader.launch.LaunchedClassLoader@6f539caf, trying classloader org.springframework.boot.loader.launch.LaunchedClassLoader@6f539caf
+2025-09-25 09:44:18,417 [,,,,,][main] ERROR  [com.zaxxer.hikari.HikariConfig] Failed to load driver class ${H2H_DB_DRIVER} from HikariConfig class classloader org.springframework.boot.loader.launch.LaunchedClassLoader@6f539caf
+2025-09-25 09:44:18,428 [,,,,,][main] WARN   [o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'h2hEntityManagerFactory' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'h2hEntityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSourceH2H' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception with message: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+2025-09-25 09:44:18,432 [,,,,,][main] INFO   [o.apache.catalina.core.StandardService] Stopping service [Tomcat]
+2025-09-25 09:44:18,435 [,,,,,][main] INFO   [m.s.p.l.core.filters.ServletFilter] TrackerFilter destruido...
+2025-09-25 09:44:18,741 [,,,,,][main] INFO   [o.s.b.a.l.ConditionEvaluationReportLogger] 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-09-25 09:44:18,845 [,,,,,][main] ERROR  [o.springframework.boot.SpringApplication] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'h2hEntityManagerFactory' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'h2hEntityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSourceH2H' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception with message: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:328)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at mx.santander.h2h.monitoreoapi.H2hTreasuryServiceApplication.main(H2hTreasuryServiceApplication.java:21)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSourceH2H' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception with message: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:546)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	... 17 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSourceH2H' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception with message: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1760)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1643)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception with message: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 41 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'hikariConfig' defined in class path resource [mx/santander/h2h/monitoreoapi/config/DBH2HConfig.class]: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:645)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:212)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.resolveBeanReference(ConfigurationClassEnhancer.java:431)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:403)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$0.hikariConfig(<generated>)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig.dataSource(DBH2HConfig.java:161)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$0.CGLIB$dataSource$0(<generated>)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$0.dataSource(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172)
+	... 44 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariConfig]: Factory method 'hikariConfig' threw exception with message: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:200)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:169)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 67 common frames omitted
+Caused by: java.lang.RuntimeException: Failed to load driver class ${H2H_DB_DRIVER} in either of HikariConfig class loader or Thread context classloader
+	at com.zaxxer.hikari.HikariConfig.setDriverClassName(HikariConfig.java:494)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig.hikariConfig(DBH2HConfig.java:111)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$0.CGLIB$hikariConfig$1(<generated>)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400)
+	at mx.santander.h2h.monitoreoapi.config.DBH2HConfig$$SpringCGLIB$$0.hikariConfig(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:172)
+	... 70 common frames omitted
+
+
+--- ASI ESTA MI APPLICATION YML...
+
+application:
+  cors:
+    interceptorPath:
+      - /api/**
+
+# ===================================================================
+# PROPERTIES FOR SERVICE ADMON CONTRATOS SPRING
+# ===================================================================
+spring:
+  application:
+    name: h2h-treasury-service
+  cloud:
+    config:
+      enabled: true
+      uri: ${SPRING_CLOUD_CONFIG_URI}
+      name: ${SPRING_APPLICATION_NAME}
+      label: ${SPRING_CLOUD_CONFIG_LABEL}
+      profile: ${SPRING_CLOUD_CONFIG_PROFILE}
+      allow-override: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+
+
+# Configuración de base de datos H2H (inyectada desde ConfigMap/Secret en OpenShift) sin esto el h2h.datasource no va funcionar
+api:
+  datasource:
+    driver: ${H2H_DB_DRIVER}
+    url: ${H2H_DB_URL}
+    username: ${H2H_DB_USERNAME}
+    password: ${H2H_DB_PASSWORD}
+    poolsize: ${H2H_DB_POOL_SIZE}
+    connectiontime: ${H2H_DB_CONNECTION_TIMEOUT} 
+
+
+---ASI LA CLASE 
+package mx.santander.h2h.monitoreoapi.config;
+
+import com.zaxxer.hikari.HikariConfig;
+
+import com.zaxxer.hikari.HikariDataSource;
+
+import mx.santander.h2h.monitoreoapi.model.entity.DBH2HConfigurationBean;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+
+import org.springframework.context.annotation.Bean;
+
+import org.springframework.context.annotation.Configuration;
+
+import org.springframework.context.annotation.Primary;
+
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import org.springframework.orm.jpa.JpaTransactionManager;
+
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
+import org.springframework.transaction.PlatformTransactionManager;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import jakarta.persistence.EntityManagerFactory;
+
+import javax.sql.DataSource;
+
+/**
+
+ * Clase para poder realizar la
+
+ * configuracion a la base de datos
+
+ * poder crear el manejador de
+
+ * transacciones y especificar de donde
+
+ * tomara los repositorios
+
+ *
+
+ * @author fcazarez - Adaptado por Rodrigo RPM
+
+ * @since 09/12/2022
+
+ *
+
+ */
+
+@Configuration
+
+@EnableTransactionManagement
+
+@EnableJpaRepositories(
+
+        entityManagerFactoryRef = "h2hEntityManagerFactory",
+
+        transactionManagerRef = "h2hTransactionManager",
+
+        basePackages = {"mx.santander.h2h.monitoreoapi.repository"}
+
+)
+
+public class DBH2HConfig {
+
+    /**
+
+     * Descripcion : Bean de configuracion de hikari,
+
+     * para el pool de conexiones, define la base de datos,
+
+     * las credenciales, el tamanio maximo de conexiones,
+
+     * el tamanio minimo y el tiempo de espera.
+
+     *
+
+     * @author Felipe Cazarez
+
+     * @since  09/12/2022
+
+     *
+
+     * @param h2hConfig contiene el bean con las propiedades
+
+     * de configuracion
+
+     *
+
+     * @return Devuelve la propiedad del tipo HikariConfig
+
+     */
+
+    @Bean
+
+    @Primary
+
+        public HikariConfig hikariConfig(DBH2HConfigurationBean h2hConfig) {
+
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl(h2hConfig.getUrl());
+
+        config.setDriverClassName(h2hConfig.getDriver());
+
+        config.setPassword(h2hConfig.getPassword());
+
+        config.setUsername(h2hConfig.getUsername());
+
+        config.setMaximumPoolSize(Integer.parseInt(h2hConfig.getPoolsize()));
+
+        config.setConnectionTimeout(Integer.parseInt(h2hConfig.getConnectiontime()));
+
+        config.setAutoCommit(false);
+
+        return config;
+
+    }
+
+    /**
+
+     * Descripcion : Bean de fuente de datos,
+
+     * de este bean podemos crear las conexiones
+
+     * que son manejadas por el pool,
+
+     * para hacer el acceso a datos.
+
+     *
+
+     * @author Felipe Cazarez
+
+     * @since  09/12/2022
+
+     *
+
+     * @param h2hConfig contiene el bean con las propiedades
+
+     * de configuracion
+
+     *
+
+     * @return Devuelve la propiedad del tipo DataSource
+
+     */
+
+    @Bean("dataSourceH2H")
+
+    @Primary
+
+    public DataSource dataSource(DBH2HConfigurationBean h2hConfig) {
+
+        return new HikariDataSource(hikariConfig(h2hConfig));
+
+    }
+
+    /**
+
+     * Descripcion : Metodo de construccion
+
+     * del entitymanager de la base
+
+     * de datos principal
+
+     *
+
+     * @author Felipe Cazarez
+
+     * @since  09/12/2022
+
+     *
+
+     * @param builder de tipo EntityManagerFactoryBuilder
+
+     * @param dataSource de tipo DataSource
+
+     *
+
+     * @return Devuelve la propiedad del tipo LocalContainerEntityManagerFactoryBean
+
+     */
+
+    @Bean(name = "h2hEntityManagerFactory")
+
+    @Primary
+
+    public LocalContainerEntityManagerFactoryBean h2hEntityManagerFactory(EntityManagerFactoryBuilder builder,
+
+                                                                          @Qualifier("dataSourceH2H") DataSource dataSource) {
+
+        return builder.dataSource(dataSource)
+
+                .packages("mx.santander.h2h.monitoreoapi.model.entity")
+
+                .persistenceUnit("DS-h2h")
+
+                .build();
+
+    }
+
+    /**
+
+     * Descripcion : Metodo para la construccion del
+
+     * transaction manager de la base de datos principal
+
+     *
+
+     * @author Felipe Cazarez
+
+     * @since  09/12/2022
+
+     *
+
+     * @param h2hEntityManagerFactory de tipo EntityManagerFactory
+
+     *
+
+     * @return Devuelve la propiedad del tipo PlatformTransactionManager
+
+     */
+
+    @Bean(name = "h2hTransactionManager")
+
+    @Primary
+
+    public PlatformTransactionManager h2hTransactionManager(@Qualifier("h2hEntityManagerFactory") EntityManagerFactory h2hEntityManagerFactory) {
+
+        return new JpaTransactionManager(h2hEntityManagerFactory);
+
+    }
+
+    /**
+
+     * Descripcion : Metodo para la generacion
+
+     * de un Jdbctemplate, para utlilizar Spring JDBC
+
+     *  para las consultas a BD
+
+     *
+
+     * @author Felipe Cazarez
+
+     * @since  09/12/2022
+
+     *
+
+     * @param dataSourceH2H el data
+
+     * source de la base de datos de h2h.
+
+     *
+
+     * @return Devuelve la propiedad del tipo JdbcTemplate
+
+     */
+
+    @Bean(name = "h2hJdbcTemplate")
+
+    @Primary
+
+    public JdbcTemplate h2hJdbcTemplate(@Qualifier("dataSourceH2H") DataSource dataSourceH2H) {
+
+        return new JdbcTemplate(dataSourceH2H);
+
+    }
+
+}
+
+
+--- Y SU BEAN  
+package mx.santander.h2h.monitoreoapi.model.entity;
+
+import lombok.Getter;
+
+import lombok.NoArgsConstructor;
+
+import lombok.Setter;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
+import org.springframework.context.annotation.Configuration;
+
+import java.io.Serializable;
+
+/**
+
+ * Bean para poder obtener la informacion de conexion a base de datos desde el
+
+ * archivo de properties o yml
+
+ *
+
+ * @author Felipe Cazarez - Adaptado por Rodrigo RPM
+
+ * @since 09/12/22
+
+ */
+
+@Getter
+
+@Setter
+
+@NoArgsConstructor
+
+@Configuration
+
+@EnableConfigurationProperties
+
+@ConfigurationProperties(prefix = "api.datasource")
+
+public class DBH2HConfigurationBean implements Serializable {
+
+    /**
+
+     * id serial
+
+     */
+
+    private static final long serialVersionUID = -3191615954848875075L;
+
+    /**
+
+     * campo para pder obtener el driver de la configuracion para acceso a base de
+
+     * datos
+
+     */
+
+    private String driver;
+
+    /**
+
+     * campo para poder obtener el tiempo maximo de conexion a la bd
+
+     */
+
+    private String connectiontime;
+
+    /**
+
+     * campo para poder obtener la contraseña para el acceso a la bd
+
+     */
+
+    private String password;
+
+    /**
+
+     * campo para poder obtener el tamaño del pool de conexiones de la bd.
+
+     */
+
+    private String poolsize;
+
+    /**
+
+     * Campo para poder obtener el valor de la url para la conexion a bd
+
+     */
+
+    private String url;
+
+    /**
+
+     * campo para poder obtener el nombre de usuario para el acceso a la bd
+
+     */
+
+    private String username;
+
+}
+
+----
+package mx.santander.h2h.monitoreoapi.config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * Configuración para habilitar el servicio de restTemplate para poder invocar
+ * otros microservios.
+ *
+ * @author Omar Rosas
+ * @since 20/01/23
+ */
+@Configuration
+@ComponentScan("mx.santander.h2h.monitoreoapi.config")
+public class RestTemplateConfig {
+
+    /**
+     * Se registra el bean de RestTemplate para poder inyectarlo
+     */
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+}
+
+Y EN EL POD
+H2H_DATASOURCE_URL
+
+ConfigMap
+CM
+h2h-database-config
+
+H2H_DB_URL
+H2H_DATASOURCE_DRIVER_CLASS_NAME
+
+ConfigMap
+CM
+h2h-database-config
+
+H2H_DB_DRIVER
+H2H_DATASOURCE_USERNAME
+
+ConfigMap
+CM
+h2h-database-config
+
+H2H_DB_USERNAME
+H2H_DATASOURCE_PASSWORD
+
+Secret
+S
+h2h-database-secret
+
+H2H_DB_PASSWORD
+H2H_DB_POOL_SIZE
+
+ConfigMap
+CM
+h2h-database-config
+
+H2H_DB_POOL_SIZE
+H2H_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+
+ConfigMap
+CM
+h2h-database-config
+
+H2H_DB_CONNECTION_TIMEOUT
+
+
+
+
