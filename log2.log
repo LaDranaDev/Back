@@ -1,0 +1,797 @@
+=========================================
+Starting application
+=========================================
+ [INFO] Downloading artifact https://nexus.pro.pandora.mx.corp/repository/maven-snapshot/mx/santander/h2h/monitoreoapi/h2h-treasury-service/0.0.1-SNAPSHOT/h2h-treasury-service-0.0.1-20250925.215633-26.jar...
+### Default user has been modified ###
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.4.10)
+
+2025-09-25 15:57:14,637 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Fetching config from server at : http://config-service:8080/
+2025-09-25 15:57:15,459 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Located environment: name=h2h-treasury-service, profiles=[dev], label=master, version=ee465218223104550726f9955eb9af63f07367e7, state=null
+2025-09-25 15:57:15,461 [,,,,,][main] INFO   [o.s.c.b.c.PropertySourceBootstrapConfiguration] Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-ssh://git@gitlab.pro.pandora.mx.corp:2220/mx-santander-online-bomonitor/config-service.git/application-dev.yml'}]
+2025-09-25 15:57:15,544 [,,,,,][main] INFO   [m.s.h.m.H2hTreasuryServiceApplication] No active profile set, falling back to 1 default profile: "default"
+2025-09-25 15:57:17,814 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-25 15:57:18,223 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 393 ms. Found 7 JPA repository interfaces.
+2025-09-25 15:57:19,820 [,,,,,][main] INFO   [o.s.cloud.context.scope.GenericScope] BeanFactory id=1c839fd0-68ad-3286-8ddc-47579427b5f1
+2025-09-25 15:57:21,060 [,,,,,][main] INFO   [o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port 8080 (http)
+2025-09-25 15:57:21,127 [,,,,,][main] INFO   [o.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-25 15:57:21,130 [,,,,,][main] INFO   [o.apache.catalina.core.StandardService] Starting service [Tomcat]
+2025-09-25 15:57:21,131 [,,,,,][main] INFO   [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-25 15:57:21,334 [,,,,,][main] INFO   [o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2025-09-25 15:57:21,335 [,,,,,][main] INFO   [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 5709 ms
+2025-09-25 15:57:21,441 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Usando Worker [mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI]
+2025-09-25 15:57:21,443 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Creando Instancia: class mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI
+2025-09-25 15:57:21,445 [,,,,,][main] INFO   [m.s.p.l.core.filters.TrackerFilter] MDC Tracker Init, headers [X-B3-TraceId], mdcValues [X-B3-TraceId]
+2025-09-25 15:57:21,558 [,,,,,][main] INFO   [m.s.p.l.core.filters.ServletFilter] ServletFilter inicializado...
+2025-09-25 15:57:21,847 [,,,,,][main] INFO   [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2025-09-25 15:57:22,458 [,,,,,][main] INFO   [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@43ee1cf7
+2025-09-25 15:57:22,460 [,,,,,][main] INFO   [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2025-09-25 15:57:22,831 [,,,,,][main] INFO   [o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: DS-h2h]
+2025-09-25 15:57:23,023 [,,,,,][main] INFO   [org.hibernate.Version] HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-09-25 15:57:23,130 [,,,,,][main] INFO   [o.h.c.internal.RegionFactoryInitiator] HHH000026: Second-level cache disabled
+2025-09-25 15:57:24,347 [,,,,,][main] INFO   [o.s.o.j.p.SpringPersistenceUnitInfo] No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-25 15:57:24,753 [,,,,,][main] WARN   [org.hibernate.orm.deprecation] HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-25 15:57:24,959 [,,,,,][main] INFO   [org.hibernate.orm.connections.pooling] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 19.1
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-25 15:57:25,849 [,,,,,][main] INFO   [o.h.validator.internal.util.Version] HV000001: Hibernate Validator 8.0.3.Final
+2025-09-25 15:57:28,120 [,,,,,][main] INFO   [o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-25 15:57:28,123 [,,,,,][main] INFO   [o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'DS-h2h'
+2025-09-25 15:57:28,721 [,,,,,][main] INFO   [o.s.d.j.r.query.QueryEnhancerFactory] Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-25 15:57:32,469 [,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterBusinessService] Realizando la creacion de LogAdapter Business
+2025-09-25 15:57:32,514 [,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] El tamano total del Buffer depende del tamano del pool configurado: (pool * buffer): Pool Size [1] | Buffer Size [100]
+2025-09-25 15:57:32,515 [,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] Se realiza inicializacion de buffer
+2025-09-25 15:57:32,526 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterAuditService] Realizando la creacion de LogAdapter Audit
+2025-09-25 15:57:32,527 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] El tamano total del Buffer depende del tamano del pool configurado: (pool * buffer): Pool Size [1] | Buffer Size [100]
+2025-09-25 15:57:32,527 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] Se realiza inicializacion de buffer
+2025-09-25 15:57:32,533 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Realizando inicializacion de appenders y loggers
+2025-09-25 15:57:32,534 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Realizando verificacion de appenders y loggers
+2025-09-25 15:57:32,535 [Thread: 1,,,,,][main] INFO   [SYSTEM] Se realiza toma de loggers suscritos como System
+2025-09-25 15:57:32,538 [Thread: 1,,,,,][main] INFO   [m.s.pid.logadapter.core.PrintConfig] ::LogAdapter version 3.0.0::
+Log de Programador activo              :true
+Log de Sistema activo                  :true
+Log Filter activo                      :true
+Envio de Log de Consola activo         :false
+Envio de Log de Sistema activo         :false
+Envio de Log Filter activo             :false
+Nivel de Log de Consola                :INFO
+Nivel de Log de Systema                :INFO
+Nivel de Log de Filtro                 :INFO
+Tamanio de buffer                       :32
+Base64 para mensajes activada          :false
+Medio Primario LogAdpterProgrammer     :CONSOLA
+Medio Contingente LogAdpterProgrammer  :CONSOLA
+Medio Primario LogAdpterSistema        :CONSOLA
+Medio Contingente LogAdpterSistema     :CONSOLA
+Medio Primario LogAdpterAudit          :AMQ
+Medio Contingente LogAdpterAudit       :REST
+Medio Primario LogAdpterBusiness       :AMQ
+Medio Contingente LogAdpterBusiness    :REST
+Medio Primario LogAdpterServicio       :CONSOLA
+Medio Contingente LogAdpterServicio    :CONSOLA
+Medio Primario LogAdpterEstadistico    :CONSOLA
+Medio Contingente LogAdpterEstadistico :CONSOLA
+Medio Primario LogAdpterFilter         :CONSOLA
+Medio Contingente LogAdpterFilter      :CONSOLA
+URL WSRest de LogService               :http://bomonitor-log-service:8080/selectorLogService
+URL AMQ de LogService                  :tcp://logservice-local-amq-tcp:61616?jms.prefetchPolicy.queuePrefetch=1&jms.redeliveryPolicy.maximumRedeliveries=2
+Usuario de conexion AMQ                :desconocido
+QUEUE                                  :logservice-local-queue
+Clase de Worker Procesado              :class mx.santander.pid.logadapter.core.config.model.WorkerConfig
+Persistencia AMQ activada              :off
+
+2025-09-25 15:57:32,543 [Thread: 1,,,,,][main] INFO   [m.s.p.l.core.filters.TrackerFilter] MDC Tracker Init, headers [X-B3-TraceId], mdcValues [X-B3-TraceId]
+2025-09-25 15:57:32,543 [Thread: 1,,,,,][main] INFO   [m.s.p.l.core.filters.ReactorFilter] ReactorFilter inicializado...
+2025-09-25 15:57:32,546 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterProgrammerService] Creando Servicio de mensajeria para Log de Programador
+2025-09-25 15:57:32,548 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterSystemService] Realizando la creacion de LogAdapter System
+2025-09-25 15:57:32,549 [Thread: 1,,,,,][main] INFO   [o.s.b.f.a.AutowiredAnnotationBeanPostProcessor] Autowired annotation is not supported on static fields: private static org.springframework.context.ApplicationContext mx.santander.pid.logadapter.util.SpringContext.context
+2025-09-25 15:57:33,138 [Thread: 1,,,,,][main] WARN   [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-25 15:57:33,536 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.InterceptorConfig]  ##### Agregando interceptor para Cors solo registrados... para [/api/**] ::: Total 1 #####
+2025-09-25 15:57:33,563 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.CorsConfig] #### Datos URL: https://h2h-fu.h2h.caas.pre.mx.corp, https://lightweight-gateway-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://lightweight-gateway-ge-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://ng-log-gestor-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://gestor-h2h.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://lightweight-gateway-ge-mx-h2h-bo-monitoreo-pre.apps.ocp06.mex.pre.mx2.paas.cloudcenter.corp, http://localhost:4200 #####
+2025-09-25 15:57:33,613 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.CorsConfig] #### Cors mapping Enabled... ####
+2025-09-25 15:57:35,356 [Thread: 1,,,,,][main] INFO   [o.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+2025-09-25 15:57:35,425 [Thread: 1,,,,,][main] INFO   [o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port 8080 (http) with context path '/'
+2025-09-25 15:57:35,440 [Thread: 1,,,,,][main] INFO   [m.s.h.m.H2hTreasuryServiceApplication] Started H2hTreasuryServiceApplication in 24.818 seconds (process running for 27.011)
+2025-09-25 15:57:35,442 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Se activa evento en Logger Management
+2025-09-25 15:57:35,443 [Thread: 1,,,,,][main] INFO   [PROGRAMMER] Se realiza toma de loggers suscritos como Programmer
+2025-09-25 15:57:35,444 [Thread: 1,,,,,][main] INFO   [SYSTEM] Se realiza toma de loggers suscritos como System
+2025-09-25 15:57:36,340 [,,,,,][http-nio-8080-exec-1] INFO   [o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-25 15:57:36,341 [,,,,,][http-nio-8080-exec-1] INFO   [o.s.web.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2025-09-25 15:57:36,343 [,,,,,][http-nio-8080-exec-1] INFO   [o.s.web.servlet.DispatcherServlet] Completed initialization in 1 ms
+2025-09-25 17:03:12,692 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:03:12,692 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:03:12,692 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:03:12,692 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:03:12,916 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando dashboard resumen con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select count(ope1_0.id_pago_pk),coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.txt_tipo_product=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?)
+Hibernate: select ope1_0.id_div,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by so1_0.txt_status_oper having count(ope1_0.id_pago_pk)>0
+Hibernate: select (ope1_0.id_tipo_pago||' '||ope1_0.id_tipo_oper),ope1_0.id_div,so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_tipo_pago,ope1_0.id_tipo_oper,ope1_0.id_div,so1_0.txt_status_oper
+2025-09-25 17:03:13,246 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] ERROR  [m.s.h.m.exception.GlobalExceptionHandler] Error ID: 07c34e99-faba-42dd-ab29-f265772d9a1e - Exception: 
+org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:494)
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:126)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:345)
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:263)
+	at org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler.handleReturnValue(ResponseEntityReturnValueHandler.java:79)
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.pid.logadapter.core.filters.ServletFilter.doFilter(ServletFilter.java:140)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.h2h.monitoreoapi.config.RootOkFilter.doFilterInternal(RootOkFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:732)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: com.fasterxml.jackson.databind.JsonMappingException: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?) (through reference chain: mx.santander.h2h.monitoreoapi.model.response.DashboardResumenResponse["totales"]->mx.santander.h2h.monitoreoapi.model.response.TotalesGlobalesDTO["pagosPorDivisa"])
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:283)
+	at com.fasterxml.jackson.databind.SerializerProvider.mappingException(SerializerProvider.java:1388)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportMappingProblem(SerializerProvider.java:1284)
+	at com.fasterxml.jackson.databind.ser.impl.FailingSerializer.serialize(FailingSerializer.java:32)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFieldsUsing(MapSerializer.java:895)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:762)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1572)
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1061)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:485)
+	... 101 common frames omitted
+2025-09-25 17:03:13,256 [8b6e343d-2d97-4105-946a-150e292355c9,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/resumen]: 564 ms
+2025-09-25 17:04:28,939 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:04:28,940 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:04:28,940 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:04:28,940 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:04:28,942 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando dashboard resumen con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select count(ope1_0.id_pago_pk),coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.txt_tipo_product=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?)
+Hibernate: select ope1_0.id_div,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by so1_0.txt_status_oper having count(ope1_0.id_pago_pk)>0
+Hibernate: select (ope1_0.id_tipo_pago||' '||ope1_0.id_tipo_oper),ope1_0.id_div,so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_tipo_pago,ope1_0.id_tipo_oper,ope1_0.id_div,so1_0.txt_status_oper
+2025-09-25 17:04:28,966 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] ERROR  [m.s.h.m.exception.GlobalExceptionHandler] Error ID: 83099751-edad-4320-b11b-17f3e7038383 - Exception: 
+org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:494)
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:126)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:345)
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:263)
+	at org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler.handleReturnValue(ResponseEntityReturnValueHandler.java:79)
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.pid.logadapter.core.filters.ServletFilter.doFilter(ServletFilter.java:140)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.h2h.monitoreoapi.config.RootOkFilter.doFilterInternal(RootOkFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:732)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: com.fasterxml.jackson.databind.JsonMappingException: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?) (through reference chain: mx.santander.h2h.monitoreoapi.model.response.DashboardResumenResponse["totales"]->mx.santander.h2h.monitoreoapi.model.response.TotalesGlobalesDTO["pagosPorDivisa"])
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:283)
+	at com.fasterxml.jackson.databind.SerializerProvider.mappingException(SerializerProvider.java:1388)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportMappingProblem(SerializerProvider.java:1284)
+	at com.fasterxml.jackson.databind.ser.impl.FailingSerializer.serialize(FailingSerializer.java:32)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFieldsUsing(MapSerializer.java:895)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:762)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1572)
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1061)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:485)
+	... 101 common frames omitted
+2025-09-25 17:04:28,970 [e32d5ac9-98f5-4e26-a8c5-33ad80eb8d21,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/resumen]: 30 ms
+2025-09-25 17:05:06,701 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:05:06,702 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:06,702 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:05:06,702 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:05:06,702 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:06,702 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:05:06,748 [2574cf2e-fcfe-4f24-b996-3e2e265615bb,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 46 ms
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:06,779 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:05:06,794 [9b019c07-b670-43c4-a7f7-556bb0e0cc9e,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 15 ms
+2025-09-25 17:05:09,401 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:09,401 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:05:09,401 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:09,402 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:05:09,407 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando detalle con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select ope1_0.id_tipo_oper,ope1_0.txt_cta_recep,ope1_0.imp,ope1_0.id_refe_unico,ope1_0.id_div,ope1_0.fch_carga,ope1_0.txt_cta_orden,ope1_0.id_tipo_pago,so1_0.txt_status_oper,ope1_0.num_refer from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) fetch first ? rows only
+Hibernate: select count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?)
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:05:09,546 [b11611ed-74f7-4909-9ba1-9d7993a25426,,,,,][http-nio-8080-exec-6] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle]: 144 ms
+2025-09-25 17:05:09,615 [61a21753-6fbe-43a3-b463-82a07ff58728,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:09,615 [61a21753-6fbe-43a3-b463-82a07ff58728,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+2025-09-25 17:05:09,615 [61a21753-6fbe-43a3-b463-82a07ff58728,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:05:09,615 [61a21753-6fbe-43a3-b463-82a07ff58728,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:05:09,631 [61a21753-6fbe-43a3-b463-82a07ff58728,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 16 ms
+2025-09-25 17:14:22,904 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:14:22,904 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:14:22,904 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:14:22,904 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:14:22,907 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando dashboard resumen con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select count(ope1_0.id_pago_pk),coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.txt_tipo_product=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?)
+Hibernate: select ope1_0.id_div,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by so1_0.txt_status_oper having count(ope1_0.id_pago_pk)>0
+Hibernate: select (ope1_0.id_tipo_pago||' '||ope1_0.id_tipo_oper),ope1_0.id_div,so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_tipo_pago,ope1_0.id_tipo_oper,ope1_0.id_div,so1_0.txt_status_oper
+2025-09-25 17:14:22,932 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] ERROR  [m.s.h.m.exception.GlobalExceptionHandler] Error ID: bd99e667-d3a8-48d1-bc81-953a5b8bc649 - Exception: 
+org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:494)
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:126)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:345)
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:263)
+	at org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler.handleReturnValue(ResponseEntityReturnValueHandler.java:79)
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.pid.logadapter.core.filters.ServletFilter.doFilter(ServletFilter.java:140)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.h2h.monitoreoapi.config.RootOkFilter.doFilterInternal(RootOkFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:732)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: com.fasterxml.jackson.databind.JsonMappingException: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?) (through reference chain: mx.santander.h2h.monitoreoapi.model.response.DashboardResumenResponse["totales"]->mx.santander.h2h.monitoreoapi.model.response.TotalesGlobalesDTO["pagosPorDivisa"])
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:283)
+	at com.fasterxml.jackson.databind.SerializerProvider.mappingException(SerializerProvider.java:1388)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportMappingProblem(SerializerProvider.java:1284)
+	at com.fasterxml.jackson.databind.ser.impl.FailingSerializer.serialize(FailingSerializer.java:32)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFieldsUsing(MapSerializer.java:895)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:762)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1572)
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1061)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:485)
+	... 101 common frames omitted
+2025-09-25 17:14:22,936 [015caf04-55ef-40d8-8b3b-c59951b2d1a7,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/resumen]: 32 ms
+2025-09-25 17:15:18,218 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:15:18,219 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:18,219 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:15:18,219 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:15:18,219 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:18,219 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:15:18,244 [ac2c1897-cb68-4364-84ca-a7f97da2da90,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 25 ms
+2025-09-25 17:15:18,327 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:15:18,327 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:18,327 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:15:18,327 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:15:18,327 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:18,328 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:15:18,343 [9ee7bc00-4c93-428a-af66-74568e4202a2,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 15 ms
+2025-09-25 17:15:22,019 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:22,019 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:15:22,020 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:22,020 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:15:22,023 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando detalle con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select ope1_0.id_tipo_oper,ope1_0.txt_cta_recep,ope1_0.imp,ope1_0.id_refe_unico,ope1_0.id_div,ope1_0.fch_carga,ope1_0.txt_cta_orden,ope1_0.id_tipo_pago,so1_0.txt_status_oper,ope1_0.num_refer from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) fetch first ? rows only
+Hibernate: select count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?)
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:15:22,065 [8fa53841-6bc5-4d99-b747-c5b6eb300969,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle]: 45 ms
+2025-09-25 17:15:22,153 [9c6b0820-c395-4625-b50e-6bd9f2244218,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:22,153 [9c6b0820-c395-4625-b50e-6bd9f2244218,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+2025-09-25 17:15:22,153 [9c6b0820-c395-4625-b50e-6bd9f2244218,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:22,153 [9c6b0820-c395-4625-b50e-6bd9f2244218,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:15:22,173 [9c6b0820-c395-4625-b50e-6bd9f2244218,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 20 ms
+2025-09-25 17:15:54,945 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:54,945 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:15:54,946 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:54,946 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:15:54,948 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando detalle con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select ope1_0.id_tipo_oper,ope1_0.txt_cta_recep,ope1_0.imp,ope1_0.id_refe_unico,ope1_0.id_div,ope1_0.fch_carga,ope1_0.txt_cta_orden,ope1_0.id_tipo_pago,so1_0.txt_status_oper,ope1_0.num_refer from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) fetch first ? rows only
+Hibernate: select count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?)
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:15:54,987 [34b413e5-7caf-4286-9edd-6cf8da0f01ab,,,,,][http-nio-8080-exec-4] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle]: 41 ms
+2025-09-25 17:15:55,061 [b03c4f7d-f595-42d3-a900-c60fcaaa73cb,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:55,062 [b03c4f7d-f595-42d3-a900-c60fcaaa73cb,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+2025-09-25 17:15:55,062 [b03c4f7d-f595-42d3-a900-c60fcaaa73cb,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:15:55,062 [b03c4f7d-f595-42d3-a900-c60fcaaa73cb,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:15:55,077 [b03c4f7d-f595-42d3-a900-c60fcaaa73cb,,,,,][http-nio-8080-exec-5] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 15 ms
+2025-09-25 17:28:48,123 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:28:48,124 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:28:48,124 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:28:48,124 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/resumen]
+2025-09-25 17:28:48,139 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando dashboard resumen con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select count(ope1_0.id_pago_pk),coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.txt_tipo_product=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?)
+Hibernate: select ope1_0.id_div,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_div
+Hibernate: select so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by so1_0.txt_status_oper having count(ope1_0.id_pago_pk)>0
+Hibernate: select (ope1_0.id_tipo_pago||' '||ope1_0.id_tipo_oper),ope1_0.id_div,so1_0.txt_status_oper,count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_div=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) group by ope1_0.id_tipo_pago,ope1_0.id_tipo_oper,ope1_0.id_div,so1_0.txt_status_oper
+2025-09-25 17:28:48,170 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] ERROR  [m.s.h.m.exception.GlobalExceptionHandler] Error ID: 99dba2cc-73e3-42d6-b323-37663af51eed - Exception: 
+org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:494)
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:126)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:345)
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:263)
+	at org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler.handleReturnValue(ResponseEntityReturnValueHandler.java:79)
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.pid.logadapter.core.filters.ServletFilter.doFilter(ServletFilter.java:140)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.h2h.monitoreoapi.config.RootOkFilter.doFilterInternal(RootOkFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:732)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: com.fasterxml.jackson.databind.JsonMappingException: Null key for a Map not allowed in JSON (use a converting NullKeySerializer?) (through reference chain: mx.santander.h2h.monitoreoapi.model.response.DashboardResumenResponse["totales"]->mx.santander.h2h.monitoreoapi.model.response.TotalesGlobalesDTO["pagosPorDivisa"])
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:283)
+	at com.fasterxml.jackson.databind.SerializerProvider.mappingException(SerializerProvider.java:1388)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportMappingProblem(SerializerProvider.java:1284)
+	at com.fasterxml.jackson.databind.ser.impl.FailingSerializer.serialize(FailingSerializer.java:32)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFieldsUsing(MapSerializer.java:895)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:762)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)
+	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
+	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1572)
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1061)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:485)
+	... 101 common frames omitted
+2025-09-25 17:28:48,176 [0208260a-c0fe-4c51-ba2e-524e85bcfc6f,,,,,][http-nio-8080-exec-7] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/resumen]: 52 ms
+2025-09-25 17:29:29,843 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:29:29,844 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:29,844 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:29:29,844 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:29:29,844 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:29,844 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:29:29,866 [b27982b1-3bbc-4964-8317-dfae2464dc3b,,,,,][http-nio-8080-exec-8] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 22 ms
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Peticion de ServerName: https://h2h-treasury-service
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:29,896 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/filtros]
+Hibernate: select toe1_0.id_tipo_oper,toe1_0.txt_tipo_oper from api_mx_prc_cat_tipo_oper toe1_0 order by toe1_0.id_tipo_oper
+Hibernate: select de1_0.id_div,de1_0.txt_div from api_mx_prc_cat_divisa de1_0 order by de1_0.id_div
+Hibernate: select tpe1_0.id_tipo_pago,tpe1_0.txt_tipo_pago from api_mx_prc_cat_tipo_pago tpe1_0 order by tpe1_0.id_tipo_pago
+Hibernate: select soe1_0.id_status_oper,soe1_0.txt_status_oper from api_mx_prc_cat_status_oper soe1_0
+2025-09-25 17:29:29,914 [a8807bfd-330a-4909-945a-17a7f9cedb67,,,,,][http-nio-8080-exec-9] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/filtros]: 18 ms
+2025-09-25 17:29:35,316 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:35,317 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:29:35,317 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:35,317 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:29:35,319 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando detalle con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select ope1_0.id_tipo_oper,ope1_0.txt_cta_recep,ope1_0.imp,ope1_0.id_refe_unico,ope1_0.id_div,ope1_0.fch_carga,ope1_0.txt_cta_orden,ope1_0.id_tipo_pago,so1_0.txt_status_oper,ope1_0.num_refer from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) fetch first ? rows only
+Hibernate: select count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?)
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:29:35,355 [6cf19bd0-3ee3-486c-a333-fd64cdd27739,,,,,][http-nio-8080-exec-10] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle]: 38 ms
+2025-09-25 17:29:35,391 [d91698e7-0da8-405a-98a1-fa37609b4c06,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:35,391 [d91698e7-0da8-405a-98a1-fa37609b4c06,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+2025-09-25 17:29:35,391 [d91698e7-0da8-405a-98a1-fa37609b4c06,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:35,391 [d91698e7-0da8-405a-98a1-fa37609b4c06,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:29:35,407 [d91698e7-0da8-405a-98a1-fa37609b4c06,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 16 ms
+2025-09-25 17:29:46,132 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:46,132 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:29:46,133 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:46,133 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle]
+2025-09-25 17:29:46,135 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h2h.monitoreoapi.service.PagoService] Consultando detalle con filtro: PagoRequest(operacion=null, divisa=null, tipoPago=null, referenciaCanal=null, importe=null, tipoOperacion=null)
+Hibernate: select ope1_0.id_tipo_oper,ope1_0.txt_cta_recep,ope1_0.imp,ope1_0.id_refe_unico,ope1_0.id_div,ope1_0.fch_carga,ope1_0.txt_cta_orden,ope1_0.id_tipo_pago,so1_0.txt_status_oper,ope1_0.num_refer from api_mx_mae_oper_pago ope1_0 join api_mx_prc_cat_status_oper so1_0 on so1_0.id_status_oper=ope1_0.id_status_oper_fk where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) fetch first ? rows only
+Hibernate: select count(ope1_0.id_pago_pk) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?)
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:29:46,170 [e752071c-126e-473c-b437-18d08e5671a7,,,,,][http-nio-8080-exec-2] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle]: 37 ms
+2025-09-25 17:29:46,258 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:46,258 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+2025-09-25 17:29:46,258 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 17:29:46,258 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
+Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
+2025-09-25 17:29:46,276 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 18 ms
