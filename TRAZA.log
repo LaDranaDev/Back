@@ -1,0 +1,273 @@
+=========================================
+Starting application
+=========================================
+ [INFO] Downloading artifact https://nexus.pro.pandora.mx.corp/repository/maven-snapshot/mx/santander/h2h/monitoreoapi/h2h-treasury-service/0.0.1-SNAPSHOT/h2h-treasury-service-0.0.1-20250925.011324-24.jar...
+### Default user has been modified ###
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.4.10)
+
+2025-09-25 12:00:41,106 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Fetching config from server at : http://config-service:8080/
+2025-09-25 12:00:41,904 [,,,,,][main] INFO   [o.s.c.c.c.ConfigServicePropertySourceLocator] Located environment: name=h2h-treasury-service, profiles=[dev], label=master, version=ee465218223104550726f9955eb9af63f07367e7, state=null
+2025-09-25 12:00:41,906 [,,,,,][main] INFO   [o.s.c.b.c.PropertySourceBootstrapConfiguration] Located property source: [BootstrapPropertySource {name='bootstrapProperties-configClient'}, BootstrapPropertySource {name='bootstrapProperties-ssh://git@gitlab.pro.pandora.mx.corp:2220/mx-santander-online-bomonitor/config-service.git/application-dev.yml'}]
+2025-09-25 12:00:41,935 [,,,,,][main] INFO   [m.s.h.m.H2hTreasuryServiceApplication] No active profile set, falling back to 1 default profile: "default"
+2025-09-25 12:00:43,924 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-25 12:00:44,321 [,,,,,][main] INFO   [o.s.d.r.c.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 383 ms. Found 7 JPA repository interfaces.
+2025-09-25 12:00:45,723 [,,,,,][main] INFO   [o.s.cloud.context.scope.GenericScope] BeanFactory id=1c839fd0-68ad-3286-8ddc-47579427b5f1
+2025-09-25 12:00:46,946 [,,,,,][main] INFO   [o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat initialized with port 8080 (http)
+2025-09-25 12:00:47,017 [,,,,,][main] INFO   [o.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-25 12:00:47,022 [,,,,,][main] INFO   [o.apache.catalina.core.StandardService] Starting service [Tomcat]
+2025-09-25 12:00:47,023 [,,,,,][main] INFO   [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-25 12:00:47,222 [,,,,,][main] INFO   [o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2025-09-25 12:00:47,223 [,,,,,][main] INFO   [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 5210 ms
+2025-09-25 12:00:47,316 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Usando Worker [mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI]
+2025-09-25 12:00:47,318 [,,,,,][main] INFO   [m.s.p.l.core.worker.WorkerConfig] Creando Instancia: class mx.santander.pid.logadapter.core.worker.LogAdapterExtractorAPI
+2025-09-25 12:00:47,320 [,,,,,][main] INFO   [m.s.p.l.core.filters.TrackerFilter] MDC Tracker Init, headers [X-B3-TraceId], mdcValues [X-B3-TraceId]
+2025-09-25 12:00:47,427 [,,,,,][main] INFO   [m.s.p.l.core.filters.ServletFilter] ServletFilter inicializado...
+2025-09-25 12:00:47,510 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] Driver class oracle.jdbc.OracleDriver found in Thread context class loader org.springframework.boot.loader.launch.LaunchedClassLoader@6f539caf
+2025-09-25 12:00:47,727 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] HikariPool-1 - configuration:
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] allowPoolSuspension.............false
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] autoCommit......................false
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] catalog.........................none
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] connectionInitSql...............none
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] connectionTestQuery.............none
+2025-09-25 12:00:47,731 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] connectionTimeout...............30000
+2025-09-25 12:00:47,732 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] dataSource......................none
+2025-09-25 12:00:47,732 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] dataSourceClassName.............none
+2025-09-25 12:00:47,732 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] dataSourceJNDI..................none
+2025-09-25 12:00:47,732 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] dataSourceProperties............{password=<masked>}
+2025-09-25 12:00:47,732 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] driverClassName................."oracle.jdbc.OracleDriver"
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] exceptionOverrideClassName......none
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] healthCheckProperties...........{}
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] healthCheckRegistry.............none
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] idleTimeout.....................600000
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] initializationFailTimeout.......1
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] isolateInternalQueries..........false
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] jdbcUrl.........................jdbc:oracle:thin:@dbtredlo21mxg01.ilm.dev.mx.corp:1660/odmx1h2h
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] keepaliveTime...................0
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] leakDetectionThreshold..........0
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] maxLifetime.....................1800000
+2025-09-25 12:00:47,733 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] maximumPoolSize.................10
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] metricRegistry..................none
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] metricsTrackerFactory...........none
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] minimumIdle.....................10
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] password........................<masked>
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] poolName........................"HikariPool-1"
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] readOnly........................false
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] registerMbeans..................false
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] scheduledExecutor...............none
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] schema..........................none
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] threadFactory...................internal
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] transactionIsolation............default
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] username........................"deaifh2h"
+2025-09-25 12:00:47,734 [,,,,,][main] DEBUG  [com.zaxxer.hikari.HikariConfig] validationTimeout...............5000
+2025-09-25 12:00:47,736 [,,,,,][main] INFO   [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2025-09-25 12:00:48,335 [,,,,,][main] INFO   [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@5831989d
+2025-09-25 12:00:48,337 [,,,,,][main] INFO   [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2025-09-25 12:00:48,437 [,,,,,][HikariPool-1 housekeeper] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2025-09-25 12:00:48,529 [,,,,,][main] DEBUG  [com.zaxxer.hikari.pool.ProxyConnection] HikariPool-1 - Executed rollback on connection oracle.jdbc.driver.T4CConnection@5831989d due to dirty commit state on close().
+2025-09-25 12:00:48,623 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@aa1f3e2
+2025-09-25 12:00:48,631 [,,,,,][main] INFO   [o.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: DS-h2h]
+2025-09-25 12:00:48,653 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=2, active=0, idle=2, waiting=0)
+2025-09-25 12:00:48,731 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@7fa61349
+2025-09-25 12:00:48,761 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=3, active=0, idle=3, waiting=0)
+2025-09-25 12:00:48,818 [,,,,,][main] INFO   [org.hibernate.Version] HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-09-25 12:00:48,827 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@7cd6587
+2025-09-25 12:00:48,858 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=4, active=0, idle=4, waiting=0)
+2025-09-25 12:00:48,931 [,,,,,][main] INFO   [o.h.c.internal.RegionFactoryInitiator] HHH000026: Second-level cache disabled
+2025-09-25 12:00:48,937 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@1cc96b25
+2025-09-25 12:00:48,968 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=5, active=0, idle=5, waiting=0)
+2025-09-25 12:00:49,030 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@487ddf65
+2025-09-25 12:00:49,060 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=6, active=0, idle=6, waiting=0)
+2025-09-25 12:00:49,137 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@2a331d57
+2025-09-25 12:00:49,168 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=7, active=0, idle=7, waiting=0)
+2025-09-25 12:00:49,232 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@43181c4e
+2025-09-25 12:00:49,262 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=8, active=0, idle=8, waiting=0)
+2025-09-25 12:00:49,335 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@cff3c78
+2025-09-25 12:00:49,365 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=9, active=0, idle=9, waiting=0)
+2025-09-25 12:00:49,434 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@65ce6ea8
+2025-09-25 12:00:49,464 [,,,,,][HikariPool-1 connection adder] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2025-09-25 12:00:49,935 [,,,,,][main] INFO   [o.s.o.j.p.SpringPersistenceUnitInfo] No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-25 12:00:50,223 [,,,,,][main] WARN   [org.hibernate.orm.deprecation] HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-25 12:00:50,252 [,,,,,][main] DEBUG  [com.zaxxer.hikari.pool.ProxyConnection] HikariPool-1 - Executed rollback on connection oracle.jdbc.driver.T4CConnection@5831989d due to dirty commit state on close().
+2025-09-25 12:00:50,260 [,,,,,][main] INFO   [org.hibernate.orm.connections.pooling] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 19.1
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-25 12:00:51,059 [,,,,,][main] INFO   [o.h.validator.internal.util.Version] HV000001: Hibernate Validator 8.0.3.Final
+2025-09-25 12:00:53,035 [,,,,,][main] INFO   [o.h.e.t.j.p.i.JtaPlatformInitiator] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-25 12:00:53,039 [,,,,,][main] INFO   [o.s.o.j.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'DS-h2h'
+2025-09-25 12:00:53,608 [,,,,,][main] INFO   [o.s.d.j.r.query.QueryEnhancerFactory] Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-25 12:00:57,128 [,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterBusinessService] Realizando la creacion de LogAdapter Business
+2025-09-25 12:00:57,130 [,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] El tamano total del Buffer depende del tamano del pool configurado: (pool * buffer): Pool Size [1] | Buffer Size [100]
+2025-09-25 12:00:57,130 [,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] Se realiza inicializacion de buffer
+2025-09-25 12:00:57,146 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterAuditService] Realizando la creacion de LogAdapter Audit
+2025-09-25 12:00:57,148 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] El tamano total del Buffer depende del tamano del pool configurado: (pool * buffer): Pool Size [1] | Buffer Size [100]
+2025-09-25 12:00:57,148 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.l.t.ThreadPoolExecutorBuilder] Se realiza inicializacion de buffer
+2025-09-25 12:00:57,209 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Realizando inicializacion de appenders y loggers
+2025-09-25 12:00:57,209 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Realizando verificacion de appenders y loggers
+2025-09-25 12:00:57,211 [Thread: 1,,,,,][main] INFO   [SYSTEM] Se realiza toma de loggers suscritos como System
+2025-09-25 12:00:57,214 [Thread: 1,,,,,][main] INFO   [m.s.pid.logadapter.core.PrintConfig] ::LogAdapter version 3.0.0::
+Log de Programador activo              :true
+Log de Sistema activo                  :true
+Log Filter activo                      :true
+Envio de Log de Consola activo         :false
+Envio de Log de Sistema activo         :false
+Envio de Log Filter activo             :false
+Nivel de Log de Consola                :INFO
+Nivel de Log de Systema                :INFO
+Nivel de Log de Filtro                 :INFO
+Tamanio de buffer                       :32
+Base64 para mensajes activada          :false
+Medio Primario LogAdpterProgrammer     :CONSOLA
+Medio Contingente LogAdpterProgrammer  :CONSOLA
+Medio Primario LogAdpterSistema        :CONSOLA
+Medio Contingente LogAdpterSistema     :CONSOLA
+Medio Primario LogAdpterAudit          :AMQ
+Medio Contingente LogAdpterAudit       :REST
+Medio Primario LogAdpterBusiness       :AMQ
+Medio Contingente LogAdpterBusiness    :REST
+Medio Primario LogAdpterServicio       :CONSOLA
+Medio Contingente LogAdpterServicio    :CONSOLA
+Medio Primario LogAdpterEstadistico    :CONSOLA
+Medio Contingente LogAdpterEstadistico :CONSOLA
+Medio Primario LogAdpterFilter         :CONSOLA
+Medio Contingente LogAdpterFilter      :CONSOLA
+URL WSRest de LogService               :http://bomonitor-log-service:8080/selectorLogService
+URL AMQ de LogService                  :tcp://logservice-local-amq-tcp:61616?jms.prefetchPolicy.queuePrefetch=1&jms.redeliveryPolicy.maximumRedeliveries=2
+Usuario de conexion AMQ                :desconocido
+QUEUE                                  :logservice-local-queue
+Clase de Worker Procesado              :class mx.santander.pid.logadapter.core.config.model.WorkerConfig
+Persistencia AMQ activada              :off
+
+2025-09-25 12:00:57,219 [Thread: 1,,,,,][main] INFO   [m.s.p.l.core.filters.TrackerFilter] MDC Tracker Init, headers [X-B3-TraceId], mdcValues [X-B3-TraceId]
+2025-09-25 12:00:57,220 [Thread: 1,,,,,][main] INFO   [m.s.p.l.core.filters.ReactorFilter] ReactorFilter inicializado...
+2025-09-25 12:00:57,222 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterProgrammerService] Creando Servicio de mensajeria para Log de Programador
+2025-09-25 12:00:57,224 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.t.s.LogAdapterSystemService] Realizando la creacion de LogAdapter System
+2025-09-25 12:00:57,225 [Thread: 1,,,,,][main] INFO   [o.s.b.f.a.AutowiredAnnotationBeanPostProcessor] Autowired annotation is not supported on static fields: private static org.springframework.context.ApplicationContext mx.santander.pid.logadapter.util.SpringContext.context
+2025-09-25 12:00:57,739 [Thread: 1,,,,,][main] WARN   [o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-25 12:00:58,146 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.InterceptorConfig]  ##### Agregando interceptor para Cors solo registrados... para [/api/**] ::: Total 1 #####
+2025-09-25 12:00:58,220 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.CorsConfig] #### Datos URL: https://h2h-fu.h2h.caas.pre.mx.corp, https://lightweight-gateway-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://lightweight-gateway-ge-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://ng-log-gestor-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://gestor-h2h.apps.str01.mex.dev.mx1.paas.cloudcenter.corp, https://lightweight-gateway-ge-mx-h2h-bo-monitoreo-pre.apps.ocp06.mex.pre.mx2.paas.cloudcenter.corp, http://localhost:4200 #####
+2025-09-25 12:00:58,220 [Thread: 1,,,,,][main] INFO   [m.s.h2h.comunes.config.CorsConfig] #### Cors mapping Enabled... ####
+2025-09-25 12:00:59,805 [Thread: 1,,,,,][main] INFO   [o.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+2025-09-25 12:00:59,831 [Thread: 1,,,,,][main] INFO   [o.s.b.w.embedded.tomcat.TomcatWebServer] Tomcat started on port 8080 (http) with context path '/'
+2025-09-25 12:00:59,846 [Thread: 1,,,,,][main] INFO   [m.s.h.m.H2hTreasuryServiceApplication] Started H2hTreasuryServiceApplication in 22.613 seconds (process running for 24.582)
+2025-09-25 12:00:59,848 [Thread: 1,,,,,][main] INFO   [m.s.p.l.c.s.LoggerManagementService] Se activa evento en Logger Management
+2025-09-25 12:00:59,849 [Thread: 1,,,,,][main] INFO   [PROGRAMMER] Se realiza toma de loggers suscritos como Programmer
+2025-09-25 12:00:59,849 [Thread: 1,,,,,][main] INFO   [SYSTEM] Se realiza toma de loggers suscritos como System
+2025-09-25 12:01:18,438 [,,,,,][HikariPool-1 housekeeper] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-09-25 12:01:18,438 [,,,,,][HikariPool-1 housekeeper] DEBUG  [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-09-25 12:01:18,561 [,,,,,][http-nio-8080-exec-1] INFO   [o.a.c.c.C.[Tomcat].[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-25 12:01:18,562 [,,,,,][http-nio-8080-exec-1] INFO   [o.s.web.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2025-09-25 12:01:18,563 [,,,,,][http-nio-8080-exec-1] INFO   [o.s.web.servlet.DispatcherServlet] Completed initialization in 1 ms
+2025-09-25 12:01:18,705 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 12:01:18,705 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/productos]
+2025-09-25 12:01:18,705 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Todo esta  OK, Continuar: SI
+2025-09-25 12:01:18,705 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/catalogos/productos]
+2025-09-25 12:01:18,716 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] ERROR  [m.s.h.m.exception.GlobalExceptionHandler] Error ID: 7ef52297-da7f-4d1f-ab3e-dd6e74b34e8c - Exception: 
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/catalogos/productos.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585)
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.pid.logadapter.core.filters.ServletFilter.doFilter(ServletFilter.java:140)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at mx.santander.h2h.monitoreoapi.config.RootOkFilter.doFilterInternal(RootOkFilter.java:35)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:732)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-09-25 12:01:18,809 [ebc3a093-e87e-4c9f-9bde-69851a63b83f,,,,,][http-nio-8080-exec-1] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/catalogos/productos]: 104 ms
