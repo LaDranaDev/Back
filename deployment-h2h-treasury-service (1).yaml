@@ -1,0 +1,374 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '81'
+    openshift.io/generated-by: OpenShiftNewApp
+  resourceVersion: '2168430813'
+  name: h2h-treasury-service
+  uid: 762239b2-7841-4721-a209-0e27800e15fe
+  creationTimestamp: '2025-09-03T00:04:16Z'
+  generation: 78
+  managedFields:
+    - manager: oc
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-09-25T01:13:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app_name': {}
+            'f:template': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:Deployment': {}
+                'f:app_name': {}
+                'f:template': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"h2h-treasury-service"}':
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/opt/metadata"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                    'f:requests':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"APP_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"ARTIFACT_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"JAVA_OPTS_EXT"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"JAVA_PARAMETERS"}':
+                      .: {}
+                      'f:name': {}
+                    'k:{"name":"PBD_URL"}':
+                      .: {}
+                      'f:name': {}
+                    'k:{"name":"PROJECT_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:fieldRef': {}
+                    'k:{"name":"TZ"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                  'f:securityContext':
+                    .: {}
+                    'f:capabilities': {}
+                    'f:privileged': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":8080,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"podinfo"}':
+                  .: {}
+                  'f:emptyDir': {}
+                  'f:name': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-09-25T16:30:33Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:metadata':
+              'f:annotations':
+                .: {}
+                'f:openshift.openshift.io/restartedAt': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"h2h-treasury-service"}':
+                  'f:env':
+                    'k:{"name":"API_DATASOURCE_HIKARI_CONNECTION_TIMEOUT"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef': {}
+                    'k:{"name":"LOGGING_LEVEL_ROOT"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"API_DATASOURCE_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"SPRING_CLOUD_CONFIG_LABEL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"API_DB_POOL_SIZE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef': {}
+                    'k:{"name":"LOGGING_LEVEL_COM_ZAXXER_HIKARI"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"API_DATASOURCE_DRIVER_CLASS_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef': {}
+                    'k:{"name":"H2H_DATASOURCE_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef': {}
+                    'k:{"name":"SPRING_CLOUD_CONFIG_PROFILE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"API_DATASOURCE_USERNAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef': {}
+                    'k:{"name":"SPRING_CLOUD_CONFIG_URI"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"SPRING_APPLICATION_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                  'f:image': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-09-25T16:31:58Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:collisionCount': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      subresource: status
+  namespace: mx-h2h-bo-monitoreo-dev
+  labels:
+    app: h2h-treasury-service
+    app_name: h2h-treasury-service
+    template: javase-8-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      Deployment: h2h-treasury-service
+      app_name: h2h-treasury-service
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        Deployment: h2h-treasury-service
+        app_name: h2h-treasury-service
+        template: javase-8-deployment
+      annotations:
+        openshift.openshift.io/restartedAt: '2025-09-04T22:34:23.072Z'
+    spec:
+      volumes:
+        - name: podinfo
+          emptyDir: {}
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 1024M
+            requests:
+              cpu: 50m
+              memory: 512M
+          terminationMessagePath: /dev/termination-log
+          name: h2h-treasury-service
+          env:
+            - name: APP_NAME
+              value: h2h-treasury-service
+            - name: JAVA_OPTS_EXT
+              value: '-Djava.security.egd=file:/dev/./urandom -Dlog4j2.formatMsgNoLookups=true'
+            - name: PBD_URL
+            - name: ARTIFACT_URL
+              value: 'https://nexus.pro.pandora.mx.corp/repository/maven-snapshot/mx/santander/h2h/monitoreoapi/h2h-treasury-service/0.0.1-SNAPSHOT/h2h-treasury-service-0.0.1-20250925.011324-24.jar'
+            - name: JAVA_PARAMETERS
+            - name: PROJECT_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: TZ
+              value: Canada/Saskatchewan
+            - name: H2H_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: h2h-database-config
+                  key: H2H_DB_URL
+            - name: API_DATASOURCE_DRIVER_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: h2h-database-config
+                  key: H2H_DB_DRIVER
+            - name: API_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: h2h-database-config
+                  key: H2H_DB_USERNAME
+            - name: API_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: h2h-database-secret
+                  key: H2H_DB_PASSWORD
+            - name: API_DB_POOL_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: h2h-database-config
+                  key: H2H_DB_POOL_SIZE
+            - name: API_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+              valueFrom:
+                configMapKeyRef:
+                  name: h2h-database-config
+                  key: H2H_DB_CONNECTION_TIMEOUT
+            - name: LOGGING_LEVEL_ROOT
+              value: INFO
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              value: DEBUG
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              value: DEBUG
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: 'http://config-service:8080/'
+            - name: SPRING_CLOUD_CONFIG_LABEL
+              value: master
+            - name: SPRING_CLOUD_CONFIG_PROFILE
+              value: dev
+            - name: SPRING_APPLICATION_NAME
+              value: h2h-treasury-service
+          securityContext:
+            capabilities: {}
+            privileged: false
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: podinfo
+              mountPath: /opt/metadata
+          terminationMessagePolicy: File
+          image: 'produban/javase-17-rh7:1.3.0.RELEASE'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 78
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2025-09-25T16:30:36Z'
+      lastTransitionTime: '2025-09-12T00:21:27Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "h2h-treasury-service-758bf68cc4" has successfully progressed.
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2025-09-25T16:31:58Z'
+      lastTransitionTime: '2025-09-25T16:31:58Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+  collisionCount: 3
