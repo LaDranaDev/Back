@@ -795,3 +795,36 @@ Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper
 2025-09-25 17:29:46,258 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Inicia Llamado [/api/pagos/detalle/totales]
 Hibernate: select ope1_0.id_div,coalesce(sum(ope1_0.imp),0) from api_mx_mae_oper_pago ope1_0 where (? is null or ope1_0.id_tipo_oper=?) and (? is null or ope1_0.txt_cta_recep=?) and (? is null or ope1_0.imp=?) and (? is null or ope1_0.id_refe_unico=?) and (? is null or ope1_0.id_div=?) and (? is null or ope1_0.fch_carga>=?) and (? is null or ope1_0.fch_carga<=?) and (? is null or ope1_0.txt_cta_orden=?) and (? is null or ope1_0.id_tipo_pago=?) and (? is null or ope1_0.id_status_oper_fk=?) and (? is null or ope1_0.num_refer=?) group by ope1_0.id_div
 2025-09-25 17:29:46,276 [78e86c91-31a0-4630-8f7b-16367c9b0e32,,,,,][http-nio-8080-exec-3] INFO   [m.s.h.c.interceptors.UrlDataInterceptor] Time elapsed for request round trip [/api/pagos/detalle/totales]: 18 ms
+\\\
+
+
+-- Ver qué divisas están llegando nulas o vacías
+SELECT NVL(TRIM(id_div), '<SIN DIVISA>') AS divisa,
+       COUNT(*) AS total_registros
+FROM   api_mx_mae_oper_pago
+WHERE  id_div IS NULL OR TRIM(id_div) = ''
+GROUP BY NVL(TRIM(id_div), '<SIN DIVISA>')
+ORDER BY total_registros DESC;
+
+-- Si quieres listar ejemplos concretos
+SELECT id_pago_pk,
+       id_tipo_oper,
+       id_refe_unico,
+       id_div,
+       fch_carga,
+       imp
+FROM   api_mx_mae_oper_pago
+WHERE  id_div IS NULL OR TRIM(id_div) = ''
+FETCH FIRST 50 ROWS ONLY;
+
+-- Por si necesitas ver si el catálogo de divisas tiene el registro faltante
+SELECT d.id_div,
+       d.txt_div
+FROM   api_mx_prc_cat_divisa d
+WHERE  NOT EXISTS (
+         SELECT 1
+         FROM   api_mx_mae_oper_pago p
+         WHERE  TRIM(NVL(p.id_div, '')) = d.id_div
+       )
+ORDER BY d.id_div;
+
