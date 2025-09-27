@@ -1,0 +1,10 @@
+curl -i -X POST "http://localhost:8080/api/pagos/resumen" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "operacion": "SPEI",
+        "fechaInicio": "'"$FECHA_HOY"'",
+        "fechaFin": "'"$FECHA_HOY"'"
+      }'
+
+
+{"totales":{"totalPagos":12,"totalMontos":1600,"pagosPorDivisa":{"MXN":15,"USD":1,"SIN_DIVISA":1}},"resumenPorEstatus":[{"estatus":"PROCESADO","total":8},{"estatus":"DUPLICADO","total":2},{"estatus":"ENVIADO","total":2},{"estatus":"RECHAZADO","total":1},{"estatus":"PENDIENTE","total":2}],"resumenPorProductoDivisaEstatus":[{"operacion":"SPEI TT","divisa":"MXN","estatus":"PROCESADO","total":4},{"operacion":" ","divisa":null,"estatus":"PROCESADO","total":1},{"operacion":" TT","divisa":"USD","estatus":"PROCESADO","total":1},{"operacion":" ","divisa":"MXN","estatus":"PROCESADO","total":2},{"operacion":" ","divisa":"MXN","estatus":"DUPLICADO","total":2},{"operacion":"SPEI TT","divisa":"MXN","estatus":"RECHAZADO","total":1},{"operacion":"SPEI TT","divisa":"MXN","estatus":"PENDIENTE","total":2},{"operacion":"SPEI TT","divisa":"MXN","estatus":"ENVIADO","total":2}],"montoTotalPorDivisa":[{"divisa":"MXN","totalMontos":2200},{"divisa":"USD","totalMontos":200},{"divisa":null,"totalMontos":150}]}
