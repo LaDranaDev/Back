@@ -1,0 +1,7 @@
+curl -i -X POST "http://localhost:8080/api/pagos/resumen" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "divisa": "MXN",
+        "fechaInicio": "'"$FECHA_HOY"'",
+        "fechaFin": "'"$FECHA_HOY"'"
+      }'
