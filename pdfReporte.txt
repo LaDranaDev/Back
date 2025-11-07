@@ -1,0 +1,49 @@
+import org.apache.fop.apps.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+import javax.xml.transform.sax.SAXResult;
+import java.io.*;
+import com.sterlingcommerce.woodstock.workflow.Document;
+import com.sterlingcommerce.woodstock.workflow.WorkFlowContext;
+ 
+Document docXml =wfc.getPrimaryDocument();
+String rutaXsl =wfc.getParm("rutaXsl");
+String rutaDocPFD = wfc.getParm("rutaPFD");
+ 
+ 
+try {
+    File xslFile = new File(rutaXsl);
+    if (!xslFile.exists()) throw new FileNotFoundException("No se encontró XSL: " + xslFile.getAbsolutePath());
+ 
+    File xmlFile = new File(docXml);
+    if (!xmlFile.exists()) throw new FileNotFoundException("No se encontró XML: " + xmlFile.getAbsolutePath());
+ 
+    File pdfFile = new File(rutaDocPFD);
+    if (pdfFile.getParentFile() != null) pdfFile.getParentFile().mkdirs();
+ 
+ 
+    FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
+    FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
+ 
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer = tf.newTransformer(new StreamSource(xslFile));
+ 
+    transformer.setParameter("baseDir", xslFile.getParentFile().toURI().toString());
+ 
+ 
+    try (OutputStream out = new FileOutputStream(pdfFile)) {
+        Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+        Source xmlSrc = new StreamSource(xmlFile);
+        Result res = new SAXResult(fop.getDefaultHandler());
+        transformer.transform(xmlSrc, res);
+    }
+ 
+    wfc.setWFContent("PrimaryDocument",pdfFile);
+ 
+} catch (TransformerConfigurationException e) {
+    System.err.println("Error de configuración XSLT (¿XSLT 2.0 sin Saxon?): " + e.getMessage());
+    e.printStackTrace();
+} catch (Exception e) {
+    e.printStackTrace();
+}
+return "0";
