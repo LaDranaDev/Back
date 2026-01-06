@@ -1,0 +1,73 @@
+=====================================================
+PENDIENTES BP: SNTDR_DHI_BP_MOVIMIENTOS_TRY
+=====================================================
+
+Hola equipo, necesito que me confirmen los siguientes datos
+para terminar de configurar el BP de Movimientos TRY:
+
+-----------------------------------------------------
+1. NOMBRE DEL POOL JDBC DE ORACLE
+-----------------------------------------------------
+   Pregunta: ¿Como se llama el connection pool para
+             conectarse a Oracle?
+
+   Ejemplo: oraclePool, dhiPool, etc.
+
+   Se usa en:
+   - Query de Parametria
+   - Query de Movimientos (Extra_Movs)
+   - Query de Purgado
+
+-----------------------------------------------------
+2. TABLA ORIGEN DE MOVIMIENTOS
+-----------------------------------------------------
+   Pregunta: ¿De que tabla se extraen los movimientos
+             con estatus confirmado (CO)?
+
+   La query seria algo como:
+   SELECT * FROM [ESTA_TABLA]
+   WHERE CLAVE_ESTATUS = 'CO'
+     AND FECHA_RESPUESTA = SYSDATE
+
+   Confirmar tambien:
+   - ¿El campo de estatus se llama CLAVE_ESTATUS?
+   - ¿El campo de fecha se llama FECHA_RESPUESTA?
+
+-----------------------------------------------------
+3. DIAS DE PURGADO
+-----------------------------------------------------
+   Pregunta: ¿Cuantos dias de retencion para la tabla
+             DHI_MX_AUX_MOVS_PAGOS_CNF_GBL?
+
+   El TXT dice: 90 dias
+   El diagrama dice: 10 dias
+
+   ¿Cual es el correcto?
+
+-----------------------------------------------------
+4. FORMATO DE FECHA EN NOMBRE ARCHIVO (OPCIONAL)
+-----------------------------------------------------
+   Pregunta: El archivo se llama:
+             confglobal_movimientos_XXXXXXXX.txt
+
+   ¿El formato de fecha es?
+   [ ] ddMMyyyy (ejemplo: 06012026)
+   [ ] YYYYMMdd (ejemplo: 20260106)
+
+-----------------------------------------------------
+5. ESTRUCTURA TABLA DHI_MX_PRC_CONFIG (OPCIONAL)
+-----------------------------------------------------
+   ¿Que columnas tiene esta tabla de configuracion?
+   ¿Que valores deberia tener para el proceso
+   MOVIMIENTOS_TRY?
+
+=====================================================
+ARCHIVOS GENERADOS
+=====================================================
+- SNTDR_DHI_BP_MOVIMIENTOS_TRY_CONFIGURADO.bpml
+  (BP con placeholders [PENDIENTE] donde falta info)
+
+- CONFIGURACION_BP_MOVIMIENTOS_TRY.md
+  (Documentacion completa del BP)
+
+=====================================================
