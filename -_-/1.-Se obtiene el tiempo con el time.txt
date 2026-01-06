@@ -1,0 +1,20 @@
+1.-Se obtiene el tiempo con el timestamp
+2- Se extrae frl buzon de confirming/gnl portabilidad input buscamos el confglobal_conlafechadeldia.txt se extrae
+3.-buscamos en otro buzon si ya existe el archivo con .fin  si existe no continua  si no continuamos
+4.-la regla la validación si existe  en el choice
+5.-en el get_properties obtenemos las queries a usar las posteamos en un process data  de un propoerties
+6.-el assign_out_add_mailbox este es la parametria para el siguente bp  (pendiente) 
+7.- invoca otro bp
+8.-release out backup elimina la parametria de el assign
+9.-borra el archivo original
+10.- parametria de la querie a usar  solo los parámetros de dhi_mx_prc_config(pendiente)
+11.- extra movs vamos a modificar la querie a buscar por sysdate al final el dato en duro
+12.-mapas (no hacemos)
+13.-no hacemos mapas igual
+14.-merge unión de archivos obtenido del mailbox extract y el resultante del segundo mapa stndr_dhi_map_genera_inter_pagos_try
+15.-purgado es una query que busca >90 días borra el registro la tabla es en Oracle se llama DHI_MX_AUX_MOVS_PAGOS_CNF_GBL y el campo FH_INTER
+16.-assign_out_add_maibox es parametria igual pasarle en contabilidad/input (pendiente) y seria igual el documento del merge ahí depositado  
+17.- es similar al otro 
+
+
+
