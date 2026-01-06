@@ -34,32 +34,19 @@ para terminar de configurar el BP de Movimientos TRY:
    - ¿El campo de fecha se llama FECHA_RESPUESTA?
 
 -----------------------------------------------------
-3. DIAS DE PURGADO
------------------------------------------------------
-   Pregunta: ¿Cuantos dias de retencion para la tabla
-             DHI_MX_AUX_MOVS_PAGOS_CNF_GBL?
-
-   El TXT dice: 90 dias
-   El diagrama dice: 10 dias
-
-   ¿Cual es el correcto?
-
------------------------------------------------------
-4. FORMATO DE FECHA EN NOMBRE ARCHIVO (OPCIONAL)
------------------------------------------------------
-   Pregunta: El archivo se llama:
-             confglobal_movimientos_XXXXXXXX.txt
-
-   ¿El formato de fecha es?
-   [ ] ddMMyyyy (ejemplo: 06012026)
-   [ ] YYYYMMdd (ejemplo: 20260106)
-
------------------------------------------------------
-5. ESTRUCTURA TABLA DHI_MX_PRC_CONFIG (OPCIONAL)
+3. ESTRUCTURA TABLA DHI_MX_PRC_CONFIG (OPCIONAL)
 -----------------------------------------------------
    ¿Que columnas tiene esta tabla de configuracion?
    ¿Que valores deberia tener para el proceso
    MOVIMIENTOS_TRY?
+
+=====================================================
+YA CONFIRMADO (NO PREGUNTAR)
+=====================================================
+- Formato fecha archivo: ddMMyyyy (ejemplo: 06012026)
+- Query Extra_Movs: usa TRUNC(SYSDATE) en lugar de
+  fecha hardcodeada
+- Purgado tabla auxiliar: 90 dias
 
 =====================================================
 ARCHIVOS GENERADOS

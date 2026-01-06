@@ -6,7 +6,11 @@
        PENDIENTES POR CONFIRMAR:
        1. [POOL_ORACLE] - Nombre del connection pool JDBC
        2. [TABLA_MOVIMIENTOS_ORIGEN] - Tabla de donde extraer movimientos
-       3. Columnas exactas de la query de movimientos
+
+       CONFIRMADO:
+       - Formato fecha archivo: ddMMyyyy (ej: 06012026)
+       - Query Extra_Movs: usar TRUNC(SYSDATE) en lugar de fecha fija
+       - Purgado tabla auxiliar: 90 dias
        ============================================================ -->
 
   <sequence name="Strart_Conta_TRY">
@@ -365,11 +369,8 @@ WHERE CLAVE_ESTATUS = 'CO'
         - CLAVE_ESTATUS (o es otro nombre?)
         - FECHA_RESPUESTA (o es otro nombre?)
 
-     4. Formato de fecha en nombre archivo:
-        - Actualmente: ddMMyyyy (ej: 06012026)
-        - Si necesitan YYYYMMdd cambiar el Assign_Fecha_Proceso
-
-     5. Dias de purgado:
-        - Actualmente: 90 dias
-        - El diagrama menciona 10 dias - CONFIRMAR cual es correcto
+     YA CONFIRMADO:
+     - Formato fecha archivo: ddMMyyyy (ej: 06012026) - LISTO
+     - Query usa TRUNC(SYSDATE) en lugar de fecha fija - LISTO
+     - Purgado: 90 dias - LISTO
      ============================================================ -->
