@@ -34,6 +34,7 @@
         </output>
         <input message="inmsg">
           <assign to="." from="*"></assign>
+          <assign to="/ProcessData/Document/Doc" from="/NODS/confirmingGBL/contabilidad/input" append="true"></assign>
         </input>
       </operation>
 
@@ -51,7 +52,7 @@
 
       <choice name="Valida_Reprocesamiento?">
         <select>
-        </select>
+   
 
       </choice>
     </sequence>
@@ -109,13 +110,15 @@
         <participant name="LightweightJDBCAdapterQuery"/>
         <output message="LightweightJDBCAdapterTypeInputMessage">
           <assign to="." from="*"></assign>
-          <assign to="pool">[POOL_ORACLE]</assign>
+          <assign to="pool">dhiPool</assign>
           <assign to="query_type">SELECT</assign>
-          <assign to="result_name">ConfigParams</assign>
-          <assign to="sql">select TXT_NAME NAME,TXT_PARAM VAL from DHI_MX_PRC_CONFIG where TXT_NAME like 'DHI_CNF_PAG_TREA_%'</assign>
+          <assign to="result_name">Result</assign>
+          <assign to="row_name">Param</assign>
+          <assign to="sql">select TXT_NAME NAME,TXT_PARAM VAL from DHI_MX_PRC_CONFIG where TXT_NAME like &apos;DHI_CNF_PAG_TREA_%&apos;</assign>
         </output>
         <input message="inmsg">
           <assign to="." from="*"></assign>
+          <assign to="/ProcessData/Info/Param" from="DocToDOM(PrimaryDocument, false, false)/*  " append="true"></assign>
         </input>
       </operation>
 
@@ -123,10 +126,11 @@
         <participant name="LightweightJDBCAdapterQuery"/>
         <output message="LightweightJDBCAdapterTypeInputMessage">
           <assign to="." from="*"></assign>
-          <assign to="pool">[POOL_ORACLE]</assign>
+          <assign to="pool">dhiPool</assign>
           <assign to="query_type">SELECT</assign>
-          <assign to="result_name">MovimientosNeutralizacion</assign>
-          <assign to="sql">SELECT</assign>
+          <assign to="result_name">Result</assign>
+          <assign to="row_name">Row</assign>
+          <assign to="sql">select pag.id_reg_api,pag.val_tp_pago,pag.val_cnl,pag.imp,pag.val_div_ord  from DHI_MX_AUX_PAGOS_CNF_GBL pag  join DHI_MX_AUX_RESP_PAGOS_CNF_GBL resp  on pag.id_reg_api= resp.val_id_reg  where resp.cve_estatus= &apos;CO&apos;  and to_char(resp.fch_resp,&apos;YYYYMMdd&apos;)=TRUNC(SYSDATE)</assign>
         </output>
         <input message="inmsg">
           <assign to="." from="*"></assign>
@@ -159,7 +163,7 @@
         <participant name="MergeDocument"/>
         <output message="MergeDocumentInputMessage">
           <assign to="." from="*"></assign>
-          <assign to="Document1" from="/ProcessData/ArchivoOrigen"></assign>
+          <assign to="Document1" from="/ProcessData/Document/Doc"></assign>
           <assign to="Document2" from="/ProcessData/PrimaryDocument"></assign>
         </output>
         <input message="inmsg">
@@ -171,7 +175,7 @@
         <participant name="LightweightJDBCAdapterQuery"/>
         <output message="LightweightJDBCAdapterTypeInputMessage">
           <assign to="." from="*"></assign>
-          <assign to="pool">[POOL_ORACLE]</assign>
+          <assign to="pool">dhiPool</assign>
           <assign to="query_type">DELETE</assign>
           <assign to="result_name">PurgadoResult</assign>
           <assign to="sql">DELETE FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL WHERE FH_INTER &lt; TRUNC(SYSDATE) - 90</assign>
