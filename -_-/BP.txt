@@ -1,0 +1,264 @@
+<process name="SNTDR_DHI_BP_MOVIMIENTOS_TRY">
+  <sequence>
+    <sequence name="Strart_Conta_TRY">
+      <operation name="Timestamp Utility">
+        <participant name="TimestampUtilService"/>
+        <output message="TimestampUtilServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="format">YYYYMMdd</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Assign_Fecha_Proceso">
+        <participant name="AssignService"/>
+        <output message="AssignServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/FechaProceso" from="/ProcessData/Rone"></assign>
+          <assign to="/ProcessData/FechaArchivo" from="concat(substring(/ProcessData/Rone,7,2), substring(/ProcessData/Rone,5,2), substring(/ProcessData/Rone,1,4))"></assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Mailbox Extract Begin Service">
+        <participant name="MailboxExtractBegin"/>
+        <output message="MailboxExtractBeginServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/input</assign>
+          <assign to="MessageNamePattern" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;.txt&apos;)"></assign>
+          <assign to="ExtractableCount">1</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/Document/Doc" from="/NODS/confirmingGBL/contabilidad/input" append="true"></assign>
+        </input>
+      </operation>
+
+      <operation name="Mailbox Query Service">
+        <participant name="MailboxQuery"/>
+        <output message="MailboxQueryServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/his</assign>
+          <assign to="MessageNamePattern" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;_fin.txt&apos;)"></assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <choice name="Valida_Reprocesamiento?">
+        <select>
+   
+
+      </choice>
+    </sequence>
+    <sequence name="Procesar_Movimientos">
+      <operation name="Assign_Backup_Origen">
+        <participant name="AssignService"/>
+        <output message="AssignServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+          <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;_org.txt&apos;)"></assign>
+          <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/FileToProcess/BackEndFile/@SCIObjectID"></assign>
+          <assign to="/ProcessData/message_to_child/DaysToKeep">5</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Invoke_Backup_Origen">
+        <participant name="InvokeBusinessProcessService"/>
+        <output message="InvokeBusinessProcessServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="INVOKE_MODE">ASYNC</assign>
+          <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Release_Backup_Origen">
+        <participant name="ReleaseService"/>
+        <output message="ReleaseServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="TARGET">/ProcessData/message_to_child</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Mailbox Delete Service">
+        <participant name="MailboxDelete"/>
+        <output message="MailboxDeleteServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="MailboxPath" from="/ProcessData/FileToProcess/MailboxPath"></assign>
+          <assign to="MessageId" from="/ProcessData/FileToProcess/MessageId"></assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Parametria">
+        <participant name="LightweightJDBCAdapterQuery"/>
+        <output message="LightweightJDBCAdapterTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="pool">dhiPool</assign>
+          <assign to="query_type">SELECT</assign>
+          <assign to="result_name">Result</assign>
+          <assign to="row_name">Param</assign>
+          <assign to="sql">select TXT_NAME NAME,TXT_PARAM VAL from DHI_MX_PRC_CONFIG where TXT_NAME like &apos;DHI_CNF_PAG_TREA_%&apos;</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/Info/Param" from="DocToDOM(PrimaryDocument, false, false)/*  " append="true"></assign>
+        </input>
+      </operation>
+
+      <operation name="Extra_Movs">
+        <participant name="LightweightJDBCAdapterQuery"/>
+        <output message="LightweightJDBCAdapterTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="pool">dhiPool</assign>
+          <assign to="query_type">SELECT</assign>
+          <assign to="result_name">Result</assign>
+          <assign to="row_name">Row</assign>
+          <assign to="sql">select pag.id_reg_api,pag.val_tp_pago,pag.val_cnl,pag.imp,pag.val_div_ord  from DHI_MX_AUX_PAGOS_CNF_GBL pag  join DHI_MX_AUX_RESP_PAGOS_CNF_GBL resp  on pag.id_reg_api= resp.val_id_reg  where resp.cve_estatus= &apos;CO&apos;  and to_char(resp.fch_resp,&apos;YYYYMMdd&apos;)=TRUNC(SYSDATE)</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY">
+        <participant name="Translation"/>
+        <output message="TranslationTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="map_name">SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY">
+        <participant name="Translation"/>
+        <output message="TranslationTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="map_name">SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Merge_Interfaces">
+        <participant name="MergeDocument"/>
+        <output message="MergeDocumentInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="Document1" from="/ProcessData/Document/Doc"></assign>
+          <assign to="Document2" from="/ProcessData/PrimaryDocument"></assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Purgado_Tabla_Auxiliar">
+        <participant name="LightweightJDBCAdapterQuery"/>
+        <output message="LightweightJDBCAdapterTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="pool">dhiPool</assign>
+          <assign to="query_type">DELETE</assign>
+          <assign to="result_name">PurgadoResult</assign>
+          <assign to="sql">DELETE FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL WHERE FH_INTER &lt; TRUNC(SYSDATE) - 90</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Assign_Archivo_Final">
+        <participant name="AssignService"/>
+        <output message="AssignServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/input</assign>
+          <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;.txt&apos;)"></assign>
+          <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/PrimaryDocument/@SCIObjectID"></assign>
+          <assign to="/ProcessData/message_to_child/DaysToKeep">1</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Invoke_Archivo_Final">
+        <participant name="InvokeBusinessProcessService"/>
+        <output message="InvokeBusinessProcessServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="INVOKE_MODE">ASYNC</assign>
+          <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Release_Archivo_Final">
+        <participant name="ReleaseService"/>
+        <output message="ReleaseServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="TARGET">/ProcessData/message_to_child</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Assign_Backup_Final">
+        <participant name="AssignService"/>
+        <output message="AssignServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+          <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;_fin.txt&apos;)"></assign>
+          <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/PrimaryDocument/@SCIObjectID"></assign>
+          <assign to="/ProcessData/message_to_child/DaysToKeep">5</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Invoke_Backup_Final">
+        <participant name="InvokeBusinessProcessService"/>
+        <output message="InvokeBusinessProcessServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="INVOKE_MODE">ASYNC</assign>
+          <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+      <operation name="Release_Backup_Final">
+        <participant name="ReleaseService"/>
+        <output message="ReleaseServiceTypeInputMessage">
+          <assign to="." from="*"></assign>
+          <assign to="TARGET">/ProcessData/message_to_child</assign>
+        </output>
+        <input message="inmsg">
+          <assign to="." from="*"></assign>
+        </input>
+      </operation>
+
+    </sequence>
+  </sequence>
+</process>
