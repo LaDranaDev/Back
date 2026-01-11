@@ -1,0 +1,345 @@
+<process name="SNTDR_DHI_BP_MOVIMIENTOS_TRY">
+  <!-- ============================================================
+       BP: Movimientos de Neutralizacion - Confirming Global
+       Version: 2.0 - Basado en ejemplos del equipo
+
+       POOL JDBC: dhiPool (confirmado de ejemplos)
+       TABLAS: DHI_MX_AUX_PAGOS_CNF_GBL, DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+       ============================================================ -->
+
+  <!-- REGLA: Validar si ya existe archivo _fin (ya se proceso) -->
+  <rule name="YaProcesado?">
+    <condition>number(/ProcessData/MailboxQueryResults/TotalMessages) &gt; 0</condition>
+  </rule>
+
+  <sequence name="Strart_Conta_TRY">
+
+    <!-- ========== PASO 1: OBTENER TIMESTAMP ========== -->
+    <operation name="Timestamp Utility">
+      <participant name="TimestampUtilService"/>
+      <output message="TimestampUtilServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="action">current_time</assign>
+        <assign to="format">yyyy-MM-dd HH:mm:ss</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 2: GUARDAR FECHA EN VARIABLE ========== -->
+    <operation name="Assign_Fecha_Proceso">
+      <participant name="AssignService"/>
+      <output message="AssignServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <!-- Formato para nombre archivo: ddMMyyyy -->
+        <assign to="/ProcessData/FechaArchivo" from="concat(substring(/ProcessData/time,9,2), substring(/ProcessData/time,6,2), substring(/ProcessData/time,1,4))" append="true"></assign>
+        <!-- Formato YYYYMMdd para queries -->
+        <assign to="/ProcessData/FechaQuery" from="concat(substring(/ProcessData/time,1,4), substring(/ProcessData/time,6,2), substring(/ProcessData/time,9,2))" append="true"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 3: EXTRAER ARCHIVO DEL MAILBOX ========== -->
+    <operation name="Mailbox Extract Begin Service">
+      <participant name="MailboxExtractBegin"/>
+      <output message="MailboxExtractBeginServiceTypeInputMessage">
+        <assign to="CommitNow">YES</assign>
+        <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/input</assign>
+        <assign to="MessageNamePattern" from="concat('confglobal_movimientos_', /ProcessData/FechaArchivo, '.txt')"></assign>
+        <assign to="ExtractableCount">1</assign>
+      </output>
+      <input message="inmsg">
+        <!-- Guardar el documento original para el merge despues -->
+        <assign to="/ProcessData/FileToProcess/BackEndFile" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MailboxPath" from="string(/inmsg/MailboxPath)" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MessageName" from="string(/inmsg/MessageName)" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MessageId" from="string(/inmsg/MessageId)" append="true"></assign>
+        <!-- Guardar copia del documento original para merge -->
+        <assign to="/ProcessData/DocumentoOriginal" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 4: VERIFICAR SI YA SE PROCESO (BUSCAR _fin.txt) ========== -->
+    <operation name="Mailbox Query Service">
+      <participant name="MailboxQuery"/>
+      <output message="MailboxQueryServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/his</assign>
+        <assign to="MessageNamePattern" from="concat('confglobal_movimientos_', /ProcessData/FechaArchivo, '_fin.txt')"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 5: DECISION - SI YA EXISTE _fin.txt TERMINAR ========== -->
+    <choice name="Valida_Reprocesamiento?">
+      <select>
+        <!-- Si NO existe _fin.txt, continuar procesamiento -->
+        <case ref="YaProcesado?" negative="true" activity="Procesar_Movimientos"/>
+      </select>
+      <!-- Si SI existe _fin.txt, no hace nada y termina -->
+    </choice>
+
+  </sequence>
+
+  <!-- ============================================================
+       SECUENCIA: PROCESAR MOVIMIENTOS (Solo si no existe _fin.txt)
+       ============================================================ -->
+  <sequence name="Procesar_Movimientos">
+
+    <!-- ========== PASO 6: BACKUP DEL ARCHIVO ORIGEN (_org.txt) ========== -->
+    <operation name="Assign_Backup_Origen">
+      <participant name="AssignService"/>
+      <output message="AssignServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+        <assign to="/ProcessData/message_to_child/nbArchivo" from="concat('confglobal_movimientos_', /ProcessData/FechaArchivo, '_org.txt')" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/FileToProcess/BackEndFile/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/DaysToKeep" from="string('5')"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Invoke_Backup_Origen">
+      <participant name="InvokeBusinessProcessService"/>
+      <output message="InvokeBusinessProcessServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="INVOKE_MODE">ASYNC</assign>
+        <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Release_Backup_Origen">
+      <participant name="ReleaseService"/>
+      <output message="ReleaseServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="TARGET">/ProcessData/message_to_child</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 7: BORRAR ARCHIVO ORIGEN DEL MAILBOX ========== -->
+    <operation name="Mailbox Delete Service">
+      <participant name="MailboxDelete"/>
+      <output message="MailboxDeleteServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="MessageId" from="/ProcessData/FileToProcess/MessageId"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 8: OBTENER PARAMETRIA DE CONFIG ========== -->
+    <operation name="Parametria">
+      <participant name="LightweightJDBCAdapterQuery"/>
+      <output message="LightweightJDBCAdapterTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="pool">dhiPool</assign>
+        <assign to="query_type">SELECT</assign>
+        <assign to="result_name">Result</assign>
+        <assign to="row_name">Param</assign>
+        <assign to="sql">SELECT TXT_NAME NAME, TXT_PARAM VAL FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME LIKE 'DHI_CNF_PAG_TREA_%'</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+        <assign to="/ProcessData/Info/Param" from="DocToDOM(PrimaryDocument, false, false)/*" append="true"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 9: EXTRAER MOVIMIENTOS CONFIRMADOS ========== -->
+    <operation name="Extra_Movs">
+      <participant name="LightweightJDBCAdapterQuery"/>
+      <output message="LightweightJDBCAdapterTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="pool">dhiPool</assign>
+        <assign to="query_type">SELECT</assign>
+        <assign to="result_name">Result</assign>
+        <assign to="row_name">Row</assign>
+        <!-- Query para extraer movimientos confirmados del dia -->
+        <assign to="sql">SELECT pag.ID_REG_API, pag.VAL_TP_PAGO, pag.VAL_CNL, pag.IMP, pag.VAL_DIV_ORD FROM DHI_MX_AUX_PAGOS_CNF_GBL pag JOIN DHI_MX_AUX_RESP_PAGOS_CNF_GBL resp ON pag.ID_REG_API = resp.VAL_ID_REG WHERE resp.CVE_ESTATUS = 'CO' AND TRUNC(resp.FCH_RESP) = TRUNC(SYSDATE)</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 10: MAPA - MOVIMIENTO PAGOS ========== -->
+    <operation name="SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY">
+      <participant name="Translation"/>
+      <output message="TranslationTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="map_name">SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY</assign>
+        <!-- Pasar el resultado del query como PrimaryDocument -->
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 11: MAPA - GENERA INTERFACE PAGOS ========== -->
+    <operation name="SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY">
+      <participant name="Translation"/>
+      <output message="TranslationTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="map_name">SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+        <!-- Guardar resultado del mapa para el merge -->
+        <assign to="/ProcessData/DocumentoNeutralizacion" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 12: MERGE - CONCATENAR ARCHIVOS ========== -->
+    <!-- Combina el archivo original con los movimientos de neutralizacion -->
+    <!-- Segun IBM docs: document1 + document2 -> PrimaryDocument -->
+    <operation name="Merge_Interfaces">
+      <participant name="MergeDocument"/>
+      <output message="MergeDocumentInputMessage">
+        <assign to="." from="*"></assign>
+        <!-- Documento 1: Archivo original del mailbox -->
+        <assign to="document1" from="/ProcessData/DocumentoOriginal/@SCIObjectID"></assign>
+        <!-- Documento 2: Resultado del mapa de neutralizacion -->
+        <assign to="document2" from="/ProcessData/DocumentoNeutralizacion/@SCIObjectID"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+        <!-- El resultado queda en PrimaryDocument automaticamente -->
+      </input>
+    </operation>
+
+    <!-- ========== PASO 13: PURGADO - ELIMINAR REGISTROS ANTIGUOS ========== -->
+    <operation name="Purgado_Tabla_Auxiliar">
+      <participant name="LightweightJDBCAdapterQuery"/>
+      <output message="LightweightJDBCAdapterTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="pool">dhiPool</assign>
+        <assign to="query_type">DELETE</assign>
+        <assign to="result_name">PurgadoResult</assign>
+        <!-- Eliminar registros mayores a 90 dias -->
+        <assign to="sql">DELETE FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL WHERE FH_INTER &lt; TRUNC(SYSDATE) - 90</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 14: DEPOSITAR ARCHIVO CONCATENADO EN INPUT ========== -->
+    <operation name="Assign_Archivo_Final">
+      <participant name="AssignService"/>
+      <output message="AssignServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/input</assign>
+        <assign to="/ProcessData/message_to_child/nbArchivo" from="concat('confglobal_movimientos_', /ProcessData/FechaArchivo, '.txt')" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/PrimaryDocument/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/DaysToKeep" from="string('1')"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Invoke_Archivo_Final">
+      <participant name="InvokeBusinessProcessService"/>
+      <output message="InvokeBusinessProcessServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="INVOKE_MODE">ASYNC</assign>
+        <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Release_Archivo_Final">
+      <participant name="ReleaseService"/>
+      <output message="ReleaseServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="TARGET">/ProcessData/message_to_child</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 15: BACKUP ARCHIVO FINAL (_fin.txt) ========== -->
+    <operation name="Assign_Backup_Final">
+      <participant name="AssignService"/>
+      <output message="AssignServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+        <assign to="/ProcessData/message_to_child/nbArchivo" from="concat('confglobal_movimientos_', /ProcessData/FechaArchivo, '_fin.txt')" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/PrimaryDocument/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/message_to_child/DaysToKeep" from="string('5')"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Invoke_Backup_Final">
+      <participant name="InvokeBusinessProcessService"/>
+      <output message="InvokeBusinessProcessServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="INVOKE_MODE">ASYNC</assign>
+        <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <!-- ========== PASO 16: RELEASE FINAL - LIMPIAR TODO PROCESSDATA ========== -->
+    <operation name="LimpiaProcessData_Final">
+      <participant name="ReleaseService"/>
+      <output message="ReleaseServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <!-- Limpiar todo lo que se uso en el proceso -->
+        <assign to="TARGET">/ProcessData/FileToProcess | /ProcessData/DocumentoOriginal | /ProcessData/DocumentoNeutralizacion | /ProcessData/Info | /ProcessData/message_to_child | /ProcessData/FechaArchivo | /ProcessData/FechaQuery | /ProcessData/MailboxQueryResults | /ProcessData/PrimaryDocument | /ProcessData/INVOKE_ID_LIST</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+  </sequence>
+
+</process>
+
+<!-- ============================================================
+     CAMBIOS REALIZADOS (basado en ejemplos del equipo):
+
+     1. Pool JDBC: dhiPool (confirmado de SNTDR_DHI_BP_PROCESA_ARCHIVOS_PAGOS)
+
+     2. Query movimientos:
+        SELECT pag.* FROM DHI_MX_AUX_PAGOS_CNF_GBL pag
+        JOIN DHI_MX_AUX_RESP_PAGOS_CNF_GBL resp
+        ON pag.ID_REG_API = resp.VAL_ID_REG
+        WHERE resp.CVE_ESTATUS = 'CO'
+        AND TRUNC(resp.FCH_RESP) = TRUNC(SYSDATE)
+
+     3. Mailbox Extract: Guarda documento en FileToProcess/BackEndFile
+        (patron del equipo)
+
+     4. Merge: Usa DocumentoOriginal + DocumentoNeutralizacion
+
+     5. Release Final: Limpia todo el ProcessData al terminar
+        (patron de SNTDR_CNF_BP_COBROS_PAGOS_DEPURA_RESPUESTA)
+
+     PENDIENTE POR REVISAR CON EQUIPO:
+     - Confirmar si los Translation necesitan PrimaryDocument explicito
+     - Validar estructura exacta del Merge
+     - Confirmar columnas del SELECT en Extra_Movs
+     ============================================================ -->
