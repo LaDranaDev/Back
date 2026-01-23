@@ -1,0 +1,107 @@
+
+las 2 tablas mas  
+select * from DHI_MX_AUX_PAGOS_CNF_GBL -------------------------- hacer purgedo por fch_reg;
+ 
+select * from DHI_MX_AUX_RESP_PAGOS_CNF_GBL --------hacer purgado por fch_resp
+ 
+el properties que jalara
+dhi_properties_pag.properties   
+
+ esto creo e sun ejemplo de insert de la tabla de DHI_MX_PRC_CONFIG  parametria  en 
+insert into DHI_MX_PRC_CONFIG (ID_CONFIG,TXT_NAME,TXT_PARAM,FCH_REGISTRO,TXT_LOGIN,FCH_ACTUALIZA,TXT_ACTIVO) values((select max (ID_CONFIG)+1 from DHI_MX_PRC_CONFIG),'DHI_CNF_PAG_TREA_SANCTCCC_LOA_CARGO_INT','PTE',to_timestamp('07/01/26 12:46:39.640140000','DD/MM/RR HH24:MI:SSXFF'),'LOGIN',to_date('07/01/26','DD/MM/RR'),'1');
+
+esto es el describe de las tablas 
+describe DHI_MX_PRC_CONFIG
+
+Nombre        ¿Nulo?   Tipo          
+------------- -------- ------------- 
+ID_CONFIG     NOT NULL NUMBER        
+TXT_NAME      NOT NULL VARCHAR2(500) 
+TXT_PARAM              CLOB          
+FCH_REGISTRO           TIMESTAMP(6)  
+TXT_LOGIN              VARCHAR2(500) 
+FCH_ACTUALIZA          DATE          
+TXT_ACTIVO             CHAR(1)       
+
+
+
+
+describe DHI_MX_AUX_PAGOS_CNF_GBL
+
+Nombre            ¿Nulo?   Tipo          
+----------------- -------- ------------- 
+ID_PAGOS_GBL_PK   NOT NULL NUMBER(10)    
+VAL_TP_PAGO                VARCHAR2(4)   
+ID_REG_API                 VARCHAR2(20)  
+VAL_CNL                    VARCHAR2(3)   
+COD_EMP                    VARCHAR2(4)   
+COD_PTO_VTA                VARCHAR2(4)   
+VAL_MED_ENT                VARCHAR2(6)   
+VAL_REF                    VARCHAR2(7)   
+COD_USU_CAP                VARCHAR2(10)  
+COD_USU_SOL                VARCHAR2(10)  
+COD_CVE_TRA                VARCHAR2(5)   
+COD_CVE_OPER               VARCHAR2(8)   
+IMP                        NUMBER(13,2)  
+TXT_COM                    VARCHAR2(120) 
+VAL_DIV_ORD                VARCHAR2(4)   
+VAL_CTA_ORD                VARCHAR2(35)  
+TXT_NOM_ORD                VARCHAR2(140) 
+VAL_IP                     VARCHAR2(15)  
+VAL_BUC_LI                 VARCHAR2(20)  
+VAL_CTA_REC                VARCHAR2(35)  
+TXT_NOM_REC                VARCHAR2(140) 
+VAL_RFC_BEN                VARCHAR2(18)  
+ID_INT                     VARCHAR2(35)  
+TXT_NOMB_INT               VARCHAR2(70)  
+TXT_CIUD_INT               VARCHAR2(30)  
+COD_CPAIS_INT              VARCHAR2(4)   
+VAL_BIC_INT                VARCHAR2(11)  
+COD_CPAIS_REC              VARCHAR2(4)   
+VAL_BIC_REC                VARCHAR2(11)  
+ID_BAN_REC                 VARCHAR2(35)  
+TXT_NOM_INS_REC            VARCHAR2(70)  
+TXT_CUID_INS_REC           VARCHAR2(30)  
+VAL_CTA_BCO_REC            VARCHAR2(35)  
+VAL_NUM_CTA_REC            VARCHAR2(35)  
+VAL_TIP_CTA_REC            VARCHAR2(3)   
+TXT_NOMB_REC               VARCHAR2(140) 
+TXT_CALLE_BEN_REC          VARCHAR2(70)  
+VAL_NUMB_BEN_REC           VARCHAR2(7)   
+VAL_CP_BEN_REC             VARCHAR2(16)  
+TXT_DIR_BEN_REC            VARCHAR2(70)  
+COD_CVE_DIV_REC            VARCHAR2(4)   
+IMP_ABONO                  NUMBER(14,2)  
+TXT_CIUD_REC               VARCHAR2(35)  
+COD_PAIS_REC               VARCHAR2(4)   
+TXT_INF_REM                VARCHAR2(140) 
+ID_CAN_CAM                 VARCHAR2(2)   
+COD_CVE_DES                VARCHAR2(10)  
+VAL_TIPO_BEN_REC           VARCHAR2(1)   
+VAL_PROP_TRANS             VARCHAR2(3)   
+FCH_REG                    DATE          
+VAL_ESTAT                  VARCHAR2(4)   
+VAL_SECU                   NUMBER(7)     
+
+
+
+describe DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+
+Nombre                   ¿Nulo?   Tipo          
+------------------------ -------- ------------- 
+ID_RESP_PAGOS_GBL_PK     NOT NULL NUMBER(10)    
+VAL_ID_ARCH                       VARCHAR2(8)   
+VAL_ID_REG                        VARCHAR2(50)  
+MSG_RESP                          VARCHAR2(30)  
+CVE_ESTATUS                       VARCHAR2(2)   
+REFERENCIA_CONTROL_CANAL          VARCHAR2(50)  
+DESCRIPCION_CVE_ESTATUS           VARCHAR2(255) 
+FCH_RESP                          DATE          
+VAL_NUM_REG                       NUMBER        
+
+
+ 
+ 
+la etiqueta ejemplo de como lo están generando 
+/ProcessData/Info/Params/Param[NAME='DHI_CNF_PAG_TREA_SANCTCCC_LOA_CARGO_INT']/VAL/text()
+ 
