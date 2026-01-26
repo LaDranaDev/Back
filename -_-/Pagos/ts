@@ -1,0 +1,209 @@
+-- ============================================================
+-- TEST MANUAL DE PURGADO
+-- Simula lo que hace el BP sin necesidad de ejecutarlo
+-- ============================================================
+
+-- ============================================================
+-- PASO 1: VERIFICAR CONFIGURACION EN DHI_MX_PRC_CONFIG
+-- ============================================================
+-- Ver los parametros de purgado configurados
+SELECT TXT_NAME, TXT_PARAM AS DIAS_PURGADO, TXT_ACTIVO
+FROM DHI_MX_PRC_CONFIG
+WHERE TXT_NAME LIKE 'DHI_CNF_PAG_TREA_PURGADO%';
+
+-- Resultado esperado:
+-- TXT_NAME                              | DIAS_PURGADO | TXT_ACTIVO
+-- DHI_CNF_PAG_TREA_PURGADO_MOVS         | 90           | 1
+-- DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS    | 90           | 1
+-- DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS   | 90           | 1
+
+
+-- ============================================================
+-- PASO 2: COUNT - VER CUANTOS REGISTROS SE BORRARIAN
+-- ============================================================
+-- Esto es lo que hacen los servicios Count_Purgado_* del BP
+
+-- Tabla 1: DHI_MX_AUX_MOVS_PAGOS_CNF_GBL (por FH_OPER)
+SELECT 'DHI_MX_AUX_MOVS_PAGOS_CNF_GBL' AS TABLA, COUNT(*) AS REGISTROS_A_PURGAR
+FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_MOVS');
+
+-- Tabla 2: DHI_MX_AUX_PAGOS_CNF_GBL (por FCH_REG)
+SELECT 'DHI_MX_AUX_PAGOS_CNF_GBL' AS TABLA, COUNT(*) AS REGISTROS_A_PURGAR
+FROM DHI_MX_AUX_PAGOS_CNF_GBL
+WHERE FCH_REG < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS');
+
+-- Tabla 3: DHI_MX_AUX_RESP_PAGOS_CNF_GBL (por FCH_RESP)
+SELECT 'DHI_MX_AUX_RESP_PAGOS_CNF_GBL' AS TABLA, COUNT(*) AS REGISTROS_A_PURGAR
+FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+WHERE FCH_RESP < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS');
+
+
+-- ============================================================
+-- PASO 3: INSERTAR DATOS DE PRUEBA (REGISTROS VIEJOS)
+-- ============================================================
+-- IMPORTANTE: Solo ejecutar en ambiente de pruebas!
+-- Estos registros tienen fecha de hace 100 dias, por lo que
+-- seran purgados cuando el BP se ejecute (si purgado = 90 dias)
+
+-- Datos de prueba para DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+-- (Fecha FH_OPER de hace 100 dias en formato YYYYMMDD)
+/*
+INSERT INTO DHI_MX_AUX_MOVS_PAGOS_CNF_GBL (
+    -- Ajusta los campos segun la estructura real de tu tabla
+    FH_OPER,
+    -- otros campos necesarios...
+) VALUES (
+    TO_CHAR(TRUNC(SYSDATE) - 100, 'YYYYMMDD'),  -- Fecha de hace 100 dias
+    -- otros valores...
+);
+*/
+
+-- Datos de prueba para DHI_MX_AUX_PAGOS_CNF_GBL
+-- (Fecha FCH_REG de hace 100 dias)
+/*
+INSERT INTO DHI_MX_AUX_PAGOS_CNF_GBL (
+    ID_REG_API,
+    FCH_REG,
+    -- otros campos necesarios...
+) VALUES (
+    'TEST_PURGADO_001',
+    TRUNC(SYSDATE) - 100,  -- Fecha de hace 100 dias
+    -- otros valores...
+);
+*/
+
+-- Datos de prueba para DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+-- (Fecha FCH_RESP de hace 100 dias)
+/*
+INSERT INTO DHI_MX_AUX_RESP_PAGOS_CNF_GBL (
+    VAL_ID_REG,
+    FCH_RESP,
+    -- otros campos necesarios...
+) VALUES (
+    'TEST_PURGADO_001',
+    TRUNC(SYSDATE) - 100,  -- Fecha de hace 100 dias
+    -- otros valores...
+);
+
+COMMIT;
+*/
+
+
+-- ============================================================
+-- PASO 4: VER REGISTROS QUE SE VAN A BORRAR (PREVIEW)
+-- ============================================================
+-- Antes de borrar, ver que registros se eliminarian
+
+-- Preview tabla 1
+SELECT 'PREVIEW - DHI_MX_AUX_MOVS_PAGOS_CNF_GBL' AS INFO, FH_OPER, COUNT(*) OVER() AS TOTAL
+FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_MOVS')
+AND ROWNUM <= 10;  -- Solo primeros 10 para no saturar
+
+-- Preview tabla 2
+SELECT 'PREVIEW - DHI_MX_AUX_PAGOS_CNF_GBL' AS INFO, ID_REG_API, FCH_REG, COUNT(*) OVER() AS TOTAL
+FROM DHI_MX_AUX_PAGOS_CNF_GBL
+WHERE FCH_REG < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS')
+AND ROWNUM <= 10;
+
+-- Preview tabla 3
+SELECT 'PREVIEW - DHI_MX_AUX_RESP_PAGOS_CNF_GBL' AS INFO, VAL_ID_REG, FCH_RESP, COUNT(*) OVER() AS TOTAL
+FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+WHERE FCH_RESP < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS')
+AND ROWNUM <= 10;
+
+
+-- ============================================================
+-- PASO 5: EJECUTAR DELETE (LO QUE HACE EL BP)
+-- ============================================================
+-- CUIDADO: Esto borra registros de verdad!
+-- Recomendacion: Primero hacer SELECT COUNT para verificar
+
+-- DELETE Tabla 1: DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+/*
+DELETE FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_MOVS');
+-- Ver cuantos se borraron: SQL%ROWCOUNT
+*/
+
+-- DELETE Tabla 2: DHI_MX_AUX_PAGOS_CNF_GBL
+/*
+DELETE FROM DHI_MX_AUX_PAGOS_CNF_GBL
+WHERE FCH_REG < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS');
+*/
+
+-- DELETE Tabla 3: DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+/*
+DELETE FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+WHERE FCH_RESP < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS');
+
+COMMIT;
+*/
+
+
+-- ============================================================
+-- PASO 6: VERIFICAR DESPUES DEL PURGADO
+-- ============================================================
+-- Despues de ejecutar los DELETE, estos COUNT deberian dar 0
+
+SELECT 'DHI_MX_AUX_MOVS_PAGOS_CNF_GBL' AS TABLA, COUNT(*) AS REGISTROS_VIEJOS
+FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL
+WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_MOVS')
+UNION ALL
+SELECT 'DHI_MX_AUX_PAGOS_CNF_GBL', COUNT(*)
+FROM DHI_MX_AUX_PAGOS_CNF_GBL
+WHERE FCH_REG < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS')
+UNION ALL
+SELECT 'DHI_MX_AUX_RESP_PAGOS_CNF_GBL', COUNT(*)
+FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+WHERE FCH_RESP < TRUNC(SYSDATE) -
+      (SELECT TO_NUMBER(TXT_PARAM) FROM DHI_MX_PRC_CONFIG WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS');
+
+
+-- ============================================================
+-- EXTRA: CAMBIAR DIAS DE PURGADO PARA PRUEBAS
+-- ============================================================
+-- Si quieres probar con menos dias (ej: 30 en vez de 90)
+
+/*
+-- Cambiar a 30 dias
+UPDATE DHI_MX_PRC_CONFIG SET TXT_PARAM = '30' WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_MOVS';
+UPDATE DHI_MX_PRC_CONFIG SET TXT_PARAM = '30' WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS';
+UPDATE DHI_MX_PRC_CONFIG SET TXT_PARAM = '30' WHERE TXT_NAME = 'DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS';
+COMMIT;
+
+-- Regresar a 90 dias
+UPDATE DHI_MX_PRC_CONFIG SET TXT_PARAM = '90' WHERE TXT_NAME LIKE 'DHI_CNF_PAG_TREA_PURGADO%';
+COMMIT;
+*/
+
+
+-- ============================================================
+-- RESUMEN DE QUERIES SIMPLES (SIN SUBQUERY)
+-- ============================================================
+-- Si prefieres hardcodear los 90 dias directamente:
+
+-- COUNT con 90 dias hardcodeado
+SELECT COUNT(*) FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) - 90;
+SELECT COUNT(*) FROM DHI_MX_AUX_PAGOS_CNF_GBL WHERE FCH_REG < TRUNC(SYSDATE) - 90;
+SELECT COUNT(*) FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL WHERE FCH_RESP < TRUNC(SYSDATE) - 90;
+
+-- DELETE con 90 dias hardcodeado (descomentar para ejecutar)
+/*
+DELETE FROM DHI_MX_AUX_MOVS_PAGOS_CNF_GBL WHERE to_date(FH_OPER,'YYYYMMDD') < TRUNC(SYSDATE) - 90;
+DELETE FROM DHI_MX_AUX_PAGOS_CNF_GBL WHERE FCH_REG < TRUNC(SYSDATE) - 90;
+DELETE FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL WHERE FCH_RESP < TRUNC(SYSDATE) - 90;
+COMMIT;
+*/
