@@ -1,0 +1,40 @@
+CREATE OR REPLACE TRIGGER TRG_DHI_INS_PAGOS_SECU_01
+BEFORE INSERT ON DHI_MX_AUX_PAGOS_CNF_GBL
+FOR EACH ROW
+DECLARE
+    v_valor  NUMBER;
+BEGIN
+    BEGIN
+        SELECT VAL_SECU
+          INTO v_valor
+          FROM DHI_MX_CTL_SECU_DIARIO
+         WHERE FCH_DIA = TRUNC(SYSDATE)
+         FOR UPDATE;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+ 
+            BEGIN
+                INSERT INTO DHI_MX_CTL_SECU_DIARIO (FCH_DIA, VAL_SECU)
+                VALUES (TRUNC(SYSDATE), 60000);
+                v_valor := 60000;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN
+ 
+                    SELECT VAL_SECU
+                      INTO v_valor
+                      FROM DHI_MX_CTL_SECU_DIARIO
+                     WHERE FCH_DIA = TRUNC(SYSDATE)
+                     FOR UPDATE;
+            END;
+    END;
+ 
+ 
+    :NEW.VAL_SECU := v_valor;
+ 
+    UPDATE DHI_MX_CTL_SECU_DIARIO
+       SET VAL_SECU = VAL_SECU + 1
+     WHERE FCH_DIA = TRUNC(SYSDATE);
+ 
+ 
+END;
+ 

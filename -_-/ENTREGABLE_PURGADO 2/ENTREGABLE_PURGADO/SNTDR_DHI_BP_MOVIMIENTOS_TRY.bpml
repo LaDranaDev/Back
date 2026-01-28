@@ -1,0 +1,355 @@
+<process name="SNTDR_DHI_BP_MOVIMIENTOS_TRY">
+  <rule name="YaProcesado?">
+    <condition>number(/ProcessData/MailboxQueryResults/TotalMessages) &gt; 0</condition>
+  </rule>
+
+  <sequence name="Strart_Conta_TRY">
+    <operation name="Timestamp Utility">
+      <participant name="TimestampUtilService"/>
+      <output message="TimestampUtilServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="action">current_time</assign>
+        <assign to="format">YYYY-MM-dd</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Assign_Val">
+      <participant name="AssignService"/>
+      <output message="AssignServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="/ProcessData/FechaArchivo" from="concat(substring(/ProcessData/time,9,2), substring(/ProcessData/time,6,2), substring(/ProcessData/time,1,4))" append="true"></assign>
+        <assign to="/ProcessData/FechaQuery" from="concat(substring(/ProcessData/time,1,4), substring(/ProcessData/time,6,2), substring(/ProcessData/time,9,2))" append="true"></assign>
+        <assign to="/ProcessData/Info/Date" from="concat(substring(/ProcessData/time,1,4), substring(/ProcessData/time,6,2), substring(/ProcessData/time,9,2))" append="true"></assign>
+        <assign to="/ProcessData/Queries/NUMDO" from="sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Query_NUMDO&apos;)" append="true"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="." from="*"></assign>
+      </input>
+    </operation>
+
+    <operation name="Mailbox Extract Begin Service">
+      <participant name="MailboxExtractBegin"/>
+      <output message="MailboxExtractBeginServiceTypeInputMessage">
+        <assign to="CommitNow">NO</assign>
+        <assign to="MessageId" from="/ProcessData/RoutingRequest/RoutingRequest/MessageId[1]/text()"></assign>
+        <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/input</assign>
+        <assign to="MessageNamePattern" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;.txt&apos;)"></assign>
+        <assign to="ExtractableCount">1</assign>
+      </output>
+      <input message="inmsg">
+        <assign to="/ProcessData/DocumentoOriginal" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/BackEndFile" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MailboxPath" from="string(/inmsg/MailboxPath)" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MessageId" from="string(/inmsg/MessageId)" append="true"></assign>
+        <assign to="/ProcessData/FileToProcess/MessageName" from="string(/inmsg/MessageName)" append="true"></assign>
+      </input>
+    </operation>
+
+    <operation name="Mailbox Query Service">
+      <participant name="MailboxQuery"/>
+      <output message="MailboxQueryServiceTypeInputMessage">
+        <assign to="." from="*"></assign>
+        <assign to="MailboxPath">/NODS/confirmingGBL/contabilidad/his</assign>
+        <assign to="MessageNamePattern" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo/text(), &apos;_fin.txt&apos;)"></assign>
+      </output>
+      <input message="inmsg">
+        <assign to="/ProcessData/MailboxQueryResults/TotalMessages" from="count(/inmsg/Message/MessageId)" append="true"></assign>
+      </input>
+    </operation>
+
+    <choice name="Valida_Reprocesamiento?">
+      <select>
+        <case ref="YaProcesado?" negative="true" activity="Procesar_Movimientos"/>
+      </select>
+
+      <sequence name="Procesar_Movimientos">
+        <operation name="Assign_Backup_Origen">
+          <participant name="AssignService"/>
+          <output message="AssignServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+            <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;_org.txt&apos;)" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/FileToProcess/BackEndFile/@SCIObjectID" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/DaysToKeep" from="string(&apos;5&apos;)"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Invoke_Backup_Origen">
+          <participant name="InvokeBusinessProcessService"/>
+          <output message="InvokeBusinessProcessServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="INVOKE_MODE">ASYNC</assign>
+            <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Release_Backup_Origen">
+          <participant name="ReleaseService"/>
+          <output message="ReleaseServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="TARGET">/ProcessData/message_to_child</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Mailbox Delete Service">
+          <participant name="MailboxDelete"/>
+          <output message="MailboxDeleteServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="MailboxPath" from="/ProcessData/FileToProcess/MailboxPath/text()"></assign>
+            <assign to="MessageId" from="/ProcessData/FileToProcess/MessageId"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Parametros">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">SELECT</assign>
+            <assign to="result_name">Result</assign>
+            <assign to="row_name">Param</assign>
+            <assign to="sql" from="sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Parametro&apos;)"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/Info/Params/" from="DocToDOM(PrimaryDocument,&apos;false&apos;,&apos;false&apos;)/*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Extra_Movs">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">SELECT</assign>
+            <assign to="result_name">Result</assign>
+            <assign to="row_name">Row</assign>
+            <assign to="sql" from="sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Movimiento&apos;)"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY">
+          <participant name="Translation"/>
+          <output message="TranslationTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="map_name">SNTDR_DHI_MAP_GENERA_INTER_PAGOS_TRY</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/DocumentoNeutralizacion" from="/inmsg/PrimaryDocument/@SCIObjectID" append="true"></assign>
+          </input>
+        </operation>
+
+        <operation name="SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY">
+          <participant name="Translation"/>
+          <output message="TranslationTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="map_name">SNTDR_DHI_MAP_MOVIMIENTO_PAGOS_TRY</assign>
+            <assign to="PrimaryDocument" from="/ProcessData/DocumentoNeutralizacion/@SCIObjectID"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="MergeDocument">
+          <participant name="MergeDocument"/>
+          <output message="MergeDocumentInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="document1">/ProcessData/DocumentoOriginal</assign>
+            <assign to="document2">/ProcessData/DocumentoNeutralizacion</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/MergeDoc/result/@SCIObjectID" from="string(/inmsg/PrimaryDocument/@SCIObjectID)" append="true"></assign>
+          </input>
+        </operation>
+
+        <operation name="Assign_Archivo_Final">
+          <participant name="AssignService"/>
+          <output message="AssignServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/input</assign>
+            <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;.txt&apos;)" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/MergeDoc/result/@SCIObjectID" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/DaysToKeep" from="string(&apos;1&apos;)"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Invoke_Archivo_Final">
+          <participant name="InvokeBusinessProcessService"/>
+          <output message="InvokeBusinessProcessServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="INVOKE_MODE">ASYNC</assign>
+            <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Release_Archivo_Final">
+          <participant name="ReleaseService"/>
+          <output message="ReleaseServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="TARGET">/ProcessData/message_to_child</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Assign_Backup_Final">
+          <participant name="AssignService"/>
+          <output message="AssignServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="/ProcessData/message_to_child/nbfich">/NODS/confirmingGBL/contabilidad/his</assign>
+            <assign to="/ProcessData/message_to_child/nbArchivo" from="concat(&apos;confglobal_movimientos_&apos;, /ProcessData/FechaArchivo, &apos;_fin.txt&apos;)" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/documentADD" from="/ProcessData/MergeDoc/result/@SCIObjectID" append="true"></assign>
+            <assign to="/ProcessData/message_to_child/DaysToKeep" from="string(&apos;5&apos;)"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Invoke_Backup_Final">
+          <participant name="InvokeBusinessProcessService"/>
+          <output message="InvokeBusinessProcessServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="INVOKE_MODE">ASYNC</assign>
+            <assign to="WFD_NAME">SNTDR_DHI_BP_MAILBOX_ADD</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Count_Purgado_MOVS">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">SELECT</assign>
+            <assign to="result_name">CountMovs</assign>
+            <assign to="row_name">Row</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Count_MOVS&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_MOVS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/PurgadoInfo/MOVS_Registros" from="DocToDOM(PrimaryDocument,&apos;false&apos;,&apos;false&apos;)/Row/TOTAL/text()"></assign>
+          </input>
+        </operation>
+
+        <operation name="Purgado_Tabla_Auxiliar">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">UPDATE</assign>
+            <assign to="result_name">PurgadoResult</assign>
+            <assign to="row_name">Result</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Purgado&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_MOVS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Count_Purgado_AUX_PAGOS">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">SELECT</assign>
+            <assign to="result_name">CountAuxPagos</assign>
+            <assign to="row_name">Row</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Count_AUX_PAGOS&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/PurgadoInfo/AUX_PAGOS_Registros" from="DocToDOM(PrimaryDocument,&apos;false&apos;,&apos;false&apos;)/Row/TOTAL/text()"></assign>
+          </input>
+        </operation>
+
+        <operation name="Purgado_AUX_PAGOS_CNF_GBL">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">UPDATE</assign>
+            <assign to="result_name">PurgadoAuxPagosResult</assign>
+            <assign to="row_name">Result</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Purgado_AUX_PAGOS&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_AUX_PAGOS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="Count_Purgado_RESP_PAGOS">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">SELECT</assign>
+            <assign to="result_name">CountRespPagos</assign>
+            <assign to="row_name">Row</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Count_RESP_PAGOS&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="/ProcessData/PurgadoInfo/RESP_PAGOS_Registros" from="DocToDOM(PrimaryDocument,&apos;false&apos;,&apos;false&apos;)/Row/TOTAL/text()"></assign>
+          </input>
+        </operation>
+
+        <operation name="Purgado_AUX_RESP_PAGOS_CNF_GBL">
+          <participant name="LightweightJDBCAdapterQuery"/>
+          <output message="LightweightJDBCAdapterTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="pool">dhiPool</assign>
+            <assign to="query_type">UPDATE</assign>
+            <assign to="result_name">PurgadoRespPagosResult</assign>
+            <assign to="row_name">Result</assign>
+            <assign to="sql" from="concat(sci-get-property(&apos;dhi_properties_pag&apos;,&apos;SNTDR_DHI_BP_MOVIMIENTOS_TRY.Purgado_RESP_PAGOS&apos;), &apos; &apos;, /ProcessData/Info/Params/Param[NAME=&apos;DHI_CNF_PAG_TREA_PURGADO_RESP_PAGOS&apos;]/VAL/text())"></assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+        <operation name="LimpiaProcessData_Final">
+          <participant name="ReleaseService"/>
+          <output message="ReleaseServiceTypeInputMessage">
+            <assign to="." from="*"></assign>
+            <assign to="TARGET">/ProcessData/FileToProcess | /ProcessData/DocumentoOriginal | /ProcessData/DocumentoNeutralizacion | /ProcessData/Info | /ProcessData/message_to_child | /ProcessData/FechaArchivo | /ProcessData/FechaQuery | /ProcessData/MailboxQueryResults | /ProcessData/PrimaryDocument | /ProcessData/INVOKE_ID_LIST | /ProcessData/Queries</assign>
+          </output>
+          <input message="inmsg">
+            <assign to="." from="*"></assign>
+          </input>
+        </operation>
+
+      </sequence>
+    </choice>
+    <onFault>
+      <sequence name="OF_BP_Error">
+        <assign name="Assign" to="/ProcessData/BP_Error">True</assign>
+      </sequence>
+    </onFault>
+  </sequence>
+</process>
+
