@@ -1,0 +1,23 @@
+SELECT fch_dia, TO_CHAR(fch_dia,'YYYY-MM-DD HH24:MI:SS') AS fch_dia_hora, val_secu
+FROM DHI_MX_CTL_SECU_DIARIO
+WHERE fch_dia = DATE '2026-01-27';
+
+
+
+SELECT fch_dia, TO_CHAR(fch_dia,'YYYY-MM-DD HH24:MI:SS') AS fch_dia_hora, val_secu
+FROM DHI_MX_CTL_SECU_DIARIO
+WHERE fch_dia >= DATE '2026-01-27'
+  AND fch_dia <  DATE '2026-01-28';
+
+
+
+SELECT column_name, nullable, identity_column, data_default
+FROM user_tab_cols
+WHERE table_name = 'DHI_MX_AUX_PAGOS_CNF_GBL'
+  AND column_name IN ('ID_PAGOS_GBL_PK','VAL_SECU');
+
+
+SELECT trigger_name, status, triggering_event
+FROM user_triggers
+WHERE table_name = 'DHI_MX_AUX_PAGOS_CNF_GBL'
+ORDER BY trigger_name;
