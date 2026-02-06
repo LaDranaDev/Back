@@ -1,0 +1,144 @@
+[2026-02-06 17:34:14.547] DEBUG 000620010005 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_str3 [TranslationServiceImpl] processData() completed ... 
+[2026-02-06 17:36:22.907] DEBUG 000620130024 TRANSLATION.TRANSLATION_UTIL.DEB_XpathStatusRpt_str1 create CDAtaSection for status_rpt 
+[2026-02-06 17:36:23.518] DEBUG 000620130024 TRANSLATION.TRANSLATION_UTIL.DEB_XpathStatusRpt_str1 create CDAtaSection for status_rpt 
+[2026-02-06 17:40:33.801] DEBUG 000620010001 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_str1 [TranslationServiceImpl] processData() starting... 
+[2026-02-06 17:40:33.801] DEBUG 000620010002 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_str2 [TranslationServiceImpl] map_name is SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO 
+[2026-02-06 17:40:33.802] DEBUG 000620070001 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngine_LargeFile translation large file support threshold = 15000000 
+[2026-02-06 17:40:33.802] DEBUG Use JDBC driver Identifier Quote String = false
+[2026-02-06 17:40:33.802] DEBUG 000000000000 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngine_MaximumDiskSpaceAllowed  
+[2026-02-06 17:40:33.802] DEBUG 000620070001 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngine_LargeFile translation large file support threshold = false 
+[2026-02-06 17:40:33.802] DEBUG 000620010003 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_largeFileSupport [TranslationServiceImpl] large file support = false 
+[2026-02-06 17:40:33.802] DEBUG 000620070017 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_map Translating using map SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO ... 
+[2026-02-06 17:40:33.802] DEBUG 000610070020 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_event3 Created and fired the event =Event: (SystemMonitoring.Translation.TranslationBegin.13) - Normal
+	TimeStamp	= 1770421233802
+	principal	= admin
+	actionType	= TranslationBegin
+	DESCRIPTION	= TRANSLATION: BEGIN SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO
+	adminAuditId	= 80810919c354dbef6node1
+	time	= 2026-02-06 17:40:33.802
+ 
+[2026-02-06 17:40:33.81] DEBUG 000620060001 TRANSLATION.TRANSLATION_BLOCKPROCESSOR.DEB_SQLBlockHandler_dbPool [SQLBlockHandler] dbPool = dhiPool 
+[2026-02-06 17:40:33.81] DEBUG 000620070007 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_str2 Reading input... 
+[2026-02-06 17:40:33.814] DEBUG 000620070009 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_ExecutionTime finished input translation phase - execution time 0.004 seconds 
+[2026-02-06 17:40:33.814] DEBUG 000620070010 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_NumberEntries number entries paged in =0 
+[2026-02-06 17:40:33.814] DEBUG 000620070011 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_NumberEntries2 number entries paged out =0 
+[2026-02-06 17:40:33.814] DEBUG 000720060012 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_NumberSort number sorts =0 
+[2026-02-06 17:40:33.814] DEBUG 000620070008 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_str3 Writing output... 
+[2026-02-06 17:40:33.814] ALL [SQLWriter] getPreparedStatementForSQLString() : Inserting into batch map Key: INSERT INTO DHI_MX_AUX_RESP_PAGOS_CNF_GBL (REFERENCIA_CONTROL_CANAL, VAL_NUM_REG, MSG_RESP, DESCRIPCION_CVE_ESTATUS, ID_RESP_PAGOS_GBL_PK, FCH_RESP, VAL_ID_REG, CVE_ESTATUS, VAL_ID_ARCH) VALUES ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? ), value: com.sterlingcommerce.woodstock.translator.util.SQLWriter$PreparedBatchStatement@4a1ba04b
+[2026-02-06 17:40:33.814] ALL [SQLWriter] executeSQL() : SQL batching is off
+[2026-02-06 17:40:33.818] ERROR 000610130014 TRANSLATION.TRANSLATION_UTIL.ERR_SQLWriter_exception7 TRANSLATOR: SQLException while performing operation for DHI_MX_AUX_RESP_PAGOS_CNF_GBL 
+[2026-02-06 17:40:33.818] ERROR [1770421233818] ORA-00001: unique constraint (DEHTDHIM.IDX_DHI_RSP_IDREG_OCUR_UN_01) violated
+[2026-02-06 17:40:33.819] ERRORDTL [1770421233818]java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (DEHTDHIM.IDX_DHI_RSP_IDREG_OCUR_UN_01) violated
+
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:450)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:399)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1017)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:655)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:566)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:215)
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:58)
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:943)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1075)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3820)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeUpdate(OraclePreparedStatement.java:3897)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeUpdate(OraclePreparedStatementWrapper.java:1361)
+	at com.sterlingcommerce.woodstock.translator.util.SQLWriter$PreparedBatchStatement.executeUpdate(SQLWriter.java:188)
+	at com.sterlingcommerce.woodstock.translator.util.SQLWriter.executeSQL(SQLWriter.java:600)
+	at com.sterlingcommerce.woodstock.translator.fieldprocessor.SQLOutputFieldHandler.processFieldValues(SQLOutputFieldHandler.java:247)
+	at com.sterlingcommerce.woodstock.translator.fieldprocessor.SimpleFieldProcessor.processFieldValues(SimpleFieldProcessor.java:490)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockHandler.handleBlock(BlockHandler.java:101)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.SQLBlockHandler.handleBlock(SQLBlockHandler.java:443)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.OutputSimpleBlockProcessor.matchBlock(OutputSimpleBlockProcessor.java:149)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockSequence.processBlock(BlockSequence.java:1192)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockSequence.searchBlock(BlockSequence.java:818)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockSequence.searchGroup(BlockSequence.java:657)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockSequence.searchForward(BlockSequence.java:465)
+	at com.sterlingcommerce.woodstock.translator.blockprocessor.BlockSequence.processFileFormat(BlockSequence.java:433)
+	at com.sterlingcommerce.woodstock.translator.engine.TranslationEngineImpl.translateOutput(TranslationEngineImpl.java:1845)
+	at com.sterlingcommerce.woodstock.translator.engine.TranslationEngineImpl.doTranslation(TranslationEngineImpl.java:1960)
+	at com.sterlingcommerce.woodstock.translator.engine.TranslationEngineImpl.translate(TranslationEngineImpl.java:1457)
+	at com.sterlingcommerce.woodstock.translator.engine.TranslationEngine.translate(TranslationEngine.java:324)
+	at com.sterlingcommerce.woodstock.services.translation.TranslationServiceImpl.processData(TranslationServiceImpl.java:749)
+	at com.sterlingcommerce.woodstock.workflow.activity.engine.ActivityEngineHelper.invokeService(ActivityEngineHelper.java:1826)
+	at com.sterlingcommerce.woodstock.workflow.activity.engine.ActivityEngineHelper.nextMainLogic(ActivityEngineHelper.java:631)
+	at com.sterlingcommerce.woodstock.workflow.activity.engine.ActivityEngineHelper.next(ActivityEngineHelper.java:362)
+	at com.sterlingcommerce.woodstock.workflow.queue.WorkFlowQueueListener.doWork(WorkFlowQueueListener.java:459)
+	at com.sterlingcommerce.woodstock.workflow.queue.WorkFlowQueueListener.run(WorkFlowQueueListener.java:240)
+	at com.sterlingcommerce.woodstock.workflow.queue.WorkFlowQueueListener.onMessage(WorkFlowQueueListener.java:197)
+	at com.sterlingcommerce.woodstock.workflow.queue.WorkFlowQueueListener.onMessage(WorkFlowQueueListener.java:184)
+	at com.sterlingcommerce.woodstock.workflow.queue.wfTransporter.run(wfTransporter.java:447)
+	at com.sterlingcommerce.woodstock.workflow.queue.BasicExecutor$Worker.run(BasicExecutor.java:508)
+	at java.lang.Thread.run(Thread.java:821)
+[2026-02-06 17:40:33.819] DEBUG 000620070013 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_executionTime2 finished output translation phase - execution time 0.005 seconds 
+[2026-02-06 17:40:33.819] DEBUG 000620070014 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_numberEntries2 number entries paged in = 0 
+[2026-02-06 17:40:33.819] DEBUG 000620070015 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_numberEntries3 number entries paged out = 0 
+[2026-02-06 17:40:33.819] DEBUG 000620070016 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_numberSorts2 number sorts =0 
+[2026-02-06 17:40:33.819] DEBUG 000610070020 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_event3 Created and fired the event =Event: (SystemMonitoring.Translation.TranslationEnd.13) - Normal
+	TimeStamp	= 1770421233819
+	principal	= admin
+	actionType	= TranslationEnd
+	DESCRIPTION	= TRANSLATION: END SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO
+	adminAuditId	= 37811819c354dbef6node1
+	time	= 2026-02-06 17:40:33.819
+ 
+[2026-02-06 17:40:33.819] DEBUG 000610070020 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_event3 Created and fired the event =Event: (SystemMonitoring.Translation.TranslationStatus.13) - Normal
+	TimeStamp	= 1770421233819
+	principal	= admin
+	actionType	= TranslationStatus
+	DESCRIPTION	= TRANSLATION: STATUS SUCCESS
+	adminAuditId	= 76811919c354dbef6node1
+	time	= 2026-02-06 17:40:33.819
+ 
+[2026-02-06 17:40:33.819] DEBUG 000620070006 TRANSLATION.TRANSLATION_ENGINE.DEB_TranslationEngineImpl_str1 Translation complete 
+[2026-02-06 17:40:33.819] DEBUG 000620010004 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_TranslationReport Translation Report: Map Name: SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO Version: 2/6/26 12:04 PM
+
+ Translation Report
+==================
+Contains errors ? true
+Contains warnings ? false
+There are 5 entries in the report
+Report Entry:
+       Section: HEADER       Severity: INFO
+       SyntaxSpecific: false       Syntax: -1        Code: 20 Translation Object Name
+       Info:
+              20: Translation Object Name
+              SNTDR_DHI_MAP_PAGOS_RESPUESTA_VOLCADO
+Report Entry:
+       Section: HEADER       Severity: INFO
+       SyntaxSpecific: false       Syntax: -1        Code: 12 Start Time
+       Info:
+              12: Start Time
+              Fri Feb 06 17:40:33 CST 2026
+Report Entry:
+       Section: OUTPUT       Severity: ERROR
+       SyntaxSpecific: true       Syntax: 5        Code: 721 UPDATE/INSERT/DELETE Execution Error
+       Info:
+              10002: Block Count
+              1
+              10017: Map Iteration Count
+              1
+              10003: Block Name
+              DHI_MX_AUX_RESP_PAGOS_CNF_GBL
+              10006: Exception
+              ORA-00001: unique constraint (DEHTDHIM.IDX_DHI_RSP_IDREG_OCUR_UN_01) violated
+
+              10019: Location Index
+              01
+Report Entry:
+       Section: TRAILER       Severity: INFO
+       SyntaxSpecific: false       Syntax: -1        Code: 13 End Time
+       Info:
+              13: End Time
+              Fri Feb 06 17:40:33 CST 2026
+Report Entry:
+       Section: TRAILER       Severity: INFO
+       SyntaxSpecific: false       Syntax: -1        Code: 19 Execution Time (ms)
+       Info:
+              19: Execution Time (ms)
+              17
+ 
+[2026-02-06 17:40:33.819] DEBUG 000620010005 TRANSLATION.TRANSLATION_STANDARD.DEB_TranslationServiceImpl_str3 [TranslationServiceImpl] processData() completed ... 
+[2026-02-06 17:46:22.916] DEBUG 000620130024 TRANSLATION.TRANSLATION_UTIL.DEB_XpathStatusRpt_str1 create CDAtaSection for status_rpt 
+[2026-02-06 17:46:23.665] DEBUG 000620130024 TRANSLATION.TRANSLATION_UTIL.DEB_XpathStatusRpt_str1 create CDAtaSection for status_rpt 
+
