@@ -1,0 +1,6 @@
+<query>Select nvl(SEC_DHI_MX_AUX_RESP_PAGOS_CNF_GBL.NEXTVAL,1) AS SEC FROM dual</query>
+    <sql_id_reg>Select count(VAL_ID_REG) as REG_VAL FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL where VAL_ID_REG= ? and CVE_ESTATUS = ?</sql_id_reg>
+    <sql_id_reg_1>select  txt_name_arch as VAL from DHI_MX_AUX_PAGOS_CNF_GBL where id_reg_api = ? and txt_name_arch is not null fetch first 1 row only</sql_id_reg_1>
+    <sql_resp_diario>select count(VAL_NUM_REG)CON_VAL from DHI_MX_AUX_RESP_PAGOS_CNF_GBL where VAL_ID_ARCH= ?</sql_resp_diario>
+    <sql_volcado_sec>Select nvl(SEC_DHI_MX_AUX_RESP_PAGOS_CNF_GBL.NEXTVAL,1) AS SEC FROM dual</sql_volcado_sec>
+ 
