@@ -4,3 +4,24 @@
     <sql_resp_diario>select count(VAL_NUM_REG)CON_VAL from DHI_MX_AUX_RESP_PAGOS_CNF_GBL where VAL_ID_ARCH= ?</sql_resp_diario>
     <sql_volcado_sec>Select nvl(SEC_DHI_MX_AUX_RESP_PAGOS_CNF_GBL.NEXTVAL,1) AS SEC FROM dual</sql_volcado_sec>
  
+
+El query sql_id_reg que valida duplicados busca por VAL_ID_REG + CVE_ESTATUS, pero el índice único IDX_DHI_RSP_IDREG_OCUR_UN_01 está sobre VAL_ID_REG + VAL_NUM_REG.
+
+Por eso el query retorna 0 (no existe) pero el INSERT falla porque ya hay un registro con la misma combinación de VAL_ID_REG + VAL_NUM_REG.
+
+La solución:
+Cambiar el query sql_id_reg en el BP de:
+
+
+Select count(VAL_ID_REG) as REG_VAL FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL 
+where VAL_ID_REG= ? and CVE_ESTATUS = ?
+A:
+
+
+Select count(VAL_ID_REG) as REG_VAL FROM DHI_MX_AUX_RESP_PAGOS_CNF_GBL 
+where VAL_ID_REG= ?
+Y en el mapa quitar la línea:
+
+
+daoGeneral.setString(2,#CVE_ESTATUS);
+Así valida solo por VAL_ID_REG y si ya existe cualquier registro con ese ID, lo rechaza en vez de intentar insertarlo.
