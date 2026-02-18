@@ -1,0 +1,2052 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mapper VERSION="1.0" xmlns="http://www.stercomm.com/SI/Map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<MapDetails>
+<VersionControl>
+<SerializationVersion>33056</SerializationVersion>
+<MajorVersion>0</MajorVersion>
+<MinorVersion>0</MinorVersion>
+<CompiledDate>251791333</CompiledDate>
+</VersionControl>
+<Summary>
+<Author>tebar</Author>
+<Description>SNTDR_CNF_FACT_VALIDAFECHAS_BET</Description>
+<MapFunction>24</MapFunction>
+</Summary>
+<Flags>
+<SystemTemplate>0</SystemTemplate>
+<UseBigDecimal>0</UseBigDecimal>
+<InitializeExtendedRuleVariables>0</InitializeExtendedRuleVariables>
+<ErrorForNotUsed>0</ErrorForNotUsed>
+<SuspendGroupProcessing>0</SuspendGroupProcessing>
+<SWIFTValidation></SWIFTValidation>
+<UseConfigurableTrimming>0</UseConfigurableTrimming>
+<CompatibleRuleExecution>1</CompatibleRuleExecution>
+<KeepTrailingZeroes>0</KeepTrailingZeroes>
+</Flags>
+<EDIAssociations_IN>
+<AgencyID></AgencyID>
+<VersionID></VersionID>
+<BindingID></BindingID>
+<FunctionGroupID></FunctionGroupID>
+<AgencyDescription></AgencyDescription>
+<VersionDescription></VersionDescription>
+<BindingDescription></BindingDescription>
+<FunctionalGroupDescription></FunctionalGroupDescription>
+<Release>65535</Release>
+</EDIAssociations_IN>
+<EDIAssociations_OUT>
+<AgencyID></AgencyID>
+<VersionID></VersionID>
+<BindingID></BindingID>
+<FunctionGroupID></FunctionGroupID>
+<AgencyDescription></AgencyDescription>
+<VersionDescription></VersionDescription>
+<BindingDescription></BindingDescription>
+<FunctionalGroupDescription></FunctionalGroupDescription>
+<Release>65535</Release>
+</EDIAssociations_OUT>
+<ExplicitRule>
+<PreSessionRule>Integer x, ind, j,cont,aux1, aux2, totfac, sumF, sumA, sumO, contF, contErr, contErr1, tpdupfac, found;
+String[15] cdempres, cdoperac, fhvenctoRem,tpvenctoRem, v, mcdupprv, mcdupimp, mcduprf1, mcduprf2, mcdupano, numinces, numaxces, mcrevoca, mcrevtra, tpfacrev, tpplarev, nudiamin, nudiarev, tprevoca, mcfinaut, tpfinaut,mcunidoc,cdremesa,mcpagext,mcimpor0,tpcriuni,tpneteo;
+String[50] mcfacdup;
+String[9999] p[9999];
+Object Oper, factory, gralDao, gralDao2, mulDao;
+
+Oper= new("mx.isban.cnf.si.userexit.utils.Operaciones");
+
+x = 0;
+
+select xpathresult into tpvenctoRem from processdata where xpath="/ProcessData/Result05/Row/TPVENCTO";
+//tpvenctoRem="U";
+select xpathresult into fhvenctoRem from processdata where xpath="/ProcessData/Result08/Row/FHVENCTO";
+//fhvenctoRem="02122020";
+
+select xpathresult into cdempres from processdata where xpath="/ProcessData/Result05/Row/CDEMPRES";
+select xpathresult into cdoperac from processdata where xpath="/ProcessData/Result05/Row/CDOPERAC";
+select xpathresult into mcdupprv from processdata where xpath="/ProcessData/Result05/Row/MCDUPPRV";
+select xpathresult into mcdupimp from processdata where xpath="/ProcessData/Result05/Row/MCDUPIMP";
+select xpathresult into mcduprf1 from processdata where xpath="/ProcessData/Result05/Row/MCDUPRF1";
+select xpathresult into mcduprf2 from processdata where xpath="/ProcessData/Result05/Row/MCDUPRF2";
+select xpathresult into mcdupano from processdata where xpath="/ProcessData/Result05/Row/MCDUPANO";
+select xpathresult into numinces from processdata where xpath="/ProcessData/Result07/Row/NUMINCES";
+select xpathresult into numaxces from processdata where xpath="/ProcessData/Result07/Row/NUMAXCES";
+select xpathresult into mcrevoca from processdata where xpath="/ProcessData/Result05/Row/MCREVOCA";
+select xpathresult into mcrevtra from processdata where xpath="/ProcessData/Result05/Row/MCREVTRA";
+select xpathresult into tpfacrev from processdata where xpath="/ProcessData/Result05/Row/TPFACREV";
+select xpathresult into tpplarev from processdata where xpath="/ProcessData/Result05/Row/TPPLAREV";
+select xpathresult into nudiamin from processdata where xpath="/ProcessData/Result05/Row/NUDIAMIN";
+select xpathresult into nudiarev from processdata where xpath="/ProcessData/Result05/Row/NUDIAREV";
+select xpathresult into tprevoca from processdata where xpath="/ProcessData/Result05/Row/TPREVOCA";
+select xpathresult into mcfacdup from processdata where xpath="/ProcessData/Result05/Row/MCFACDUP";
+select xpathresult into mcunidoc from processdata where xpath="/ProcessData/Result05/Row/MCUNIDOC";
+select xpathresult into tpneteo from processdata where xpath="/ProcessData/Result05/Row/TPNETEO";
+select xpathresult into tpcriuni from processdata where xpath="/ProcessData/Result05/Row/TPCRIUNI";
+select xpathresult into mcimpor0 from processdata where xpath="/ProcessData/Result05/Row/MCIMPOR0";
+
+select xpathresult into mcfinaut from processdata where xpath="/ProcessData/Result2/Row/MCFINAUT";
+select xpathresult into mcpagext from processdata where xpath="/ProcessData/Result2/Row/MCPAGEXT";
+select xpathresult into tpfinaut from processdata where xpath="/ProcessData/Result2/Row/TPFINAUT";
+select xpathresult into cdremesa from processdata where xpath="/ProcessData/DATOSREMESA/CDREMESA";
+
+ind=1;
+j=1;
+cont=0;
+totfac=0;
+aux1=1;
+aux2=1;
+sumF=0;
+sumA=0;
+sumO=0;
+contF=0;
+contErr=0;
+contErr1=0;
+v="";
+tpdupfac=0;
+found = 0;
+
+while x &lt; 9999 do
+begin
+p[x] = "";
+x=x+1;
+end
+
+//Inicia conexiones a BD
+factory = new ("mx.isban.cnf.si.userexit.dao.DaoFactory");
+gralDao = factory.getGeneralInfoDAO();
+gralDao.openConnection("informixPool");
+mulDao= factory.getMultipleGeneralInfoDAO();
+mulDao.openConnection("informixPool");
+gralDao2 = factory.getGeneralInfoDAO();
+gralDao2.openConnection("cnfPool");</PreSessionRule>
+<PostSessionRule></PostSessionRule>
+</ExplicitRule>
+</MapDetails>
+<TemplateOption>2</TemplateOption>
+<ExtendedRuleLibraries>
+<ExtendedRuleLibraryName>SNTDR_CNF_ER_FUNCTIONS_2.0</ExtendedRuleLibraryName>
+</ExtendedRuleLibraries>
+
+<INPUT>
+<PosSyntax>
+<DelimiterUsed>no</DelimiterUsed>
+<Delimiter1/><Delimiter2Used>no</Delimiter2Used>
+<Delimiter2/><RecordLengthUsed>no</RecordLengthUsed>
+<RecordLength>0</RecordLength>
+<CharacterEncoding></CharacterEncoding>
+<DecimalCharUsed>no</DecimalCharUsed>
+<DecimalChar/><UseBytePositions>no</UseBytePositions>
+<RepeatSuppressionCharUsed>no</RepeatSuppressionCharUsed>
+<RepeatSuppressionChar/><Group>
+<ID>20</ID>
+<Name>INPUT</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>5</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><ExplicitRule>
+<OnBegin></OnBegin>
+<OnEnd>String[8] fechvenc,nuanio,resDupl1,resDupl2,resDupl3,nStr,z1,cdError,resPais,resPais1,cdsinoni,mcfinanc,mcfinanc0,tpfactor,tpfactor0,resMcfinac,resMcpreval,resPcreten,pcreten,tpfactur;
+String[100] xpathok,xpathko,xpathko1,aux1s,aux2s,cdprov,imp,SumaF,SumaA,SumaO,imnomina,imnomina0,xpathko2,xpathko3,resNif,resNif0,resCdprovee,resCdprovee0;
+String[400] queryDupl1,queryDupl2,queryDupl3,queryDupl1Fe,queryDupl2Ne,queryDupl3Ue,queryCdprovee,queryPaisres,queryPaisres1,queryMcpreval,queryMcfinac,queryPcreten;
+integer nint,impnum,result,result1,bolemisio, n,resDuplInt,contDuplic,ncarac,z,cdestado,bolsinoni;
+real imnomina2,impfac_ok,imintere,imfinable,pcreten1;
+
+n=1;
+cdestado=0;
+cdsinoni="";
+impfac_ok=0;
+imintere=0;
+mcfinanc="0";
+mcfinanc0="0";
+tpfactor="0";
+tpfactor0="0";
+pcreten="0";
+imfinable=0;
+pcreten1=0;
+
+if ind-1 = totfac then
+BEGIN
+
+	while aux1-1 &lt; cont do
+	begin
+
+		ntoa(aux1,aux1s);
+
+		nint=atoi(p[aux1-1]);
+
+		cdprov = mid($Facturas[nint].#LinFactura,6,20);
+		fechvenc = mid($Facturas[nint].#LinFactura,98,8);
+
+		result = 0;
+		result1 = 0;
+		aux2=1;
+
+		while aux2-1 &lt; totfac do
+		begin
+
+			contF=0;
+			ntoa(aux2,aux2s);
+
+			if cdprov = mid($Facturas[aux2].#LinFactura,6,20) &amp; fechvenc = mid($Facturas[aux2].#LinFactura,98,8) then
+			begin
+
+				imp = mid($Facturas[aux2].#LinFactura,69,21);
+				impnum = atoi(imp);
+
+				if mid($Facturas[aux2].#LinFactura,26,3) = "001" then
+				begin
+
+					sumF = sumF + impnum;
+					contF = contF + 1;
+		 
+				end
+
+				if mid($Facturas[aux2].#LinFactura,26,3) = "002" then
+				begin
+
+					sumA = sumA + impnum;
+
+				end
+
+
+				if mid($Facturas[aux2].#LinFactura,26,3) = "003" then
+				begin
+
+					sumO = sumO + impnum;
+
+				end
+
+			end
+
+
+			if tpvenctoRem = "U" then
+			begin
+
+				if fhvenctoRem != "" then
+				begin
+	
+					if fhvenctoRem != mid($Facturas[aux2].#LinFactura,98,8) &amp; mid($Facturas[aux2].#LinFactura,98,8) != "        " then
+					begin
+
+						contErr = 1;
+
+					end
+
+				end
+
+			end
+
+			aux2=aux2+1;
+
+		end
+
+		//xpathF = "/ProcessData/Sumatorio/Abono_"+aux1s+"/SumaF";
+		//xpathA = "/ProcessData/Sumatorio/Abono_"+aux1s+"/SumaA";
+		//xpathO = "/ProcessData/Sumatorio/Abono_"+aux1s+"/SumaO";
+
+		ntoa(sumF, SumaF);
+		ntoa(sumA, SumaA);
+		ntoa(sumO, SumaO);
+
+		//update processdata set xpathresult = SumaF where xpath = xpathF;
+		//update processdata set xpathresult = SumaA where xpath = xpathA;
+		//update processdata set xpathresult = SumaO where xpath = xpathO;
+
+		xpathok = "/ProcessData/Validaciones/Pie/OK";
+		xpathko = "/ProcessData/Validaciones/Pie/ERROR";
+
+
+		//VALIDACION ABONOS CONTRA FACTURAS-OTROS
+
+		if sumA &gt;= 0 then
+		begin
+
+			if sumA &gt;= sumF then
+			begin
+
+				result = 0;
+
+			end
+			else
+			begin
+
+				result = 1;
+
+			end
+
+		end
+
+		if sumO &gt;= 0 then
+		begin
+
+			if sumO &gt;= sumF then
+			begin
+
+
+				result1 = 0;
+
+			end
+			else
+			begin
+
+				result1 = 1;
+
+			end
+
+			if result = 1 &amp; result1 = 1 then
+			begin
+
+				update processdata set xpathresult = "OK_LC00166" where xpath = xpathok;
+
+			end
+			else
+			begin
+
+				update processdata set xpathresult = "ERR_LC00166003" where xpath = xpathko;
+
+			end
+
+		end
+
+		sumF=0;
+		sumA=0;
+		sumO=0;
+
+		if contF = 0 then
+		begin
+
+			update processdata set xpathresult = "ERR_LC00167008" where xpath = xpathko;
+
+		end
+		else
+		begin
+
+			update processdata set xpathresult = "OK_LC00167" where xpath = xpathok;
+
+		end
+
+		aux1=aux1+1;
+
+	end
+
+
+	//CONTROL VENC. UNICO
+			
+	if contErr = 1 | contErr1 &gt; 1 then
+	begin
+
+		//ntoa(contErr,cntErr);
+		//ntoa(contErr1,cntErr1);
+		//update processdata set xpathresult = cntErr where xpath = "/ProcessData/Validaciones/Opcion1";
+		//update processdata set xpathresult = cntErr1 where xpath = "/ProcessData/Validaciones/Opcion2";
+
+		update processdata set xpathresult = "RE043" where xpath = "/ProcessData/Validaciones/ERROR";
+
+	end
+	else
+	begin
+
+
+		//Si la op. no admite facturas duplicadas, valida que no existan
+
+		while n &lt;= totfac do
+		begin
+
+			ntoa(n,nStr);
+			cdestado = 0;
+			z = 1;
+			xpathko2="/ProcessData/Validaciones/Factura_"+nStr+"/ERROR";
+			select xpathresult into cdError from processdata where xpath= xpathko2;
+
+			while cdError != "" do
+			begin
+
+				if cdError = "RE022" | cdError = "RE023" | cdError = "RE024" | cdError = "RE025" | cdError = "RE026" | cdError = "RE027" | cdError = "RE030" | cdError = "RE028" | cdError = "RE029" | cdError = "RE138" | cdError = "RE194" | cdError = "RE058" | cdError = "RE059" | cdError = "RE060" | cdError = "RE188" | cdError = "RE054" then
+				begin
+
+					cdestado = 1;
+
+				end
+
+				z = z + 1;
+
+				ntoa(z,z1);
+				xpathko3="/ProcessData/Validaciones/Factura_"+nStr+"/ERROR["+z1+"]";
+				select xpathresult into cdError from processdata where xpath= xpathko3;
+
+			end
+
+			bolsinoni = 1;
+			cdestado = 0; //VALOR A PINCHO - QUITAR!!
+
+			IF cdestado = 0 then
+			begin
+
+				queryCdprovee = "SELECT TRIM(cdprovee) codprov FROM trsfprovcte WHERE  cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "' AND cdcltpro = '" + mid($Facturas[n].#LinFactura,6,20) + "'";
+				resCdprovee = gralDao.getQueryResult(queryCdprovee,"codprov");
+
+				queryPaisres = "SELECT tpidpers,nunif numNif,cdpaires paisres FROM tsfproveedor WHERE cdprovee = '" + mid($Facturas[n].#LinFactura,6,20) + "'";
+				resPais = gralDao.getQueryResult(queryPaisres, "paisres");
+				resNif = gralDao.getQueryResult(queryPaisres, "numNif");
+
+				queryPaisres1 = "SELECT ID.cdsinoni cdsinoni1 FROM tsfpaises PA,tsfidioma ID WHERE PA.cdpais = '" + resPais + "' AND ID.cdidioma = PA.cdidioma";
+				resPais1 = gralDao.getQueryResult(queryPaisres1, "cdsinoni1");
+
+				//xpathCd = "/ProcessData/Validaciones/Factura_"+nStr+"/queryCdprovee";
+				//xpathPa = "/ProcessData/Validaciones/Factura_"+nStr+"/queryPaisres";
+				//xpathPa1 = "/ProcessData/Validaciones/Factura_"+nStr+"/queryPaisres1";
+
+				//xpathRCd = "/ProcessData/Validaciones/Factura_"+nStr+"/resultCdprovee";
+				//xpathRPa = "/ProcessData/Validaciones/Factura_"+nStr+"/resultPaisres";
+				//xpathRPa1 = "/ProcessData/Validaciones/Factura_"+nStr+"/resultPaisres1";
+
+
+				//update processdata set xpathresult = queryCdprovee where xpath= xpathCd;
+				//update processdata set xpathresult = queryPaisres where xpath= xpathPa;
+				//update processdata set xpathresult = queryPaisres1 where xpath= xpathPa1;
+
+				//update processdata set xpathresult = resCdprovee where xpath= xpathRCd;
+				//update processdata set xpathresult = resPais where xpath= xpathRPa;
+				//update processdata set xpathresult = resNif where xpath= xpathRPa;
+				//update processdata set xpathresult = resPais1 where xpath= xpathRPa1;
+
+
+
+				if resPais1 = "" then
+				begin
+
+					bolsinoni = 0;
+
+				end
+
+				if bolsinoni = 0 then
+				begin
+
+					if resPais != "724" &amp; resPais != "484" then
+					begin
+
+						cdsinoni = "I";
+
+					end
+					else
+					begin
+
+						cdsinoni = "E";
+
+					end
+
+				end
+
+				mcfacdup = "0"; //VALOR A PINCHO - QUITAR!!
+
+				if mcfacdup = "0" &amp; mid($Facturas[n].#LinFactura,29,40) != "                                        " then
+				begin
+
+					xpathko1 = "/ProcessData/Validaciones/Factura_"+nStr+"/ERROR";
+					bolemisio = 0;
+
+					IF mid($Facturas[n].#LinFactura,90,8) != "        " THEN
+					BEGIN
+
+						nuanio = mid($Facturas[n].#LinFactura,94,4);
+						bolemisio = 1;
+
+					END
+					ELSE
+					BEGIN
+
+						IF mid($Facturas[n].#LinFactura,98,8) != "        " THEN
+						BEGIN
+
+							nuanio = mid($Facturas[n].#LinFactura,102,4);
+							bolemisio = 0;
+
+						END
+						ELSE
+						BEGIN
+
+							nuanio = mid($INPUT.#Funcional,31,4);
+							bolemisio = 0;
+
+						END
+
+					END
+
+					tpfactur="";
+
+					if mid($Facturas[n].#LinFactura,26,3) = "001" then tpfactur = "F";
+					if mid($Facturas[n].#LinFactura,26,3) = "002" then tpfactur = "A";
+					if mid($Facturas[n].#LinFactura,26,3) = "003" then tpfactur = "O";
+
+
+					//Querys Fac. Duplicadas
+
+					queryDupl1 = "SELECT COUNT(1) factdup1 FROM tsffacturc F WHERE  F.cdempres = '" + cdempres + "' AND F.cdoperac = '" + cdoperac + "' AND F.cdcltfac = '" + mid($Facturas[n].#LinFactura,29,40) + "' AND F.mcanulac = '0'";
+					queryDupl2 = "SELECT COUNT(1) factdup2 FROM trsfneteos N WHERE N.cdempres = '" + cdempres + "' AND N.cdoperac = '" + cdoperac + "' AND N.cdcltfac = '" + mid($Facturas[n].#LinFactura,29,40) + "' AND N.tpfactur = '" + tpfactur + "'";
+					queryDupl3 = "SELECT COUNT(1) factdup3 FROM trsfunific U WHERE U.cdempres = '" + cdempres + "' AND U.cdoperac = '" + cdoperac + "' AND U.cdcltfac = '" + mid($Facturas[n].#LinFactura,29,40) + "' AND U.tpfactur = '" + tpfactur + "'";
+
+					tpdupfac = 0;
+					imnomina0 = "";
+					imnomina = trimleft(mid($Facturas[n].#LinFactura,69,21),"0");
+					ncarac = len(imnomina);
+
+					if ncarac &gt;= 4 then
+					begin
+
+						imnomina0 = mid(imnomina,0, ncarac-2) + "." + mid(imnomina,ncarac-2,2);
+
+					end
+					if ncarac = 3 then
+					begin
+
+						imnomina0 = mid(imnomina,0,1) + "." + mid(imnomina,1,2);			
+
+					end
+					if ncarac = 2 then
+					begin
+
+						imnomina0 = "0" + "." + mid(imnomina,0,2);			
+
+					end
+					if ncarac = 1 then
+					begin
+
+						imnomina0 = "0" + ".0" + mid(imnomina,0,1);			
+
+					end
+					if ncarac = 0 then
+					begin
+
+						imnomina0 = "0";			
+
+					end
+
+					//xpathPr1 = "/ProcessData/Validaciones/Factura_" + nStr + "/Importe";
+					//update processdata set xpathresult = imnomina0 where xpath = xpathPr1;
+
+					if mcdupprv = "1" then
+					begin
+
+						tpdupfac = tpdupfac + 1;
+						queryDupl1 = queryDupl1 + " AND cdprovee = '" + resCdprovee + "'";
+						queryDupl2 = queryDupl2 + " AND cdprovee = '" + resCdprovee + "'";
+						queryDupl3 = queryDupl3 + " AND cdprovee = '" + resCdprovee + "'";
+					end
+
+					if mcdupimp = "1" then
+					begin
+
+						tpdupfac = tpdupfac + 2;
+						queryDupl1 = queryDupl1 + " AND imnomina = '" + imnomina0 + "' AND cdmoneda = '" + mid($Facturas[n].#LinFactura,298,3) + "'";
+						queryDupl2 = queryDupl2 + " AND imnomina = '" + imnomina0 + "' AND cdmoneda = '" + mid($Facturas[n].#LinFactura,298,3) + "'";
+						queryDupl3 = queryDupl3 + " AND imnomina = '" + imnomina0 + "' AND cdmoneda = '" + mid($Facturas[n].#LinFactura,298,3) + "'";
+					end
+
+					if mcduprf1 = "1" then
+					begin
+
+						tpdupfac = tpdupfac + 8;
+						queryDupl1 = queryDupl1 + " AND (nbrefuni = '" + mid($Facturas[n].#LinFactura,106,7) + "' OR nbrefuni IS NULL)";
+						queryDupl2 = queryDupl2 + " AND (nbrefuni = '" + mid($Facturas[n].#LinFactura,106,7) + "' OR nbrefuni IS NULL)";
+						queryDupl3 = queryDupl3 + " AND (nbrefuni = '" + mid($Facturas[n].#LinFactura,106,7) + "' OR nbrefuni IS NULL)";
+					end
+
+					if mcduprf2 = "1" then
+					begin
+
+						tpdupfac = tpdupfac + 16;
+						queryDupl1 = queryDupl1 + " AND (nbrefer2 = '" + mid($Facturas[n].#LinFactura,173,40) + "' OR nbrefer2 IS NULL)";
+						queryDupl2 = queryDupl2 + " AND (nbrefer2 = '" + mid($Facturas[n].#LinFactura,173,40) + "' OR nbrefer2 IS NULL)";
+						queryDupl3 = queryDupl3 + " AND (nbrefer2 = '" + mid($Facturas[n].#LinFactura,173,40) + "' OR nbrefer2 IS NULL)";
+					end
+
+					if mcdupano = "1" then
+					begin
+
+						tpdupfac = tpdupfac + 4;
+						queryDupl1Fe = queryDupl1 + " AND  YEAR(F.fhemisio) = '" + nuanio + "'";
+						queryDupl1 = queryDupl1 + " AND  YEAR(F.fhvencto) = '" + nuanio + "'";
+						queryDupl2Ne = queryDupl2 + " AND  YEAR(N.fhemisio) = '" + nuanio + "'";
+						queryDupl2 = queryDupl2 + " AND  YEAR(N.fhvencto) = '" + nuanio + "'";
+						queryDupl3Ue = queryDupl3 + " AND  YEAR(U.fhemisio) = '" + nuanio + "'";
+						queryDupl3 = queryDupl3 + " AND  YEAR(U.fhvencto) = '" + nuanio + "'";
+					end
+
+					contDuplic = 0;
+					resDupl1 = "";
+					resDupl2 = "";
+					resDupl3 = "";
+
+
+					//Duplicidad en tsffacturc
+
+					//xpath1 = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl1";
+					//xpath1Fe = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl1Fe";
+					//xpath2 = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl2";
+					//xpath2Ne = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl2Ne";
+					//xpath3 = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl3";
+					//xpath3Ue = "/ProcessData/Validaciones/Factura_"+nStr+"/queryDupl3Ue";
+
+
+					IF mid($Facturas[n].#LinFactura,26,3) = "001" | mid($Facturas[n].#LinFactura,26,3) = "003" THEN
+					BEGIN
+
+						//update processdata set xpathresult = queryDupl1 where xpath= xpath1;
+						//update processdata set xpathresult = queryDupl1Fe where xpath= xpath1Fe;
+						//update processdata set xpathresult = queryDupl2 where xpath= xpath2;
+						//update processdata set xpathresult = queryDupl2Ne where xpath= xpath2Ne;
+						//update processdata set xpathresult = queryDupl3 where xpath= xpath3;
+						//update processdata set xpathresult = queryDupl3Ue where xpath= xpath3Ue;
+
+						if tpdupfac = 0 | tpdupfac = 1 | tpdupfac = 2 | tpdupfac = 3 | tpdupfac = 8 | tpdupfac = 9 | tpdupfac = 10 | tpdupfac = 11 | tpdupfac = 16 | tpdupfac = 17 | tpdupfac = 18 | tpdupfac = 19 | tpdupfac = 24 | tpdupfac = 25 | tpdupfac = 26 | tpdupfac = 27 then
+						begin
+
+							resDupl1 = gralDao.getQueryResult(queryDupl1, "factdup1");
+
+						end
+
+						if tpdupfac = 4 | tpdupfac = 5 | tpdupfac = 6 | tpdupfac = 7 | tpdupfac = 12 | tpdupfac = 13 | tpdupfac = 14 | tpdupfac = 15 | tpdupfac = 20 | tpdupfac = 21 | tpdupfac = 22 | tpdupfac = 23 | tpdupfac = 28 | tpdupfac = 29 | tpdupfac = 30 | tpdupfac = 31 then
+						begin
+
+							if bolemisio = 1 then
+							begin
+
+								resDupl1 = gralDao.getQueryResult(queryDupl1Fe, "factdup1");
+
+							end
+							else
+							begin
+
+								resDupl1 = gralDao.getQueryResult(queryDupl1, "factdup1");
+
+							end
+
+						end
+
+						resDuplInt = atoi(resDupl1);
+
+						if resDuplInt &gt; 0 then
+						begin
+
+							contDuplic = 1;
+							update processdata set xpathresult = "RE032" where xpath = xpathko1;
+
+						end
+
+					END
+
+					if contDuplic = 0 then
+					begin
+
+						//Duplicidad en trsfneteos
+
+						if tpdupfac = 0 | tpdupfac = 1 | tpdupfac = 2 | tpdupfac = 3 | tpdupfac = 8 | tpdupfac = 9 | tpdupfac = 10 | tpdupfac = 11 | tpdupfac = 16 | tpdupfac = 17 | tpdupfac = 18 | tpdupfac = 19 | tpdupfac = 24 | tpdupfac = 25 | tpdupfac = 26 | tpdupfac = 27 then
+						begin
+
+							resDupl2 = gralDao.getQueryResult(queryDupl2, "factdup2");
+
+						end
+
+						if tpdupfac = 4 | tpdupfac = 5 | tpdupfac = 6 | tpdupfac = 7 | tpdupfac = 12 | tpdupfac = 13 | tpdupfac = 14 | tpdupfac = 15 | tpdupfac = 20 | tpdupfac = 21 | tpdupfac = 22 | tpdupfac = 23 | tpdupfac = 28 | tpdupfac = 29 | tpdupfac = 30 | tpdupfac = 31 then
+						begin
+
+							if bolemisio = 1 then
+							begin
+
+								resDupl2 = gralDao.getQueryResult(queryDupl2Ne, "factdup2");
+
+							end
+							else
+							begin
+
+								resDupl2 = gralDao.getQueryResult(queryDupl2, "factdup2");
+
+							end
+
+						end
+
+						resDuplInt = atoi(resDupl2);
+
+						if resDuplInt &gt; 0 then
+						begin
+
+							contDuplic = 1;
+							update processdata set xpathresult = "RE032" where xpath = xpathko1;
+						end
+
+					end
+
+
+					if contDuplic = 0 then
+					begin
+
+						//Duplicidad en trsfunific
+
+						if tpdupfac = 0 | tpdupfac = 1 | tpdupfac = 2 | tpdupfac = 3 | tpdupfac = 8 | tpdupfac = 9 | tpdupfac = 10 | tpdupfac = 11 | tpdupfac = 16 | tpdupfac = 17 | tpdupfac = 18 | tpdupfac = 19 | tpdupfac = 24 | tpdupfac = 25 | tpdupfac = 26 | tpdupfac = 27 then
+						begin
+
+							resDupl3 = gralDao.getQueryResult(queryDupl3, "factdup3");
+
+						end
+
+						if tpdupfac = 4 | tpdupfac = 5 | tpdupfac = 6 | tpdupfac = 7 | tpdupfac = 12 | tpdupfac = 13 | tpdupfac = 14 | tpdupfac = 15 | tpdupfac = 20 | tpdupfac = 21 | tpdupfac = 22 | tpdupfac = 23 | tpdupfac = 28 | tpdupfac = 29 | tpdupfac = 30 | tpdupfac = 31 then
+						begin
+
+							if bolemisio = 1 then
+							begin
+
+								resDupl3 = gralDao.getQueryResult(queryDupl3Ue, "factdup3");
+
+							end
+							else
+							begin
+
+								resDupl3 = gralDao.getQueryResult(queryDupl3, "factdup3");
+
+							end
+
+						end
+
+						resDuplInt = atoi(resDupl3);
+
+						if resDuplInt &gt; 0 then
+						begin
+
+							contDuplic = 1;
+							update processdata set xpathresult = "RE032" where xpath = xpathko1;
+						end
+
+					end
+
+					if contDuplic = 0 then
+					begin
+
+						imnomina2 = aton(imnomina0);
+
+						IF mid($Facturas[n].#LinFactura,26,3) = "001" | mid($Facturas[n].#LinFactura,26,3) = "003" THEN
+						BEGIN
+
+							impfac_ok = impfac_ok + imnomina2;
+
+						END
+						ELSE
+						BEGIN
+
+							IF mid($Facturas[n].#LinFactura,26,3) = "002" THEN
+							BEGIN
+
+								impfac_ok = impfac_ok - imnomina2;
+
+							END
+
+						END
+
+						IF mid($Facturas[n].#LinFactura,6,20) = mid($Facturas[n-1].#LinFactura,6,20) &amp; mid($Facturas[n-1].#LinFactura,6,20) != "                    " THEN
+						BEGIN
+
+							if mcfinaut = "1" &amp; tpfinaut = "P" THEN
+							begin
+
+								if imintere = 0 then
+								begin
+
+									mcfinanc = "0";
+
+								end
+								else
+								begin
+
+									mcfinanc = "1";
+
+								end
+
+							end
+							else
+							begin
+
+
+								if n &gt; 1 then
+								begin
+
+									mcfinanc  = mcfinanc0;
+
+
+								end
+							end
+
+							if n &gt; 1 then
+							begin
+
+								tpfactor = tpfactor0;
+
+							end
+
+						END
+						ELSE
+						BEGIN
+
+							mcfinanc = "0";
+							tpfactor = "0";
+
+							if mcfinaut = "1" then
+							begin
+
+								if tpfinaut = "P" &amp; imintere = 0 then
+								begin
+
+									mcfinanc = "0";
+
+								end
+								else
+								begin
+
+									mcfinanc = "1";
+
+								end
+
+							end
+							else
+							begin
+
+								//Falta validacion de v1_tpconmar
+
+							end
+
+						END
+
+						queryMcfinac = "SELECT mccanfin mcfinac FROM tsfoperaci WHERE cdproduc = '02' AND cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "'";
+						resMcfinac = gralDao.getQueryResult(queryMcfinac, "mcfinac");
+
+						if resMcfinac = "1" then
+						begin
+
+							mcfinanc = "0";
+
+						end
+
+						queryMcpreval = "SELECT mcpreval resultmcpre FROM trsftpinpro WHERE cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "' AND cdprovee = '" + mid($Facturas[n].#LinFactura,6,20) + "' AND fhregtro = (SELECT MAX(fhregtro) FROM trsftpinpro WHERE cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "' AND cdprovee = '" + mid($Facturas[n].#LinFactura,6,20) + "')";
+						resMcpreval = gralDao.getQueryResult(queryMcpreval,"resultmcpre");
+
+
+						queryPcreten = "SELECT pcreten respcr FROM trsfcondmar WHERE cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "' AND cdprovee = '" + mid($Facturas[n].#LinFactura,6,20) + "' AND tpregtro ='1'";
+						resPcreten = gralDao.getQueryResult(queryPcreten,"respcr"); //REPETIDO PARA PRUEBAS; SOLO DEJAR LA DE ABAJO
+
+						pcreten = "";
+
+						if resMcpreval = "1" then
+						begin
+
+							queryPcreten = "SELECT pcreten respcr FROM trsfcondmar WHERE cdempres = '" + cdempres + "' AND cdoperac = '" + cdoperac + "' AND cdprovee = '" + mid($Facturas[n].#LinFactura,6,20) + "' AND tpregtro ='1'";
+							resPcreten = gralDao.getQueryResult(queryPcreten,"respcr");
+
+							if resPcreten != "" then
+							begin
+
+								pcreten = resPcreten;
+
+							end
+
+						end
+
+						if pcreten != "0" then
+						begin
+
+							pcreten1 = aton(pcreten);
+							imfinable = (1 - (pcreten1/100)) * imnomina2;
+
+						end
+						else
+						begin
+
+							imfinable = imnomina2;
+
+						end
+
+						//ntoa(impfac_ok,impfac_ok1);
+
+						//xpathPr = "/ProcessData/Validaciones/Factura_" + nStr + "/SumaImportesOK";
+						//update processdata set xpathresult = impfac_ok1 where xpath = xpathPr;
+
+						mcfinanc0  = mcfinanc;
+						tpfactor0 = tpfactor;
+
+
+					end
+
+				end
+
+			END
+
+
+			IF n &gt; 1 &amp; ( resNif0 = resNif | ( resNif0 = "" &amp; resNif = "" )) &amp; ( mid($Facturas[n-1].#LinFactura,6,20) = mid($Facturas[n].#LinFactura,6,20) | ( mid($Facturas[n-1].#LinFactura,6,20) = "                    " &amp; mid($Facturas[n].#LinFactura,6,20) = "                    " )) THEN
+			BEGIN
+
+				resCdprovee = resCdprovee0;
+
+			END
+
+			resNif0 = resNif;
+			resCdprovee0 = resCdprovee;
+
+
+			n = n + 1;
+
+		end
+
+
+		//Fase Rechazada o Validada --&gt; APLICA?
+
+
+		//Proceso de UNIFICACION
+
+		IF mcunidoc = "1" THEN
+		BEGIN
+
+			//fc_unificados() --&gt; Falta
+
+		END
+
+
+		//Proceso de NETEOS
+
+		//Importe de facturas aceptadas
+
+		//Numero de facturas aceptadas
+
+		//Validacion de la operacion
+
+		//Actualizar fase a "A" y estado a NULL
+
+		//Regrabar el registro de cabecera de remesas
+
+
+	end		
+
+END</OnEnd>
+</ExplicitRule>
+<PosRecord>
+<ID>19</ID>
+<Name>CabeceraGenerica</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>0</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>1</TagLength>
+<Field>
+<ID>18</ID>
+<Name>Generica</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>1500</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<StartPos>0</StartPos>
+<Length>1500</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>17</ID>
+<Name>CabeceraFuncional</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>1</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>1</TagLength>
+<Field>
+<ID>16</ID>
+<Name>Funcional</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>1500</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<StartPos>0</StartPos>
+<Length>1500</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>15</ID>
+<Name>Facturas</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><ExplicitRule>
+<OnBegin></OnBegin>
+<OnEnd>String[8] indtext, fhvencto, mcnotifi, sysDateString, sysDateString1, Stringdate2, Stringdate3, fhrevoca0, cdforpag, fecha, diferFh1,resultado,resultado0,fhvencto1;
+String[100] xpathErr, Stringdate1,nuplzces1;
+Integer ctrl,ctrl0, nuplzces, numinces1, numaxces1,nudiarev0, diferFh, nudiamin0;
+datetime d, sysDate2, fhcarga, fhrevoca, fhemisio, fhvencto0, fhremesa, d1;
+
+object sysDate;
+object sysDateFormat,sysDateFormat1;
+
+fecha="";
+
+
+j=ind-1;
+
+ntoa(ind,indtext);
+xpathErr="/ProcessData/Validaciones/Factura_"+indtext+"/ERROR";
+
+
+if mid($Facturas[ind].#LinFactura,26,3) = "002" then
+begin
+
+	p[cont] = indtext;
+
+	cont=cont+1;
+
+end
+
+
+$TMP_FhVencUnica[ind].#tmp:2 = mid($Facturas[ind].#LinFactura,98,8);
+
+if ind &gt; 1 &amp; tpvenctoRem = "U" &amp; fhvenctoRem = "" &amp; mid($Facturas[ind].#LinFactura,98,8) != "        " &amp; contErr1 &lt; 2 then
+BEGIN
+
+	if v = "" | v !=  mid($Facturas[ind].#LinFactura,98,8) then
+	begin
+
+		while j &gt; 0 do
+		begin
+
+			if $TMP_FhVencUnica[j].#tmp:2 != "        " then
+			begin
+
+				if v = "" then
+				begin
+
+					if $TMP_FhVencUnica[j].#tmp:2 != mid($Facturas[ind].#LinFactura,98,8) then 
+					begin
+
+						contErr1 = contErr1 + 1;
+						v = $TMP_FhVencUnica[j].#tmp:2;
+
+						//ntoa(ind,indtext);
+						//xpathErr="/ProcessData/Validaciones/Factura_"+indtext+"/resultV";
+						//update processdata set xpathresult = v where xpath = xpathErr;
+					end
+
+				end
+				else
+				begin
+
+					if v != $TMP_FhVencUnica[j].#tmp:2 &amp; $TMP_FhVencUnica[j].#tmp:2 != mid($Facturas[ind].#LinFactura,98,8) then 
+					begin
+
+						contErr1 = contErr1 + 1;
+
+						//ntoa(ind,indtext);
+						//ntoa(j,jText);
+						//ntoa(contErr1,cntErrStr);
+						//xpathErr1="/ProcessData/Validaciones/Factura_"+indtext+"/ContErr"+jText;
+						//update processdata set xpathresult = cntErrStr where xpath = xpathErr1;
+
+						v = $TMP_FhVencUnica[j].#tmp:2;
+						//xpathErr="/ProcessData/Validaciones/Factura_"+indtext+"/resultV";
+						//update processdata set xpathresult = v where xpath = xpathErr;
+					end
+
+				end
+
+				j = j - 1;
+				
+			end
+			
+		end
+
+	end
+
+END
+
+
+
+//VALIDA FECHA EMISION FACTURA
+
+resultado0 = call SNTDR_CNF_ER_FUNCTIONS.checkFecha(mid($Facturas[ind].#LinFactura,90,8));
+
+if mid($Facturas[ind].#LinFactura,90,8) != "        " then
+begin
+
+	if resultado0 != "S" then update processdata set xpathresult = "RE024007" where xpath = xpathErr;
+
+end
+
+
+//VALIDA FECHA DE VENCIMIENTO 
+
+mcnotifi = "0"; //marca de notificacion - mirar si hay que mantenerlo ¿¿?¿?
+
+if mid($Facturas[ind].#LinFactura,98,8) != "        " &amp; found = 0 then
+begin
+
+	fhvencto1 = mid($Facturas[ind].#LinFactura,98,8);
+	found = 1;
+
+end
+
+d = DATE("%d%m%y%y",fhvencto1);
+
+if mid($Facturas[ind].#LinFactura,26,3) = "001" | mid($Facturas[ind].#LinFactura,26,3) = "003" then
+begin
+
+	sysDate = new("java.util.Date");
+	sysDateFormat = new("java.text.SimpleDateFormat","yyyy/MM/dd");
+	sysDateFormat1 = new("java.text.SimpleDateFormat","ddMMyyyy");
+	sysDateString = sysDateFormat.format(sysDate);
+
+	sysDateString1 = sysDateFormat1.format(sysDate);
+	sysDate2 = date("%d%m%y%y",sysDateString1);
+
+	ctrl0 = 0;
+
+	if mid($Facturas[ind].#LinFactura,98,8) = "        " then
+	begin
+
+		if tpvenctoRem = "U" then
+		begin
+			ctrl0 = 1;
+			fhvencto = fhvencto1;
+		end
+
+	end
+	else
+	begin
+	
+		//Se valida que la fecha tenga un formato correcto
+
+		resultado = call SNTDR_CNF_ER_FUNCTIONS.checkFecha(fhvencto1);
+
+		if resultado != "S" then
+		begin
+
+
+			if tpvenctoRem != "U" then
+			begin
+
+				update processdata set xpathresult = "RE027" where xpath = xpathErr;
+
+			end
+			else
+			begin
+
+				ctrl0 = 1;
+
+			end
+
+		end
+		else
+		begin
+
+			ctrl0 = 1;
+
+			strdate(d,"%y%y/%m/%d", Stringdate1);
+
+			nuplzces = Oper.datesDiff(sysDateString,Stringdate1);
+
+			//xpathFh1="/ProcessData/Validaciones/Factura_"+indtext+"/Fecha1";
+			//xpathFh2="/ProcessData/Validaciones/Factura_"+indtext+"/Fecha2";
+			//update processdata set xpathresult = sysDateString where xpath = xpathFh1;
+			//update processdata set xpathresult = Stringdate1 where xpath = xpathFh2;
+
+			ntoa(nuplzces,nuplzces1);
+
+			//xpathDif="/ProcessData/Validaciones/Factura_"+indtext+"/DiferenciaDias";
+			//update processdata set xpathresult = nuplzces1 where xpath = xpathDif;
+
+
+			if numinces = "0" then
+			begin
+
+				sysDate2 = sysDate2 &lt;&lt; months(-1);
+
+				//xpathFcA="/ProcessData/Validaciones/Factura_"+indtext+"/FcActualMenos1";
+				//xpathFcFac="/ProcessData/Validaciones/Factura_"+indtext+"/FcVencFac";
+				//sysDateString2 = sysDateFormat1.format(sysDate2);
+				//sysDateString3 = sysDateFormat1.format($TMP_FhVenc[ind].#tmp_fhvenc);
+
+				//update processdata set xpathresult = sysDateString3 where xpath = xpathFcFac;
+				//update processdata set xpathresult = sysDateString2 where xpath = xpathFcA;
+
+				if d &lt; sysDate2 then
+				begin
+
+					update processdata set xpathresult = "RE030" where xpath = xpathErr;
+					ctrl0 = 0;
+
+				end
+
+			end
+
+			if mcnotifi = "0" then
+			begin
+
+				if numinces != "0" then
+				begin
+
+					if nuplzces &lt; 0 then
+					begin
+
+						update processdata set xpathresult = "RE028" where xpath = xpathErr;
+						ctrl0 = 0;
+					end
+					else
+					begin
+
+						numinces1 = atoi(numinces);
+
+						if nuplzces &lt; numinces1 then
+						begin
+
+							update processdata set xpathresult = "RE030" where xpath = xpathErr;
+							ctrl0 = 0;
+						end
+
+					end
+				end
+
+				numaxces1 = atoi(numaxces);
+						
+				if nuplzces &gt; numaxces1 then
+				begin
+
+					update processdata set xpathresult = "RE029" where xpath = xpathErr;
+					ctrl0 = 0;
+
+				end
+
+			end
+
+		end
+
+	end
+
+end
+
+
+
+
+
+
+//VALIDA FECHA DE REVOCACION
+
+fhrevoca0="";
+fhvencto0 = DATE("%d%m%y%y",fhvencto);
+
+if mcrevoca = "1" &amp; fhrevoca0 = "" then
+begin
+
+	if cdforpag = "T" &amp; mcrevtra = "1" then
+	begin
+
+		ctrl = 0;
+
+		if tpfacrev = "P" then
+		begin
+
+			if tpplarev = "C" then
+			begin
+
+				fecha = mid($INPUT.#Generica,29,13);
+
+			end
+
+			if tpplarev = "E" then
+			begin
+
+				fecha = mid($Facturas[ind].#LinFactura,90,8);
+
+			end
+
+			if tpplarev = "R" then
+			begin
+
+				fecha = mid($INPUT.#Funcional,25,2) + mid($INPUT.#Funcional,28,2) + mid($INPUT.#Funcional,31,4);
+
+			end
+
+			if tpplarev != "C" &amp; tpplarev != "E" &amp; tpplarev != "R" then
+			begin
+
+				ctrl = 0;
+				update processdata set xpathresult = "RE138" where xpath = xpathErr;
+
+			end
+
+			d1 = DATE("%d%m%y%y",fecha);
+			strdate(d,"%y%y/%m/%d", Stringdate2);
+			strdate(d1,"%y%y/%m/%d", Stringdate3);
+
+			//xpathFc1="/ProcessData/Validaciones/Factura_"+indtext+"/Fc1";
+			//xpathFc2="/ProcessData/Validaciones/Factura_"+indtext+"/Fc2";
+			//xpathDifer="/ProcessData/Validaciones/Factura_"+indtext+"/DifDias";
+			//update processdata set xpathresult = Stringdate2 where xpath = xpathFc1;
+			//update processdata set xpathresult = Stringdate3 where xpath = xpathFc2;
+
+			diferFh = Oper.datesDiff(Stringdate3,Stringdate2);
+
+			ntoa(diferFh,diferFh1);
+			//update processdata set xpathresult = diferFh1 where xpath = xpathDifer;
+
+			nudiamin0 = atoi(nudiamin);
+
+			if diferFh &gt; nudiamin0 then
+			begin
+
+				ctrl = 1;
+				//xpathDifer="/ProcessData/Validaciones/Factura_"+indtext+"/Control";
+				//update processdata set xpathresult = "Control es 1" where xpath = xpathDifer;
+
+			end
+			else
+			begin
+
+				if nudiamin = "" then
+				begin
+
+					update processdata set xpathresult = "RE138" where xpath = xpathErr;
+
+				end
+
+				ctrl = 0;
+
+			end
+
+		end
+
+		if tpfacrev = "T" then
+		begin
+
+			ctrl = 1;
+
+		end
+
+
+		if tpfacrev != "P" &amp; tpfacrev != "T" then
+		begin
+
+			ctrl = 0;
+			update processdata set xpathresult = "RE138" where xpath = xpathErr;
+
+		end
+
+	end
+
+
+
+	//Tipo de Revocacion por Fecha de Cesion
+
+	fhrevoca = date("%d%m%y%y",fhrevoca0);
+	nudiarev0 = atoi(nudiarev);
+
+	IF tprevoca = "C" &amp; ctrl = 1 THEN
+	BEGIN
+
+		fhcarga = DATE("%d%m%y%y",mid($INPUT.#Generica,29,8));
+		fhrevoca = fhcarga &lt;&lt; days(nudiarev0);
+
+	END
+
+
+	//Tipo de Revocacion por Fecha de Emision
+
+	IF tprevoca = "E" &amp; ctrl = 1 &amp; resultado0 = "S" THEN
+	BEGIN
+
+		fhemisio = DATE("%d%m%y%y",mid($Facturas[ind].#LinFactura,90,8));
+		fhrevoca = fhemisio &lt;&lt; days(nudiarev0);
+
+	END
+
+
+	//Tipo de Revocacion por Fecha de Vencimiento
+
+	IF tprevoca = "V" &amp; ctrl0 = 1 &amp; ctrl = 1 THEN
+	BEGIN
+
+		fhrevoca = fhvencto0 &lt;&lt; days(-nudiarev0);
+
+	END
+
+
+	//Tipo de Revocacion por Fecha de Remesa
+
+	IF tprevoca = "R" &amp; ctrl = 1 THEN
+	BEGIN
+
+		fhremesa = DATE("%d/%m/%y%y",mid($INPUT.#Funcional,25,10));
+		fhrevoca = fhremesa &lt;&lt; days(nudiarev0);
+
+		//xpathFcRev="/ProcessData/Validaciones/Factura_"+indtext+"/FcRevoca";
+		//sysDateString2 = sysDateFormat1.format(fhrevoca);
+		//update processdata set xpathresult = sysDateString2 where xpath = xpathFcRev;
+
+		IF fhvencto0 &lt; fhrevoca THEN
+		BEGIN
+
+			update processdata set xpathresult = "RE194" where xpath = xpathErr;
+
+		END
+
+	END
+
+end
+
+
+
+//Tipo de Revocacion por Fecha de Remesa APLICA??
+
+//Referencias --&gt; funcion elim_blan_ini() ?¿
+
+
+//Fecha Vencimiento / Fecha Emision
+
+if mid($Facturas[ind].#LinFactura,26,3) = "001" | mid($Facturas[ind].#LinFactura,26,3) = "003" then
+begin
+
+	if mid($Facturas[ind].#LinFactura,90,8) != "        " then //FALTA cadena() como condicion
+	begin
+
+		fhemisio = DATE("%d%m%y%y",mid($Facturas[ind].#LinFactura,90,8));
+
+		IF fhvencto0 &lt; fhemisio THEN
+		BEGIN
+
+			update processdata set xpathresult = "RE188" where xpath = xpathErr;		
+
+		end
+
+	end
+
+end
+
+
+//Validamos Datos de Financiacion Predeterminada - TODOS ESTOS CAMPOS QUE HAY DENTRO NO SABEMOS DE DONDE SE SACAN
+
+IF mcfinaut = "1" &amp; tpfinaut = "P" THEN
+BEGIN
+
+
+
+END
+
+
+
+
+totfac=totfac+1;
+ind = ind + 1;</OnEnd>
+</ExplicitRule>
+<BlockSig>
+<Tag>2</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>1</TagLength>
+<Field>
+<ID>14</ID>
+<Name>LinFactura</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>1500</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<StartPos>0</StartPos>
+<Length>1500</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>13</ID>
+<Name>Pie</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>3</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>1</TagLength>
+<Field>
+<ID>12</ID>
+<Name>LineaPie</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>1500</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<StartPos>0</StartPos>
+<Length>1500</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>11</ID>
+<Name>TMP_FhVencUnica</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>XXX</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>0</TagLength>
+<Field>
+<ID>10</ID>
+<Name>tmp:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>350</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<StartPos>0</StartPos>
+<Length>350</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field></PosRecord></Group></PosSyntax></INPUT><OUTPUT>
+<PosSyntax>
+<DelimiterUsed>no</DelimiterUsed>
+<Delimiter1/><Delimiter2Used>no</Delimiter2Used>
+<Delimiter2/><RecordLengthUsed>no</RecordLengthUsed>
+<RecordLength>0</RecordLength>
+<CharacterEncoding></CharacterEncoding>
+<DecimalCharUsed>no</DecimalCharUsed>
+<DecimalChar/><UseBytePositions>no</UseBytePositions>
+<RepeatSuppressionCharUsed>no</RepeatSuppressionCharUsed>
+<RepeatSuppressionChar/><Group>
+<ID>9</ID>
+<Name>OUTPUT</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>4</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><PosRecord>
+<ID>8</ID>
+<Name>Linea_Inicio</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>0LX</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>3</TagLength>
+<Field>
+<ID>7</ID>
+<Name>Inic</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>350</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>18</Link>
+<StartPos>0</StartPos>
+<Length>350</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>6</ID>
+<Name>Cabecera</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>1LX</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>3</TagLength>
+<Field>
+<ID>5</ID>
+<Name>LineaCabecera</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>350</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>16</Link>
+<StartPos>0</StartPos>
+<Length>350</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>4</ID>
+<Name>Facturas</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>2LX</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>3</TagLength>
+<Field>
+<ID>3</ID>
+<Name>LinFactura</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>350</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>14</Link>
+<StartPos>0</StartPos>
+<Length>350</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field>
+</PosRecord>
+<PosRecord>
+<ID>2</ID>
+<Name>Pie</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag>300</Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagPos>0</TagPos>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<TagLength>3</TagLength>
+<Field>
+<ID>1</ID>
+<Name>LineaPie</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>350</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format>X</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>12</Link>
+<StartPos>0</StartPos>
+<Length>350</Length>
+<Justify>left</Justify>
+<PadChar>SP</PadChar>
+<PadHighByte>0</PadHighByte>
+<Binary>0</Binary>
+</Field></PosRecord></Group></PosSyntax>
+</OUTPUT>
+<SyntaxTokens>
+<Token>
+<Code>A</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Char>SP</Char>
+</Token>
+<Token>
+<Code>N</Code>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Char>.</Char>
+<Char>-</Char>
+<Char>+</Char>
+</Token>
+<Token>
+<Code>X</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Char>.</Char>
+<Char>-</Char>
+<Char>+</Char>
+<Char>SP</Char>
+<Char>(</Char>
+<Char>)</Char>
+<Char>:</Char>
+<Char>/</Char>
+<Char>%</Char>
+<Char>\</Char>
+<Char>!</Char>
+<Char>"</Char>
+<Char>$</Char>
+<Char>^</Char>
+<Char>&amp;</Char>
+<Char>*</Char>
+<Char>_</Char>
+<Char>=</Char>
+<Char>[</Char>
+<Char>]</Char>
+<Char>{</Char>
+<Char>}</Char>
+<Char>;</Char>
+<Char>'</Char>
+<Char>?</Char>
+<Char>,</Char>
+<Char>&lt;</Char>
+<Char>&gt;</Char>
+<Char>~</Char>
+<Char>#</Char>
+<Char>|</Char>
+<Char>@</Char>
+<Char>`</Char>
+</Token>
+<Token>
+<Code>J</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Range>
+<Start>/</Start>
+<End>!</End>
+</Range>
+<Range>
+<Start>@</Start>
+<End>:</End>
+</Range>
+<Range>
+<Start>`</Start>
+<End>[</End>
+</Range>
+<Range>
+<Start>~</Start>
+<End>{</End>
+</Range>
+<Range>
+<Start>0xDF</Start>
+<End>0xA1</End>
+</Range>
+<Char>SP</Char>
+</Token></SyntaxTokens></Mapper>

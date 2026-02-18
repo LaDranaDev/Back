@@ -1,0 +1,3241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mapper VERSION="1.0" xmlns="http://www.stercomm.com/SI/Map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<MapDetails>
+<VersionControl>
+<SerializationVersion>33056</SerializationVersion>
+<MajorVersion>0</MajorVersion>
+<MinorVersion>0</MinorVersion>
+<CompiledDate>100992996</CompiledDate>
+</VersionControl>
+<Summary>
+<Author>Diego</Author>
+<Description>SNTDR_ONB_MAP_VALIDATE_EDA</Description>
+<MapFunction>24</MapFunction>
+</Summary>
+<Flags>
+<SystemTemplate>0</SystemTemplate>
+<UseBigDecimal>0</UseBigDecimal>
+<InitializeExtendedRuleVariables>0</InitializeExtendedRuleVariables>
+<ErrorForNotUsed>0</ErrorForNotUsed>
+<SuspendGroupProcessing>0</SuspendGroupProcessing>
+<SWIFTValidation></SWIFTValidation>
+<UseConfigurableTrimming>0</UseConfigurableTrimming>
+<CompatibleRuleExecution>1</CompatibleRuleExecution>
+<KeepTrailingZeroes>0</KeepTrailingZeroes>
+</Flags>
+<EDIAssociations_IN>
+<AgencyID></AgencyID>
+<VersionID></VersionID>
+<BindingID></BindingID>
+<FunctionGroupID></FunctionGroupID>
+<AgencyDescription></AgencyDescription>
+<VersionDescription></VersionDescription>
+<BindingDescription></BindingDescription>
+<FunctionalGroupDescription></FunctionalGroupDescription>
+<Release>65535</Release>
+</EDIAssociations_IN>
+<EDIAssociations_OUT>
+<AgencyID></AgencyID>
+<VersionID></VersionID>
+<BindingID></BindingID>
+<FunctionGroupID></FunctionGroupID>
+<AgencyDescription></AgencyDescription>
+<VersionDescription></VersionDescription>
+<BindingDescription></BindingDescription>
+<FunctionalGroupDescription></FunctionalGroupDescription>
+<Release>65535</Release>
+</EDIAssociations_OUT>
+<ExplicitRule>
+<PreSessionRule>object factory;
+object daoGenOracle,daoMulGen;
+object hashmapCompTel,usuarios;
+integer ind;
+string[1000] sqlString;
+String[13] patronNumerico;
+String[56] patronEspeciales;
+patronNumerico = "[0-9]{1,1000}";
+patronEspeciales = "[a-z,A-Z,0-9,ñ,Ñ,á,Á,é,É,í,Í,ó,Ó,ú,Ú,@,\.,&amp;, ,_]{1,1000}";
+ind=0;
+
+factory = new("mx.isban.h2h.si.userexit2.dao.DaoFactory");
+daoGenOracle = factory.getGeneralInfoDAO();
+daoGenOracle.openConnectionPool("OnbPool");
+
+daoMulGen = factory.getMultipleGeneralInfoDAO();
+
+daoMulGen.openConnectionPool("OnbPool");
+
+
+sqlString = "select id_compania_cel_pk as ID, dsc_compania_cel as VALOR from cnf_mx_cat_compania_cel where val_estatus='A'";
+update processdata set xpathresult=sqlString where xpath="sqlString";
+
+hashmapCompTel = daoMulGen.getQueryResultString(sqlString, "VALOR","ID");
+
+
+
+update processdata set xpathresult=hashmapCompTel where xpath="hashmapCompTel";
+
+usuarios = new("java.util.ArrayList");</PreSessionRule>
+<PostSessionRule>daoGenOracle.closeConnection();
+daoMulGen.closeConnection();</PostSessionRule>
+</ExplicitRule>
+</MapDetails>
+<TemplateOption>2</TemplateOption>
+<ExtendedRuleLibraries/>
+<INPUT>
+<VarDelimSyntax>
+<FieldDelimiter>;</FieldDelimiter>
+<QuoteCharacter>"</QuoteCharacter>
+<QuoteHandling>0</QuoteHandling>
+<IncludeColumnNames>0</IncludeColumnNames>
+<CharacterEncoding>UTF8 (UTF8)</CharacterEncoding>
+<RepeatSuppressionCharUsed>no</RepeatSuppressionCharUsed>
+<RepeatSuppressionChar/><Group>
+<ID>103</ID>
+<Name>INPUT</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>3</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><VarDelimRecord>
+<ID>102</ID>
+<Name>Header</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>13</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag></Tag>
+<TagFieldNum>65535</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagFieldNum>0</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<Field>
+<ID>101</ID>
+<Name>Usuario:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>100</ID>
+<Name>ApelPat:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>99</ID>
+<Name>ApelMat:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>98</ID>
+<Name>Nombre:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>97</ID>
+<Name>Mail:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>96</ID>
+<Name>Telefono:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>95</ID>
+<Name>Extension:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>94</ID>
+<Name>Celular:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>93</ID>
+<Name>CompMovil:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>92</ID>
+<Name>Emisor:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>91</ID>
+<Name>RFCemisor:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>90</ID>
+<Name>Estatus:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>89</ID>
+<Name>Perfil:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit></Field>
+</VarDelimRecord>
+<Group>
+<ID>88</ID>
+<Name>g1</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><ExplicitRule>
+<OnBegin>ind=ind+1;</OnBegin>
+<OnEnd>string[100] error[100];
+integer inderror,i;
+object cadenaJava;
+string[10] resultado,UserRep;
+string[18] idEmi,aux,istr;
+string[2000] EDA;
+string[1] bandUser;
+
+
+inderror=0;resultado="";idEmi="";i=0;aux="";istr="";EDA="";bandUser="C";UserRep="false";
+
+while i&lt;100 do begin
+	error[i]="";
+	i=i+1;
+end
+
+
+
+
+update processdata set xpathresult=#Usuario where xpath="Usuario";
+
+
+if !exist(#Usuario) then begin
+	error[inderror]="Error Campo Usuario corporativo: No Existe";
+	inderror=inderror+1;
+	bandUser="I";
+end
+else begin
+	if len(#Usuario) !=7 then begin
+		error[inderror]="Error Campo Usuario corporativo: Longitud distinta de 7";
+		inderror=inderror+1;
+		bandUser="I";
+	end
+	if left(#Usuario,1)=" " | right(#Usuario,1)=" " then begin
+		error[inderror]="Error Campo Usuario corporativo: Espacios al inicio o final";
+		inderror=inderror+1;
+		bandUser="I";
+	end
+	cadenaJava  = new("java.lang.String", #Usuario);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Usuario: Caracteres no permitidos";
+		inderror=inderror+1;
+		bandUser="I";
+	end
+end
+if bandUser="C" then begin
+	UserRep=usuarios.contains(#Usuario);
+	if UserRep="false" then begin
+		usuarios.add(#Usuario);
+	end
+end
+
+if !exist(#ApelPat) then begin
+	error[inderror]="Error Campo Apellido Paterno: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#ApelPat) &gt;80 then begin
+		error[inderror]="Error Campo Apellido Paterno: Longitud mayor 80";
+		inderror=inderror+1;
+	end
+	if left(#ApelPat,1)=" " | right(#ApelPat,1)=" " then begin
+		error[inderror]="Error Campo Apellido Paterno: Espacios al inicio o final";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #ApelPat);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Apellido Paterno: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+if exist(#ApelMat) then begin
+	if len(#ApelMat) &gt;80 then begin
+		error[inderror]="Error Campo Apellido Materno: Longitud mayor 80";
+		inderror=inderror+1;
+	end
+	if left(#ApelMat,1)=" " | right(#ApelMat,1)=" " then begin
+		error[inderror]="Error Campo Apellido Materno: Espacios al inicio o final";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #ApelMat);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Apellido Materno: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+if !exist(#Nombre) then begin
+	error[inderror]="Error Campo Nombre: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Nombre) &gt;80 then begin
+		error[inderror]="Error Campo Nombre: Longitud mayor 80";
+		inderror=inderror+1;
+	end
+	if left(#Nombre,1)=" " | right(#Nombre,1)=" " then begin
+		error[inderror]="Error Campo Nombre: Espacios al inicio o final";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #Nombre);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Nombre: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+if !exist(#Mail) then begin
+	error[inderror]="Error Campo Mail: No Existe";
+	inderror=inderror+1;
+end
+	else begin
+	if len(#Mail) &gt;60 then begin
+		error[inderror]="Error Campo Mail: Longitud mayor 80";
+		inderror=inderror+1;
+	end
+	if left(#Mail,1)=" " | right(#Mail,1)=" " then begin
+		error[inderror]="Error Campo Mail: Espacios al inicio o final";
+		inderror=inderror+1;
+	end
+	if strstr(#Mail,"@")=-1 then begin
+		error[inderror]="Error Campo Mail: Sin arroba";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #Mail);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Mail: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+if !exist(#Telefono) then begin
+	error[inderror]="Error Campo Telefono: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Telefono) !=10 then begin
+		error[inderror]="Error Campo Telefono: Longitud distinta a 10";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", trim(#Telefono));
+	resultado =cadenaJava.matches(patronNumerico);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Telefono: No numerico";
+		inderror=inderror+1;
+	end
+end
+
+
+if !exist(#Extension) then begin
+	error[inderror]="Error Campo Extension: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Extension) !=5 then begin
+		error[inderror]="Error Campo Extension: Longitud distinta a 5";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", trim(#Extension));
+	resultado =cadenaJava.matches(patronNumerico);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Extension: No numerico";
+		inderror=inderror+1;
+	end
+end
+
+if exist(#Celular) then begin
+	if len(#Celular) !=10 then begin
+		error[inderror]="Error Campo Celular: Longitud distinta a 10";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", trim(#Celular));
+	resultado =cadenaJava.matches(patronNumerico);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Celular: No numerico";
+		inderror=inderror+1;
+	end
+	if !exist(#CompMovil) then begin
+		error[inderror]="Error Campo Compañia Movil: No Existe";
+		inderror=inderror+1;
+	end
+	else begin
+		if len(#CompMovil) &gt;80 then begin
+			error[inderror]="Error Compañia Movil: Longitud mayor 80";
+			inderror=inderror+1;
+		end
+		cadenaJava  = new("java.lang.String", #CompMovil);
+		resultado =cadenaJava.matches(patronEspeciales);
+		if resultado="false" then begin
+			error[inderror]="Error Campo Compañia Movil: Caracteres no permitidos";
+			inderror=inderror+1;
+		end
+		resultado = hashmapCompTel.containsValue(#CompMovil);
+		if(resultado = "false") then begin
+			error[inderror]="Error Compañia Movil: No se encuentra en catalogo";
+			inderror=inderror+1;			
+		end
+	end
+end
+
+
+
+if !exist(#Emisor) then begin
+	error[inderror]="Error Campo Emisor: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Emisor) &gt;80 then begin
+		error[inderror]="Error Campo Emisor: Longitud mayor 80";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #Emisor);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Emisor: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+
+if !exist(#RFCemisor) then begin
+	error[inderror]="Error Campo RFCemisor: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#RFCemisor) &lt;12 | len(#RFCemisor) &gt;20 then begin
+		error[inderror]="Error Campo RFC emisor: Longitud Incorrecta";
+		inderror=inderror+1;
+	end
+	sqlString="select max(id_emisor_pk) as ID from cnf_mx_cat_emisor where val_estatus='A' and txt_rfc_emisor='"+#RFCemisor+"'";
+	idEmi = daoGenOracle.getQueryResult(sqlString,"ID");
+update processdata set xpathresult=idEmi where xpath="idEmi";
+	if idEmi="" then begin
+		error[inderror]="Error Campo RFC emisor: No Existe en catalogo";
+		inderror=inderror+1;
+	end
+
+	cadenaJava  = new("java.lang.String", #RFCemisor);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo RFC emisor: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+
+
+
+if !exist(#Estatus) then begin
+	error[inderror]="Error Campo Estatus: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Estatus) !=1 then begin
+		error[inderror]="Error Campo Estatus: Longitud mayor 1";
+		inderror=inderror+1;
+	end
+	if #Estatus!="A" &amp; #Estatus!="I" then begin
+		error[inderror]="Error Campo Estatus: Valor debe ser A o I";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #Estatus);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Estatus: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+
+
+if !exist(#Perfil) then begin
+	error[inderror]="Error Campo Perfil: No Existe";
+	inderror=inderror+1;
+end
+else begin
+	if len(#Perfil) !=1 then begin
+		error[inderror]="Error Campo Perfil: Longitud mayor 1";
+		inderror=inderror+1;
+	end
+	if #Perfil!="A" &amp; #Perfil!="O" then begin
+		error[inderror]="Error Campo Perfil: Valor debe ser A o O";
+		inderror=inderror+1;
+	end
+	cadenaJava  = new("java.lang.String", #Perfil);
+	resultado =cadenaJava.matches(patronEspeciales);
+	if resultado="false" then begin
+		error[inderror]="Error Campo Perfil: Caracteres no permitidos";
+		inderror=inderror+1;
+	end
+end
+
+update processdata set xpathresult=error[0] where xpath="Error0";
+update processdata set xpathresult=error[1] where xpath="Error0";
+update processdata set xpathresult=error[2] where xpath="Error0";
+update processdata set xpathresult=error[3] where xpath="Error0";
+update processdata set xpathresult=error[4] where xpath="Error0";
+
+if inderror=0 then begin
+	$gerror[ind].#TMP_error="Validacion Correcta";
+	sqlString="select 'Id Empleado: '||e.id_emp_acc_pk||' Usuario: '||e.val_usua_corp||' Apellido Paterno: '||e.txt_apel_pat||' Apellido Materno: '||e.txt_apel_mat||' Nombre: '||e.txt_nombre||' Email: '||e.txt_email||' Num Telefono: '||e.num_telefono||' Num Ext: '||e.num_ext||' Num Celular: '||e.num_cel||' Comp Celular: '||e.txt_comp_cel||' Area: '||ca.dsc_area||' Estatus: '||e.val_estatus||' Perfil: '||e.flg_rol as EDA ";
+	sqlString=sqlString+"from cnf_mx_empl_acce_sist e left join cnf_mx_cat_areas ca on e.id_area_fk=ca.id_area_pk where e.val_usua_corp='"+#Usuario+"'";
+update processdata set xpathresult=sqlString where xpath="sqlStringEDA";
+	EDA = daoGenOracle.getQueryResult(sqlString,"EDA");
+update processdata set xpathresult=EDA where xpath="EDA";
+	if EDA!="" then begin
+		$gerror[ind].#TMP_error:2=EDA;
+update processdata set xpathresult=EDA where xpath="EDA";
+	end
+	if UserRep="true" then begin
+		$gerror[ind].#TMP_error:3="EDA Repetido";
+	end
+end
+else begin
+if error[0]!="" then begin
+	$gerror[ind].#TMP_error=error[0];
+end
+if error[1]!="" then begin
+	$gerror[ind].#TMP_error:2=error[1];
+end
+if error[2]!="" then begin
+	$gerror[ind].#TMP_error:3=error[2];
+end
+if error[3]!="" then begin
+	$gerror[ind].#TMP_error:4=error[3];
+end
+if error[4]!="" then begin
+	$gerror[ind].#TMP_error:5=error[4];
+end
+if error[5]!="" then begin
+	$gerror[ind].#TMP_error:6=error[5];
+end
+if error[6]!="" then begin
+	$gerror[ind].#TMP_error:7=error[6];
+end
+if error[7]!="" then begin
+	$gerror[ind].#TMP_error:8=error[7];
+end
+if error[8]!="" then begin
+	$gerror[ind].#TMP_error:9=error[8];
+end
+if error[9]!="" then begin
+	$gerror[ind].#TMP_error:10=error[9];
+end
+if error[10]!="" then begin
+	$gerror[ind].#TMP_error:11=error[10];
+end
+if error[11]!="" then begin
+	$gerror[ind].#TMP_error:12=error[11];
+end
+if error[12]!="" then begin
+	$gerror[ind].#TMP_error:13=error[12];
+end
+if error[13]!="" then begin
+	$gerror[ind].#TMP_error:14=error[13];
+end
+if error[14]!="" then begin
+	$gerror[ind].#TMP_error:15=error[14];
+end
+if error[15]!="" then begin
+	$gerror[ind].#TMP_error:16=error[15];
+end
+if error[16]!="" then begin
+	$gerror[ind].#TMP_error:17=error[16];
+end
+if error[17]!="" then begin
+	$gerror[ind].#TMP_error:18=error[17];
+end
+if error[18]!="" then begin
+	$gerror[ind].#TMP_error:19=error[18];
+end
+if error[19]!="" then begin
+	$gerror[ind].#TMP_error:20=error[19];
+end
+end</OnEnd>
+</ExplicitRule>
+<VarDelimRecord>
+<ID>87</ID>
+<Name>Details</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>13</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag></Tag>
+<TagFieldNum>65535</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagFieldNum>0</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<Field>
+<ID>86</ID>
+<Name>Usuario</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>85</ID>
+<Name>ApelPat</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>84</ID>
+<Name>ApelMat</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>83</ID>
+<Name>Nombre</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>82</ID>
+<Name>Mail</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>81</ID>
+<Name>Telefono</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>80</ID>
+<Name>Extension</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>79</ID>
+<Name>Celular</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>78</ID>
+<Name>CompMovil</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>77</ID>
+<Name>Emisor</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>76</ID>
+<Name>RFCemisor</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>75</ID>
+<Name>Estatus</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>74</ID>
+<Name>Perfil</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit></Field></VarDelimRecord>
+</Group>
+<Group>
+<ID>73</ID>
+<Name>gerror</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><VarDelimRecord>
+<ID>72</ID>
+<Name>Errores</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>20</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag></Tag>
+<TagFieldNum>65535</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagFieldNum>0</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<Field>
+<ID>71</ID>
+<Name>TMP_error</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>70</ID>
+<Name>TMP_error:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>2000</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>69</ID>
+<Name>TMP_error:3</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>68</ID>
+<Name>TMP_error:4</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>67</ID>
+<Name>TMP_error:5</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>66</ID>
+<Name>TMP_error:6</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>65</ID>
+<Name>TMP_error:7</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>64</ID>
+<Name>TMP_error:8</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>63</ID>
+<Name>TMP_error:9</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>62</ID>
+<Name>TMP_error:10</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>61</ID>
+<Name>TMP_error:11</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>60</ID>
+<Name>TMP_error:12</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>59</ID>
+<Name>TMP_error:13</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>58</ID>
+<Name>TMP_error:14</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>57</ID>
+<Name>TMP_error:15</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>56</ID>
+<Name>TMP_error:16</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>55</ID>
+<Name>TMP_error:17</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>54</ID>
+<Name>TMP_error:18</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>53</ID>
+<Name>TMP_error:19</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+</Field>
+<Field>
+<ID>52</ID>
+<Name>TMP_error:20</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit></Field></VarDelimRecord></Group></Group></VarDelimSyntax></INPUT><OUTPUT>
+<VarDelimSyntax>
+<FieldDelimiter>;</FieldDelimiter>
+<QuoteCharacter>"</QuoteCharacter>
+<QuoteHandling>0</QuoteHandling>
+<IncludeColumnNames>0</IncludeColumnNames>
+<CharacterEncoding>UTF8 (UTF8)</CharacterEncoding>
+<RepeatSuppressionCharUsed>no</RepeatSuppressionCharUsed>
+<RepeatSuppressionChar/><Group>
+<ID>51</ID>
+<Name>OUTPUT</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>2</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><VarDelimRecord>
+<ID>50</ID>
+<Name>Header</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>14</ChildCount>
+<Note></Note>
+<Min>1</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag></Tag>
+<TagFieldNum>65535</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>65535</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagFieldNum>0</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<Field>
+<ID>49</ID>
+<Name>Usuario:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>101</Link>
+</Field>
+<Field>
+<ID>48</ID>
+<Name>ApelPat:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>100</Link>
+</Field>
+<Field>
+<ID>47</ID>
+<Name>ApelMat:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>99</Link>
+</Field>
+<Field>
+<ID>46</ID>
+<Name>Nombre:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>98</Link>
+</Field>
+<Field>
+<ID>45</ID>
+<Name>Mail:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>97</Link>
+</Field>
+<Field>
+<ID>44</ID>
+<Name>Telefono:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>96</Link>
+</Field>
+<Field>
+<ID>43</ID>
+<Name>Extension:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>95</Link>
+</Field>
+<Field>
+<ID>42</ID>
+<Name>Celular:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>94</Link>
+</Field>
+<Field>
+<ID>41</ID>
+<Name>CompMovil:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>93</Link>
+</Field>
+<Field>
+<ID>40</ID>
+<Name>Emisor:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>92</Link>
+</Field>
+<Field>
+<ID>39</ID>
+<Name>RFCemisor:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>91</Link>
+</Field>
+<Field>
+<ID>38</ID>
+<Name>Estatus:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>90</Link>
+</Field>
+<Field>
+<ID>37</ID>
+<Name>Perfil:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>89</Link>
+</Field>
+<Field>
+<ID>36</ID>
+<Name>ERRORES</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>20</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<ExplicitRule>#ERRORES="ERRORES";</ExplicitRule>
+</Field>
+</VarDelimRecord>
+<Group>
+<ID>35</ID>
+<Name>g2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>1</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>9999999</Max>
+<PromoteGroup>no</PromoteGroup>
+<GroupChoiceType>0</GroupChoiceType>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><VarDelimRecord>
+<ID>34</ID>
+<Name>Details</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>33</ChildCount>
+<Note></Note>
+<Min>0</Min>
+<Max>1</Max>
+<LoopCtl>normal</LoopCtl>
+<OrderingType>0</OrderingType>
+<OrderingTag></OrderingTag>
+<UsageRelatedFieldName/><BlockSig>
+<Tag></Tag>
+<TagFieldNum>65535</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>65535</KeyFieldAction>
+<Tag></Tag>
+<TagFieldNum>0</TagFieldNum>
+<KeyFieldID>0</KeyFieldID>
+<KeyFieldData>0</KeyFieldData>
+<KeyFieldAction>0</KeyFieldAction>
+</BlockSig>
+<Field>
+<ID>33</ID>
+<Name>Usuario</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>86</Link>
+</Field>
+<Field>
+<ID>32</ID>
+<Name>ApelPat</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>85</Link>
+</Field>
+<Field>
+<ID>31</ID>
+<Name>ApelMat</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>84</Link>
+</Field>
+<Field>
+<ID>30</ID>
+<Name>Nombre</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>83</Link>
+</Field>
+<Field>
+<ID>29</ID>
+<Name>Mail</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>82</Link>
+</Field>
+<Field>
+<ID>28</ID>
+<Name>Telefono</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>numeric</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>yes</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format>N0</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>81</Link>
+</Field>
+<Field>
+<ID>27</ID>
+<Name>Extension</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>numeric</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>yes</ImplicitDecimal>
+<AllowSignedDecimal>1</AllowSignedDecimal>
+<Format>N0</Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>80</Link>
+</Field>
+<Field>
+<ID>26</ID>
+<Name>Celular</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>79</Link>
+</Field>
+<Field>
+<ID>25</ID>
+<Name>CompMovil</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>78</Link>
+</Field>
+<Field>
+<ID>24</ID>
+<Name>Emisor</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>200</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>77</Link>
+</Field>
+<Field>
+<ID>23</ID>
+<Name>RFCemisor</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>76</Link>
+</Field>
+<Field>
+<ID>22</ID>
+<Name>Estatus</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>75</Link>
+</Field>
+<Field>
+<ID>21</ID>
+<Name>Perfil</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>50</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>74</Link>
+</Field>
+<Field>
+<ID>20</ID>
+<Name>TMP_error</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>71</Link>
+</Field>
+<Field>
+<ID>19</ID>
+<Name>TMP_error:2</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>2000</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>70</Link>
+</Field>
+<Field>
+<ID>18</ID>
+<Name>TMP_error:3</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>69</Link>
+</Field>
+<Field>
+<ID>17</ID>
+<Name>TMP_error:4</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>68</Link>
+</Field>
+<Field>
+<ID>16</ID>
+<Name>TMP_error:5</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>67</Link>
+</Field>
+<Field>
+<ID>15</ID>
+<Name>TMP_error:6</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>66</Link>
+</Field>
+<Field>
+<ID>14</ID>
+<Name>TMP_error:7</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>65</Link>
+</Field>
+<Field>
+<ID>13</ID>
+<Name>TMP_error:8</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>64</Link>
+</Field>
+<Field>
+<ID>12</ID>
+<Name>TMP_error:9</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>63</Link>
+</Field>
+<Field>
+<ID>11</ID>
+<Name>TMP_error:10</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>62</Link>
+</Field>
+<Field>
+<ID>10</ID>
+<Name>TMP_error:11</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>61</Link>
+</Field>
+<Field>
+<ID>9</ID>
+<Name>TMP_error:12</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>60</Link>
+</Field>
+<Field>
+<ID>8</ID>
+<Name>TMP_error:13</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>59</Link>
+</Field>
+<Field>
+<ID>7</ID>
+<Name>TMP_error:14</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>58</Link>
+</Field>
+<Field>
+<ID>6</ID>
+<Name>TMP_error:15</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>57</Link>
+</Field>
+<Field>
+<ID>5</ID>
+<Name>TMP_error:16</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>56</Link>
+</Field>
+<Field>
+<ID>4</ID>
+<Name>TMP_error:17</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>55</Link>
+</Field>
+<Field>
+<ID>3</ID>
+<Name>TMP_error:18</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>54</Link>
+</Field>
+<Field>
+<ID>2</ID>
+<Name>TMP_error:19</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>53</Link>
+</Field>
+<Field>
+<ID>1</ID>
+<Name>TMP_error:20</Name>
+<Description></Description>
+<Active>1</Active>
+<ChildCount>0</ChildCount>
+<Note></Note>
+<Mandatory>no</Mandatory>
+<NotUsed>no</NotUsed>
+<FieldNumber>0</FieldNumber>
+<StoreGroup>65535</StoreGroup>
+<StoreField>65535</StoreField>
+<BusinessName></BusinessName>
+<StoreLimit>
+<MaxLen>100</MaxLen>
+<MinLen>0</MinLen>
+<Signed>no</Signed>
+<DataType>string</DataType>
+<ImpliedDecimalPos>0</ImpliedDecimalPos>
+<ImplicitDecimal>no</ImplicitDecimal>
+<AllowSignedDecimal>0</AllowSignedDecimal>
+<Format></Format>
+<BinaryOutput>0</BinaryOutput>
+<BinaryWidth>0</BinaryWidth>
+</StoreLimit>
+<Link>52</Link>
+</Field></VarDelimRecord></Group></Group></VarDelimSyntax>
+</OUTPUT>
+<SyntaxTokens>
+<Token>
+<Code>A</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Char>SP</Char>
+</Token>
+<Token>
+<Code>N</Code>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Char>.</Char>
+<Char>-</Char>
+<Char>+</Char>
+</Token>
+<Token>
+<Code>X</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Char>.</Char>
+<Char>-</Char>
+<Char>+</Char>
+<Char>SP</Char>
+<Char>(</Char>
+<Char>)</Char>
+<Char>:</Char>
+<Char>/</Char>
+<Char>%</Char>
+<Char>\</Char>
+<Char>!</Char>
+<Char>"</Char>
+<Char>$</Char>
+<Char>^</Char>
+<Char>&amp;</Char>
+<Char>*</Char>
+<Char>_</Char>
+<Char>=</Char>
+<Char>[</Char>
+<Char>]</Char>
+<Char>{</Char>
+<Char>}</Char>
+<Char>;</Char>
+<Char>'</Char>
+<Char>?</Char>
+<Char>,</Char>
+<Char>&lt;</Char>
+<Char>&gt;</Char>
+<Char>~</Char>
+<Char>#</Char>
+<Char>|</Char>
+<Char>@</Char>
+<Char>`</Char>
+</Token>
+<Token>
+<Code>J</Code>
+<Range>
+<Start>Z</Start>
+<End>A</End>
+</Range>
+<Range>
+<Start>z</Start>
+<End>a</End>
+</Range>
+<Range>
+<Start>9</Start>
+<End>0</End>
+</Range>
+<Range>
+<Start>/</Start>
+<End>!</End>
+</Range>
+<Range>
+<Start>@</Start>
+<End>:</End>
+</Range>
+<Range>
+<Start>`</Start>
+<End>[</End>
+</Range>
+<Range>
+<Start>~</Start>
+<End>{</End>
+</Range>
+<Range>
+<Start>ß</Start>
+<End>¡</End>
+</Range>
+<Char>SP</Char>
+</Token></SyntaxTokens></Mapper>
